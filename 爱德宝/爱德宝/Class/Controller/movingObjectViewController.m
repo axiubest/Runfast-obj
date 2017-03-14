@@ -12,6 +12,8 @@
 {
     NSDate *nowDate;
     NSDate *sevenDate;
+    NSInteger day;
+    CGFloat dis;
     
 }
 @property (weak, nonatomic) IBOutlet UIButton *weekButton;
@@ -30,7 +32,7 @@
 
 
 - (IBAction)clickweek:(id)sender {
-
+    day = 7;
     self.slider.minimumValue = 0.0;
     self.slider.maximumValue = 100.0;
     _MonthButton.backgroundColor = [UIColor colorWithHexString:@"1D5F1E"];
@@ -47,7 +49,7 @@
 - (IBAction)clickedmonth:(id)sender {
     self.slider.minimumValue = 0.0;
     self.slider.maximumValue = 500.0;
-
+    day = 30;
     
     _MonthButton.backgroundColor = [UIColor colorWithHexString:@"30C302"];
     _weekButton.backgroundColor = [UIColor colorWithHexString:@"0B5486"];
@@ -67,6 +69,8 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    day = 7;
+    dis = 50;
      self.navigationController.interactivePopGestureRecognizer.enabled=NO;
     _weekButton.layer.masksToBounds = YES;
     _weekButton.layer.cornerRadius = _weekButton.width/ 2;
@@ -119,7 +123,7 @@
 - (NSString *)slider:(ASValueTrackingSlider *)slider stringForValue:(float)value;
 {
     _mubiaoLab.text = [NSString stringWithFormat:@"我的目标:%@", [slider.numberFormatter stringFromNumber:@(value)]];
-    
+    dis = value;
     value = roundf(value);
     NSString *s;
     if (self.slider.maximumValue == 500.0) {
@@ -147,7 +151,9 @@
 
 
 - (void)save {
-    
+    [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%ld", (long)day] forKey:sportDay];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%lf", dis] forKey:sportDis];
+    [self pushViewControllerWithCcontroller:[[MainPageViewController alloc] init]];
 }
 
 - (void)didReceiveMemoryWarning {

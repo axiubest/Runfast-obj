@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "WorldGradeModel.h"
 @interface WordGradeCell : UITableViewCell
+
+
+
+- (void)dataSource:(WorldGradeModel *)model count:(NSInteger)count;
 
 @end

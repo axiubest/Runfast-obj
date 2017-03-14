@@ -24,6 +24,31 @@
 
 }
 
+- (void)setBackImageView:(UIView *)view {
+    UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
+    img.frame = view.frame;
+    [view addSubview:img];
+}
+
+- (void)pushViewControllerWithCcontroller:(id)controller {
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
+    
+    [tempAppDelegate.mainNavigationController pushViewController:controller animated:NO];
+}
+
+- (void)HUDWithText:(NSString *)text {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    hud.labelText = text;
+    hud.mode = MBProgressHUDModeText;
+    [hud hide:YES afterDelay:1.5];
+
+}
+
+- (BOOL)isLogin {
+  return   [XIU_Login isLogin];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

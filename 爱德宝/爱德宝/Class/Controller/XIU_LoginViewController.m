@@ -140,7 +140,7 @@
     self.AccountBottomLine.backgroundColor = _usernameIsValid ? [UIColor greenColor] : [UIColor lightGrayColor];
     self.PswBottomLine.backgroundColor = _passwordIsValid ? [UIColor greenColor] : [UIColor lightGrayColor];
     self.LoginButton.enabled = _usernameIsValid && _passwordIsValid;
-    self.LoginButton.backgroundColor = _usernameIsValid && _passwordIsValid ? [UIColor redColor] : [UIColor lightGrayColor];
+    self.LoginButton.backgroundColor = _usernameIsValid && _passwordIsValid ? [UIColor blueColor] : [UIColor lightGrayColor];
 }
 
 - (void)usernameTextFieldChanged {
@@ -180,17 +180,16 @@
     [self.signInService signInWithUsername:self.PhoneNumTextField.text
   password:self.PasswordTextField.text
   complete:^(BOOL success) {
+      
       self.LoginButton.enabled = !success;
       if (success) {
           XIU_WeakSelf(self);
 
           [_XIUDelegate login];
-          
-#warning
-          [[NSNotificationCenter defaultCenter] postNotificationName:@"dismissVC" object:nil];
-
           [weakself.navigationController popViewControllerAnimated:YES];
- 
+
+      }else {
+
       }
   }];
     

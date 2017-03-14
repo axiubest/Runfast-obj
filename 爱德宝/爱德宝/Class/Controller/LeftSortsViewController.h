@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeftSortsViewController : UIViewController
+@interface LeftSortsViewController : XIU_BaseViewController
 @property (nonatomic,strong) UITableView *tableview;
 @end

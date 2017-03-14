@@ -7,7 +7,7 @@
 //
 
 #import "XIU_GetVerificationCodeVC.h"
-
+#import "MainPageViewController.h"
 static id _instance = nil;
 @interface XIU_GetVerificationCodeVC ()
 {
@@ -15,6 +15,9 @@ static id _instance = nil;
     NSTimer *_Timer;
 }
 @property (nonatomic, weak)UITextField *VerificationField;
+
+@property (nonatomic, weak)UITextField *PasswordField;
+
 
 
 @property (nonatomic, weak)UIButton *nextButton;
@@ -30,7 +33,9 @@ static id _instance = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"手机快速注册";
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5"];
+    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
+    image.frame  =CGRectMake(0, 0, KWIDTH, KHEIGHT);
+    [self.view addSubview:image];
     [self creatSubView];
 }
 
@@ -42,6 +47,7 @@ static id _instance = nil;
 - (void)creatSubView {
     UILabel *topLab = [[UILabel alloc] init];
     topLab.text = [NSString stringWithFormat:@"请输入%@收到的短信验证码", _PhoneNumberStr];
+    topLab.textColor = [UIColor whiteColor];
     topLab.font = [UIFont systemFontOfSize:14.f];
     [self.view addSubview:topLab];
     
@@ -54,11 +60,22 @@ static id _instance = nil;
     [SV addSubview:VerificationField];
     _VerificationField = VerificationField;
     
+    UITextField *PasswordField = [[UITextField alloc] init];
+    PasswordField.placeholder = @"   请输入密码";
+    PasswordField.keyboardType = UIKeyboardTypePhonePad;
+    PasswordField.backgroundColor = [UIColor whiteColor];
+    [PasswordField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    PasswordField.clearButtonMode = 1;
+    [SV addSubview:PasswordField];
+    _PasswordField = PasswordField;
+    
+    
+    
     UIButton *getVerificationNum = [[UIButton alloc] init];
     [getVerificationNum setTitle:@"获取验证码" forState:UIControlStateNormal];
     getVerificationNum.titleLabel.font = [UIFont systemFontOfSize:15];
     getVerificationNum.tintColor = [UIColor whiteColor];
-    getVerificationNum.backgroundColor = [UIColor colorWithHexString:@"#F2302F"];
+    getVerificationNum.backgroundColor = [UIColor lightGrayColor];
     [getVerificationNum addTarget:self action:@selector(chickedGetVerificationBtn:) forControlEvents:UIControlEventTouchUpInside];
     getVerificationNum.userInteractionEnabled = YES;
     [SV addSubview:getVerificationNum];
@@ -68,18 +85,24 @@ static id _instance = nil;
     UIButton *nextButton = [[UIButton alloc] init];
     [nextButton setTitle:@"下一步" forState:UIControlStateNormal];
     nextButton.enabled = NO;
-    [nextButton setTintColor:[UIColor grayColor]];
-    [nextButton setBackgroundColor:[UIColor colorWithHexString:@"#EEEEEE"]];
+    [nextButton setTintColor:[UIColor whiteColor]];
+    [nextButton setBackgroundColor:[UIColor lightGrayColor]];
     [nextButton addTarget:self action:@selector(chickedNextButton) forControlEvents:UIControlEventTouchUpInside];
     [SV addSubview:nextButton];
     _nextButton = nextButton;
+    _count = 60;
+    nextButton.enabled = NO;
+    _Timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
 
+
+    
+    
     
 //-----------masonry layout------------
     
     [topLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_offset(CGSizeMake(300, 15));
-        make.top.offset(40);
+        make.top.offset(90);
         make.left.offset(20);
     }];
     
@@ -97,23 +120,31 @@ static id _instance = nil;
         make.top.equalTo(VerificationField.mas_top);
     }];
     
-    [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [PasswordField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(SV).with.offset(20);
         make.right.equalTo(SV).with.offset(-20);
         make.height.offset(LAND_CONTORL_HEIGHT);
         make.top.equalTo(getVerificationNum.mas_bottom).with.offset(30);
+    }];
+    
+    [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(SV).with.offset(20);
+        make.right.equalTo(SV).with.offset(-20);
+        make.height.offset(LAND_CONTORL_HEIGHT);
+        make.top.equalTo(PasswordField.mas_bottom).with.offset(30);
         
     }];
 
 }
 
 -(void)textFieldDidChange :(UITextField *)theTextField{
-    if (theTextField.text.length != 0) {
+    if (_PasswordField.text.length != 0 && _VerificationField.text.length != 0) {
         [self.nextButton setBackgroundColor:[UIColor redColor]];
         self.nextButton.enabled = YES;
         [self.nextButton setTintColor:[UIColor whiteColor]];
     }else {
-        [self.nextButton setBackgroundColor:[UIColor colorWithHexString:@"#EEEEEE"]];
+    [self.nextButton setBackgroundColor:[UIColor colorWithHexString:@"#EEEEEE"]];
         [self.nextButton setTintColor:[UIColor grayColor]];
         self.nextButton.enabled = NO;
         
@@ -136,7 +167,6 @@ static id _instance = nil;
     if (_count !=1) {
         _count -=1;
         [self.getVerificationNum setTitle:[NSString stringWithFormat:@"%ld  秒",_count] forState:UIControlStateNormal];
-        NSLog(@"%ld", _count);
     }
     else
     {
@@ -151,7 +181,23 @@ static id _instance = nil;
 
 //下一步按钮
 - (void)chickedNextButton {
-    NSLog(@"下一步");
+    //验证码判断
+    //网络请求
+    [self request];
+}
+
+- (void)request {
+    [[XIU_NetAPIManager sharedManager] request_ResignWithPhoneNumber:_PhoneNumberStr Psw:_PasswordField.text andBlock:^(id data, NSError *error) {
+        if (data) {
+            [XIU_Login doLogin:data];
+            [self HUDWithText:@"注册成功"];
+
+            [self pushViewControllerWithCcontroller:[[MainPageViewController alloc] init]];
+            
+        }else {
+            [self HUDWithText:@"注册失败"];
+        }
+    }];
 }
 
 -(void)dealloc {

@@ -41,7 +41,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
+    image.frame  =CGRectMake(0, 0, KWIDTH, KHEIGHT);
+    [self.view addSubview:image];
     self.title = @"手机快速注册";
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5"];
     [self setUpUIView];
@@ -52,17 +54,24 @@
 
     
     UIView *phoneView = [[UIView alloc] init];
-    phoneView.backgroundColor = [UIColor whiteColor];
+    phoneView.layer.borderColor = [UIColor whiteColor].CGColor;
+    phoneView.layer.borderWidth = 1;
+    phoneView.backgroundColor = [UIColor clearColor];
+    
     [SV addSubview:phoneView];
     
     UIView *VerificationView = [[UIView alloc] init];
-    VerificationView.backgroundColor = [UIColor whiteColor];
+    VerificationView.layer.borderColor = [UIColor whiteColor].CGColor;
+    VerificationView.layer.borderWidth = 1;
+    VerificationView.backgroundColor = [UIColor clearColor];
     [SV addSubview:VerificationView];
 
     
     
     UITextField *PhoneNumField = [[UITextField alloc] init];
-    PhoneNumField.placeholder = @"请输入手机号";
+    
+    UIColor *color = [UIColor whiteColor];
+    PhoneNumField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入手机号" attributes:@{NSForegroundColorAttributeName: color}];
     PhoneNumField.keyboardType = UIKeyboardTypePhonePad;
     [PhoneNumField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 
@@ -81,6 +90,10 @@
     
     UITextField *verificationField = [[UITextField alloc] init];
     verificationField.placeholder = @"请输入验证码";
+    
+    verificationField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入验证码" attributes:@{NSForegroundColorAttributeName: color}];
+    verificationField.font = [UIFont systemFontOfSize:15];
+
     verificationField.clearButtonMode = 1;
     [SV addSubview:verificationField];
     _verificationField = verificationField;
@@ -88,8 +101,10 @@
     UIButton *nextButton = [[UIButton alloc] init];
     [nextButton setTitle:@"下一步" forState:UIControlStateNormal];
     nextButton.enabled = NO;
-    [nextButton setTintColor:[UIColor grayColor]];
-    [nextButton setBackgroundColor:[UIColor colorWithHexString:@"#EEEEEE"]];
+    nextButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    nextButton.layer.borderWidth = 1;
+    [nextButton setTintColor:[UIColor clearColor]];
+    [nextButton setBackgroundColor:[UIColor clearColor]];
     [nextButton addTarget:self action:@selector(chickedNextButton) forControlEvents:UIControlEventTouchUpInside];
     [SV addSubview:nextButton];
     self.nextButton = nextButton;
@@ -101,19 +116,19 @@
     [self.view addSubview:AgreeDelegateImageBtn];
     
     
-    UILabel *DelegateLab = [[UILabel alloc] init];
-    DelegateLab.textColor = [UIColor grayColor];
-    DelegateLab.font = [UIFont systemFontOfSize:14.f];
-    [DelegateLab addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chickedDelegateLabel)]];
-    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:@"同意XX用户注册协议"];
+//    UILabel *DelegateLab = [[UILabel alloc] init];
+//    DelegateLab.textColor = [UIColor grayColor];
+//    DelegateLab.font = [UIFont systemFontOfSize:14.f];
+//    [DelegateLab addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chickedDelegateLabel)]];
+//    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:@"同意XX用户注册协议"];
     
-    [AttributedStr addAttribute:NSForegroundColorAttributeName
-                          value:[UIColor blackColor]
-                          range:NSMakeRange(2, 8)];
-    
-    DelegateLab.attributedText = AttributedStr;
-    DelegateLab.userInteractionEnabled = YES;
-    [self.view addSubview:DelegateLab];
+//    [AttributedStr addAttribute:NSForegroundColorAttributeName
+//                          value:[UIColor blackColor]
+//                          range:NSMakeRange(2, 8)];
+//    
+//    DelegateLab.attributedText = AttributedStr;
+//    DelegateLab.userInteractionEnabled = YES;
+//    [self.view addSubview:DelegateLab];
  
 /**massory layout*/
     [phoneView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -127,7 +142,7 @@
     
     [PhoneNumField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.bottom.and.right.equalTo(phoneView).with.offset(0);
-        make.left.equalTo(self.view).with.offset(10);
+        make.left.mas_equalTo(phoneView).with.offset(20);
     }];
     
     
@@ -168,12 +183,12 @@
         make.size.mas_equalTo(CGSizeMake(20,20));
     }];
 
-    [DelegateLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(AgreeDelegateImageBtn.mas_centerY);
-        make.left.equalTo(AgreeDelegateImageBtn.mas_right).with.offset(10);
-        make.right.equalTo(SV).with.offset(0);
-        make.height.offset(15);
-    }];
+//    [DelegateLab mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(AgreeDelegateImageBtn.mas_centerY);
+//        make.left.equalTo(AgreeDelegateImageBtn.mas_right).with.offset(10);
+//        make.right.equalTo(SV).with.offset(0);
+//        make.height.offset(15);
+//    }];
     
 }
 - (void)didReceiveMemoryWarning {
@@ -184,7 +199,7 @@
 
 -(void)textFieldDidChange :(UITextField *)theTextField{
     if (theTextField.text.length != 0) {
-        [self.nextButton setBackgroundColor:[UIColor redColor]];
+        [self.nextButton setBackgroundColor:[UIColor blueColor]];
         self.nextButton.enabled = YES;
         [self.nextButton setTintColor:[UIColor whiteColor]];
     }else {

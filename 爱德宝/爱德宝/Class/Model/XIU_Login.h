@@ -18,6 +18,7 @@
 
 
 - (NSString *)toPath;
++ (NSString *)toPath;
 - (NSDictionary *)params;
 
 + (void)doLogin:(NSDictionary *)loginData;

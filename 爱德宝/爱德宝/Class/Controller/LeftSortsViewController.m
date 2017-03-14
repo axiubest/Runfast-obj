@@ -12,12 +12,23 @@
 #import "movingObjectViewController.h"
 #import "WordGradeViewController.h"
 #import "MoreViewController.h"
-
-@interface LeftSortsViewController () <UITableViewDelegate,UITableViewDataSource>
+#import "XIU_LoginViewController.h"
+#import "XIU_ModifyAvatarViewController.h"
+@interface LeftSortsViewController () <UITableViewDelegate,UITableViewDataSource,XIU_LoginViewControllerDelegate>
 
 @end
 
 @implementation LeftSortsViewController
+
+
+- (void)login {
+    [self.tableview reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableview reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,8 +43,13 @@
     [self.view addSubview:tableview];
     
     [tableview registerNib:[UINib nibWithNibName:@"SliderBarPersonCell" bundle:nil] forCellReuseIdentifier:SliderBarPersonIdentifier];
+    
 }
 
+
+- (void)mytext:(NSNotification *)not {
+    [self.tableview reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -41,14 +57,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return [XIU_Login isLogin] ? 6 : 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     if (indexPath.row == 0) {
+
         SliderBarPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:SliderBarPersonIdentifier];
+        
         return cell;
     }
     static NSString *Identifier = @"Identifier";
@@ -70,6 +88,8 @@
         cell.textLabel.text = @"历史记录";
     }else if (indexPath.row == 4) {
         cell.textLabel.text = @"更多设置";
+    }else if (indexPath.row == 5) {
+        cell.textLabel.text = @"退出";
     }
     return cell;
 }
@@ -79,7 +99,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
    
     switch (indexPath.row) {
-        case 0:
+        case 0: {
+            if ([XIU_Login isLogin]) {
+                XIU_ModifyAvatarViewController *vcc = [[XIU_ModifyAvatarViewController alloc] init];
+                [self pushViewControllerWithCcontroller:vcc];
+            }else {
+                XIU_LoginViewController *login = [[XIU_LoginViewController alloc] init];
+                login.XIUDelegate = self;
+                [self pushViewControllerWithCcontroller:login];
+            }
+        }
             
             break;
         case 1: {
@@ -109,6 +138,13 @@
         }
             
             break;
+        case 5:{
+            [XIU_Login doLogOut];
+            [self HUDWithText:@"您已退出登录"];
+            [self.tableview reloadData];
+        }
+            
+            break;
         default:
             break;
     }
@@ -116,12 +152,7 @@
    
 }
 
-- (void)pushViewControllerWithCcontroller:(id)controller {
-     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
-    
-    [tempAppDelegate.mainNavigationController pushViewController:controller animated:NO];
-}
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ( indexPath.row == 0) {
@@ -140,4 +171,5 @@
     view.backgroundColor = [UIColor clearColor];
     return view;
 }
+
 @end

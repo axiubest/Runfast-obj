@@ -11,9 +11,6 @@
 
 
 @interface NSObject (Common)
-
-
-#pragma mark BaseURL
 + (NSString *)baseURLStr;
 
 

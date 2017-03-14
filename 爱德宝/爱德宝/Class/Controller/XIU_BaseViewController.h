@@ -15,10 +15,15 @@ typedef NS_ENUM(NSUInteger, UINavigationItem_Type) {
 
 @interface XIU_BaseViewController : UIViewController
 
+- (void)pushViewControllerWithCcontroller:(id)controller;
+- (void)setBackImageView:(UIView *)view;
+
+- (BOOL)isLogin;
 
 - (void)createNavgationButtonWithImageNmae:(NSString *)imageName title:(NSString *)title target:(id)target action:(SEL)action type:(UINavigationItem_Type)navigationItem_Type;
 
 - (void)showEmptyDataSetViewWithTitle:(NSDictionary *)emptyDictionary;
 
+- (void)HUDWithText:(NSString *)text;
 
 @end

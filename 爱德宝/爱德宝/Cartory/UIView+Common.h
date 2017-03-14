@@ -26,6 +26,10 @@
 @property (nonatomic, strong, readonly) UIView *lastSubviewOnX;
 @property (nonatomic, strong, readonly) UIView *lastSubviewOnY;
 
+
+- (void)doCircleFrame;
+
+
 /**
  * @brief 移除此view上的所有子视图
  */

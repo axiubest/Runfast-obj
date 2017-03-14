@@ -9,13 +9,22 @@
 #import "HistoryViewController.h"
 #import "HistoryGradeCell.h"
 #import "HistoryHeaderView.h"
+#import "HistorygradeModel.h"
 static NSString *const HistoryGradeIdentifier  =@"HistoryGradeCell";
 @interface HistoryViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (nonatomic, copy) NSMutableArray <HistorygradeModel *>*dataSource;
 @end
 
 @implementation HistoryViewController
+
+-(NSMutableArray<HistorygradeModel *> *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
+}
+
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -45,18 +54,28 @@ static NSString *const HistoryGradeIdentifier  =@"HistoryGradeCell";
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 10;
+    return self.dataSource.count;
+    
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HistoryGradeCell *cell = [tableView dequeueReusableCellWithIdentifier:HistoryGradeIdentifier];
+    cell.model = self.dataSource[indexPath.section];
     return cell;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"历史记录";
     [_tableView registerNib:[UINib nibWithNibName:HistoryGradeIdentifier bundle:nil] forCellReuseIdentifier:HistoryGradeIdentifier];
+    [self request];
+}
+
+- (void)request {
+    [[XIU_NetAPIManager sharedManager] request_HistoryGradeBlock:^(id data, NSError *error) {
+        self.dataSource =data;
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

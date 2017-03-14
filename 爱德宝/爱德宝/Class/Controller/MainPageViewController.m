@@ -6,20 +6,50 @@
 //  Copyright (c) 2015年 eamon. All rights reserved.
 //
 
+#import <CoreBluetooth/CoreBluetooth.h>
+
 #import "MainPageViewController.h"
 #import "AppDelegate.h"
 #import "HistoryViewController.h"
 #import "ModeSelectionVC.h"
+#import "CLDashboardProgressView.h"
+#import "BLEViewController.h"
+#import "BLEListTableViewController.h"
+#import "SerialGATT.h"
+#import "QMS_QMSRunViewController.h"
+#import "BLEDeviceViewController.h"
 #define vBackBarButtonItemName  @"backArrow.png"    //导航条返回默认图片名
-@interface MainPageViewController ()
+#define arc_size KWIDTH
+#define progressWidth 15
+
+@interface MainPageViewController ()<BTSmartSensorDelegate,CBPeripheralManagerDelegate>
+{
+}
+@property (nonatomic, weak)CLDashboardProgressView *disProgressView;
+@property (nonatomic, weak)CLDashboardProgressView *dayProgressView;
+@property (strong, nonatomic) SerialGATT *sensor;
+@property (nonatomic, retain) NSMutableSet *peripheralViewControllerSet;
+@property (nonatomic,strong) CBPeripheralManager * centralManager;
 
 @end
 
+
 @implementation MainPageViewController
+@synthesize sensor;
+@synthesize peripheralViewControllerSet;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"主界面";
+    
+    sensor = [[SerialGATT alloc] init];
+    [sensor setup];
+    sensor.delegate = self;
+
+    peripheralViewControllerSet = [[NSMutableSet alloc] init];
+    
+    self.centralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:dispatch_get_global_queue(0, 0)];
 
     
     UIImageView *image = [[UIImageView alloc] initWithFrame:FULLRECT];
@@ -32,9 +62,130 @@
     
     [self createUI];
     
+    [self createProgressView];
 }
 
+
+#pragma mark draw
+
+
+- (void)createProgressView {
+    
+    CLDashboardProgressView *disprogress = [[CLDashboardProgressView alloc] initWithFrame:CGRectMake(0, 0, arc_size, arc_size)];
+    disprogress.backgroundColor = [UIColor whiteColor];
+    disprogress.outerRadius = 160; // 外圈半径
+    disprogress.innerRadius = 140;  // 内圈半径
+    disprogress.beginAngle = 140;    // 起始角度
+    disprogress.blockAngle = 8;   // 每个进度块的角度
+    disprogress.gapAngle = 0;     // 两个进度块的间隙的角度
+    disprogress.progressColor = [UIColor greenColor]; // 进度条填充色
+    disprogress.trackColor    = [UIColor darkGrayColor];   // 进度条痕迹填充色
+    disprogress.outlineColor  = [UIColor grayColor];  // 进度条边框颜色
+    disprogress.outlineWidth  = 0.5;                    // 进度条边框线宽
+    
+    disprogress.blockCount = 26;   // 进度块的数量
+    disprogress.minValue = 0;      // 进度条最小数值
+    disprogress.maxValue = 100;    // 进度条最大数值
+    disprogress.currentValue = 10; // 进度条当前数值
+    
+    disprogress.showShadow = NO;  // 是否显示阴影
+    disprogress.shadowOuterRadius = 85; // 阴影外圈半径
+    disprogress.shadowInnerRadius = 10; // 阴影内圈半径
+    disprogress.shadowFillColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];   // 阴影颜色
+    
+    disprogress.autoAdjustAngle = YES;  // 自动调整角度
+    disprogress.center = self.view.center;
+    disprogress.backgroundColor = [UIColor clearColor];
+    _disProgressView = disprogress;
+    [self.view addSubview:_disProgressView];
+    
+    
+    
+    
+    CLDashboardProgressView *progress = [[CLDashboardProgressView alloc] initWithFrame:CGRectMake(0, 0, arc_size, arc_size)];
+    progress.backgroundColor = [UIColor whiteColor];
+    progress.outerRadius = _disProgressView.outerRadius - 30; // 外圈半径
+    progress.innerRadius = _disProgressView.innerRadius - 20;  // 内圈半径
+    progress.beginAngle = 140;    // 起始角度
+    progress.blockAngle = 8;   // 每个进度块的角度
+    progress.gapAngle = 0;     // 两个进度块的间隙的角度
+    progress.progressColor = [UIColor whiteColor]; // 进度条填充色
+    progress.trackColor    = [UIColor darkGrayColor];   // 进度条痕迹填充色
+    progress.outlineColor  = [UIColor grayColor];  // 进度条边框颜色
+    progress.outlineWidth  = 0;                    // 进度条边框线宽
+    
+    progress.blockCount = 26;   // 进度块的数量
+    progress.minValue = 0;      // 进度条最小数值
+    progress.maxValue = 100;    // 进度条最大数值
+    progress.currentValue = 10; // 进度条当前数值
+    
+    progress.showShadow = NO;  // 是否显示阴影
+    progress.shadowOuterRadius = 85; // 阴影外圈半径
+    progress.shadowInnerRadius = 10; // 阴影内圈半径
+    progress.shadowFillColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];   // 阴影颜色
+    
+    progress.autoAdjustAngle = YES;  // 自动调整角度
+    progress.center = self.view.center;
+    progress.backgroundColor = [UIColor clearColor];
+    _dayProgressView = progress;
+    [self.view addSubview:_dayProgressView];
+    
+    
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, KWIDTH, 50)];
+    lab.font = [UIFont systemFontOfSize:50 weight:2];
+    lab.textAlignment = 1;
+    lab.textColor = [UIColor whiteColor];
+    lab.text = [NSString stringWithFormat:@"%.f",_disProgressView.currentValue];
+    lab.center = CGPointMake(SV.center.x, SV.center.y - 40);
+    [self.view addSubview:lab];
+    
+    UILabel *allLab = [[UILabel alloc] init];
+    allLab.textColor  = [UIColor lightGrayColor];
+    allLab.text = @"100km";
+    [self.view addSubview:allLab];
+    [allLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lab.mas_bottom);
+        make.centerX.mas_equalTo(lab.mas_centerX);
+    }];
+    
+    UILabel *nowDayLab = [[UILabel alloc] init];
+    nowDayLab.textColor  = [UIColor lightGrayColor];
+    nowDayLab.font = [UIFont systemFontOfSize:22 weight:1];
+    nowDayLab.text = @"100km";
+    [self.view addSubview:nowDayLab];
+    [nowDayLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(allLab.mas_bottom).with.offset(10);
+        make.centerX.mas_equalTo(allLab.mas_centerX);
+    }];
+
+    
+}
+
+
+
+
 - (void)clickedBLE {
+    
+    [self setUpBlueTooth];
+    
+    BLEListTableViewController *v = [[BLEListTableViewController alloc] init];
+
+    [self.navigationController pushViewController:v animated:YES];
+}
+
+- (void)setUpBlueTooth {
+    if ([sensor activePeripheral]) {
+        [sensor.manager cancelPeripheralConnection:sensor.activePeripheral];
+        sensor.activePeripheral = nil;
+    }if ([self.peripheralViewControllerSet count]) {
+        sensor.peripherals = nil;
+        [peripheralViewControllerSet removeAllObjects];
+    }
+    
+
+    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(scanTimer:) userInfo:nil repeats:NO];
+    
+//    [sensor findBLKSoftPeripherals:5];
     
 }
 
@@ -74,10 +225,27 @@
         [self.navigationController pushViewController:select animated:YES];
     }];
     [self.view addSubview:styleSelectBtn];
+    
+    
+    UIView *line1 = [[UIView alloc] init];
+    line1.backgroundColor = [UIColor darkGrayColor];
+    [self.view addSubview:line1];
+    [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(SV.mas_centerX);
+        make.top.equalTo(historyBtn);
+        make.bottom.equalTo(historyBtn);
+        make.width.equalTo(@1);
+    }];
+    
+    UIView *line2 = [[UIView alloc] init];
+    line2.backgroundColor = [UIColor darkGrayColor];
+    [self.view addSubview:line2];
+    line2.frame = CGRectMake(20, historyBtn.y + historyBtn.height + 10, KWIDTH - 40, 1);
 }
 
 - (void)clickedQuickStartBtn {
-    
+    BLEViewController *ble = [[BLEViewController alloc] init];
+    [self.navigationController pushViewController:ble animated:YES];
 }
 
 - (void) openOrCloseLeftList
@@ -108,6 +276,32 @@
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
 }
+
+
+- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral{
+    
+    switch (peripheral.state) {
+            //蓝牙开启且可用
+        case CBPeripheralManagerStatePoweredOn:
+            break;
+        default:
+            break;
+    }
+}
+
+-(void) peripheralFound:(CBPeripheral *)peripheral
+{
+    if (!peripheral.name) {
+        return;
+    }
+    
+    BLEDeviceViewController *controller = [[BLEDeviceViewController alloc] init];
+    controller.peripheral = peripheral;
+    controller.sensor = sensor;
+    [peripheralViewControllerSet addObject:controller];
+}
+
+
 
 
 

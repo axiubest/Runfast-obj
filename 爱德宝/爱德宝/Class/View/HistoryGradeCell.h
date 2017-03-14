@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HistorygradeModel.h"
 @interface HistoryGradeCell : UITableViewCell
+
+@property (nonatomic, strong)HistorygradeModel *model;
 
 @end

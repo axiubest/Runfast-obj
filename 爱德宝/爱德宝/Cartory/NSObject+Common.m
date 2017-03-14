@@ -9,6 +9,7 @@
 #import "NSObject+Common.h"
 #import "NSObject+Cache.h"
 #import "MBProgressHUD.h"
+static NSString *KBASEURL = @"112.74.28.179:8080/userbeancontrol/";
 
 
 @implementation NSObject (Common)

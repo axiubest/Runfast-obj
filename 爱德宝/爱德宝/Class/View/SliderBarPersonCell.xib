@@ -20,7 +20,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="OXC-hw-kxF">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="头像.png" translatesAutoresizingMaskIntoConstraints="NO" id="OXC-hw-kxF">
                         <rect key="frame" x="20" y="20.5" width="60" height="60"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="7Uk-sF-Qp2"/>
@@ -68,10 +68,16 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="PersonImageView" destination="OXC-hw-kxF" id="AKD-4r-mTy"/>
+                <outlet property="PersonName" destination="6rj-u3-hZl" id="cOG-MY-nCm"/>
+                <outlet property="PersonNumber" destination="KTk-eH-Hu5" id="dVc-MH-Buf"/>
+                <outlet property="PersondistanceNumber" destination="GHW-49-v1m" id="eg3-90-AER"/>
+            </connections>
             <point key="canvasLocation" x="-50" y="30.5"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="bg.png" width="782" height="1258"/>
+        <image name="头像.png" width="200" height="200"/>
     </resources>
 </document>

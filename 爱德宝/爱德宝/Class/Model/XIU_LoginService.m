@@ -26,9 +26,11 @@
     [[XIU_NetAPIManager sharedManager] request_Login_WithPath:[self.login toPath] Params:[self.login params] andBlock:^(id data, NSError *error) {
         if (data) {
             //在此再进行密码判断
-            //            BOOL success = [username isEqualToString:@"user"] && [password isEqualToString:@"password"];
+//                        BOOL success = [username isEqualToString:@"user"] && [password isEqualToString:@"password"];
             BOOL success = YES;
             completeBlock(success);
+        }else {
+
         }
     }];
 

@@ -7,7 +7,7 @@
 //
 
 #import "WordGradeCell.h"
-
+#import "UIImageView+WebCache.h"
 
 @interface WordGradeCell ()
 
@@ -22,6 +22,21 @@
 @end
 
 @implementation WordGradeCell
+
+
+
+- (void)dataSource:(WorldGradeModel *)model count:(NSInteger )count {
+    [_userImageView sd_setImageWithURL:[NSURL URLWithString:model.userImg]];
+    _userName.text = model.username;
+    _userKmLab.text = [NSString stringWithFormat:@"%@", model.allDis];
+    _gradeLab.text = [NSString stringWithFormat:@"%ld", count + 1];
+    if (count < 3) {
+        _huangguanImageView.image = [UIImage imageNamed:@"皇冠"];
+        _gradeLab.textColor = [UIColor blackColor];
+    }
+
+}
+
 
 
 

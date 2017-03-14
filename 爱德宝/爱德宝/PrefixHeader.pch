@@ -9,7 +9,26 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
-#define KBASEURL @"http://112.74.28.179:8080/Chislim/"
+#define TableView_ResignNib(Nib,identifier) [tableView registerNib:Nib forCellReuseIdentifier:identifier]
+
+#define TableView_ResignClass(cellName,identifier) [tableView registerClass:[cellName class] forCellReuseIdentifier:identifier]
+
+
+#define user_ranking @"user_ranking"
+
+
+#define sportDay @"sportDay"
+#define sportDis @"sportDis"
+#define BASEURL @"112.74.28.179:8080/adbs/userbeancontrol/"
+// 重写NSLog，debug模式下打印行数
+#ifdef DEBUG
+#define NSLog(s, ... ) NSLog( @"[%@ in line %d]=>>%@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+#define NSLog(s, ... )
+#endif
+
+#define degreesToRadians(x) (M_PI*(x)/180.0) //把角度转换成PI的方式
+
 
 #define kKeyWindow [UIApplication sharedApplication].keyWindow
 #define BackImageName @"bg"
@@ -49,4 +68,6 @@
 #import "XIU_NetAPIManager.h"
 #import "UIColor+ColorStyle.h"
 #import "NSObject+Common.h"
+#import "XIU_NetAPIManager.h"
+#import "MainPageViewController.h"
 #endif /* PrefixHeader_pch */

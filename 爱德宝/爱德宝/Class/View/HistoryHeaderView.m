@@ -18,6 +18,19 @@
 
 @implementation HistoryHeaderView
 
+-(void)setKcal:(UILabel *)Kcal {
+    _Kcal = Kcal;
+    _Kcal.text =[NSString stringWithFormat:@"%@Kcal",[XIU_Login curLoginUser].allCir];
+}
 
+-(void)setTime:(UILabel *)time {
+    _time = time;
+    _time.text = [NSString stringWithFormat:@"%@", [XIU_Login curLoginUser].allTime];
+}
+
+-(void)setDistance:(UILabel *)distance {
+    _distance = distance;
+    _distance.text = [NSString stringWithFormat:@"%@Km", [XIU_Login curLoginUser].allDis];
+}
 
 @end

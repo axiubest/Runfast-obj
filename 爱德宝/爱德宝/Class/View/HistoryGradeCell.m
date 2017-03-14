@@ -23,6 +23,15 @@
 
 @implementation HistoryGradeCell
 
+
+-(void)setModel:(HistorygradeModel *)model {
+    _model = model;
+    _DateLab.text = [NSString stringWithFormat:@"%@", _model.sportDate];
+    _kCarLab.text = [NSString stringWithFormat:@"%.2f/Kcar", [_model.allCor floatValue]];
+    _timeLab.text = [NSString stringWithFormat:@"%.2f/h", [_model.sportTime floatValue]];
+    _disLab.text = [NSString stringWithFormat:@"%.f/Km", [_model.allDis floatValue]];
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

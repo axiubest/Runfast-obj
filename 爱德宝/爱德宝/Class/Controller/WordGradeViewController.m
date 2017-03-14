@@ -9,21 +9,29 @@
 #import "WordGradeViewController.h"
 #import "WordGradeHeaderView.h"
 #import "WordGradeCell.h"
-
+#import "WorldGradeModel.h"
 @interface WordGradeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property(nonatomic, strong) XIU_Login *login;
 @end
 
 @implementation WordGradeViewController
 
+
+-(NSMutableArray *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 70.f;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 100;
+    return self.dataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -46,12 +54,26 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WordGradeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WordGradeIdentifier"];
+    NSLog(@"%ld", (long)indexPath.section);
+    [cell dataSource:self.dataSource[indexPath.section] count:indexPath.section];
     return cell;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.login = [[XIU_Login alloc] init];
     [_tableView registerNib:[UINib nibWithNibName:@"WordGradeCell" bundle:nil] forCellReuseIdentifier:@"WordGradeIdentifier"];
     _tableView.sectionFooterHeight = 0.000001;
+    
+    [self request];
+}
+
+- (void)request {
+    [[XIU_NetAPIManager sharedManager] request_WorldGrade_WithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/getallrankinglist?" Params:@{@"page": @"0",@"size" :@"5",} andBlock:^(id data, NSError *error) {
+        NSLog(@"%@", data);
+//        NSLog(@"%@--%@", BASEURL, )
+        [self.dataSource addObjectsFromArray:data];
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

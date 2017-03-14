@@ -28,14 +28,16 @@ static XIU_User *curLoginUser;
 }
 
 - (NSString *)toPath {
-    return @"UserServlet?dowhat=getOneByPhone&";
+    return @"http://112.74.28.179:8080/adbs/userbeancontrol/loginByPhone?";
 }
 
-
++ (NSString *)toPath {
+    return @"http://112.74.28.179:8080/adbs/userbeancontrol/loginByPhone?";
+}
 #pragma mark 相应key-Value在此修改---密码加密调用[self.password sha1Str]
 - (NSDictionary *)params {
-    NSMutableDictionary *param = @{@"userPhone": self.phone,
-                                    @"userPass" : self.password,}.mutableCopy;
+    NSMutableDictionary *param = @{@"userphone": self.phone,
+                                    @"userpass" : self.password,}.mutableCopy;
     return param;
 }
 
@@ -51,6 +53,7 @@ static XIU_User *curLoginUser;
         [defaults setObject:[NSNumber numberWithBool:YES] forKey:kLoginStatus];
         
      NSDictionary *tmpDic = [loginData deleteAllNullValue:loginData];
+        
         [defaults setObject:tmpDic forKey:kLoginUserDict];
 
         
@@ -69,6 +72,7 @@ static XIU_User *curLoginUser;
 + (XIU_User *)curLoginUser {
     if (!curLoginUser) {
         NSDictionary *loginData = [[NSUserDefaults standardUserDefaults] objectForKey:kLoginUserDict];
+        
         [[NSUserDefaults standardUserDefaults] synchronize];
         curLoginUser = loginData? [XIU_User mj_objectWithKeyValues:loginData]: nil;
     }

@@ -179,25 +179,25 @@
 
 
 #pragma mark - 单击手势
--(void)handeTap:(UITapGestureRecognizer *)tap{
-    
-    if ((!self.closed) && (tap.state == UIGestureRecognizerStateEnded))
-    {
-        [UIView beginAnimations:nil context:nil];
-        tap.view.transform = CGAffineTransformScale(CGAffineTransformIdentity,1.0,1.0);
-        tap.view.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2,[UIScreen mainScreen].bounds.size.height/2);
-        self.closed = YES;
-        
-        self.leftTableview.center = CGPointMake(kLeftCenterX, kScreenHeight * 0.5);
-        self.leftTableview.transform = CGAffineTransformScale(CGAffineTransformIdentity,kLeftScale,kLeftScale);
-        self.contentView.alpha = kLeftAlpha;
-        
-        [UIView commitAnimations];
-        _scalef = 0;
-        [self removeSingleTap];
-    }
-    
-}
+//-(void)handeTap:(UITapGestureRecognizer *)tap{
+//    
+//    if ((!self.closed) && (tap.state == UIGestureRecognizerStateEnded))
+//    {
+//        [UIView beginAnimations:nil context:nil];
+//        tap.view.transform = CGAffineTransformScale(CGAffineTransformIdentity,1.0,1.0);
+//        tap.view.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2,[UIScreen mainScreen].bounds.size.height/2);
+//        self.closed = YES;
+//        
+//        self.leftTableview.center = CGPointMake(kLeftCenterX, kScreenHeight * 0.5);
+//        self.leftTableview.transform = CGAffineTransformScale(CGAffineTransformIdentity,kLeftScale,kLeftScale);
+//        self.contentView.alpha = kLeftAlpha;
+//        
+//        [UIView commitAnimations];
+//        _scalef = 0;
+//        [self removeSingleTap];
+//    }
+//    
+//}
 
 #pragma mark - 修改视图位置
 /**
@@ -247,11 +247,11 @@
     if (!self.sideslipTapGes)
     {
         //单击手势
-        self.sideslipTapGes= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handeTap:)];
-        [self.sideslipTapGes setNumberOfTapsRequired:1];
+//        self.sideslipTapGes= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handeTap:)];
+//        [self.sideslipTapGes setNumberOfTapsRequired:1];
         
-        [self.mainVC.view addGestureRecognizer:self.sideslipTapGes];
-        self.sideslipTapGes.cancelsTouchesInView = YES;  //点击事件盖住其它响应事件,但盖不住Button;
+//        [self.mainVC.view addGestureRecognizer:self.sideslipTapGes];
+//        self.sideslipTapGes.cancelsTouchesInView = YES;  //点击事件盖住其它响应事件,但盖不住Button;
     }
 }
 

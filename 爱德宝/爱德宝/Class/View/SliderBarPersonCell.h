@@ -10,4 +10,13 @@
 static NSString * const SliderBarPersonIdentifier = @"SliderBarPersonCell";
 @interface SliderBarPersonCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *PersonImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *PersonName;
+
+@property (weak, nonatomic) IBOutlet UILabel *PersonNumber;
+
+@property (weak, nonatomic) IBOutlet UILabel *PersondistanceNumber;
+
+
 @end

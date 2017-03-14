@@ -15,22 +15,21 @@
 
 -(id)copyWithZone:(NSZone*)zone {
     XIU_User *user = [[[self class] allocWithZone:zone] init];
-    user.userId = [_userId copy];
-    user.userName = [_userName copy];
-    user.userImage = [_userImage copy];
-    user.userPass = [_userPass copy];
-    user.userWeight = [_userWeight copy];
-    user.userHeigh = [_userHeigh copy];
-    user.bmi = [_bmi copy];
-    user.project = [_project copy];
-    user.userPhone = [_userPhone copy];
-    user.userSex = [_userSex copy];
-    user.userEmail = [_userEmail copy];
-    user.userBirth = [_userBirth copy];
-    user.userIntru = [_userIntru copy];
-    user.channelId = [_channelId copy];
-    user.hobby = [_hobby copy];
-    user.userMark = [_userMark copy];
+    user.username = [_username copy];
+    user.usersex = [_usersex copy];
+    user.birth = [_birth copy];
+    user.weight = [_weight copy];
+    user.height = [_height copy];
+    user.userImg = [_userImg copy];
+    user.userphone = [_userphone copy];
+    user.userpass = [_userpass copy];
+    user.userfrom = [_userfrom copy];
+    user.channelid = [_channelid copy];
+    user.allDis = [_allDis copy];
+    user.allCir = [_allCir copy];
+    user.allTime = [_allTime copy];
+    user.userhobby = [_userhobby copy];
+    
 
     return user;
 }
@@ -41,28 +40,15 @@
     return @"0x0";
 }
 
-- (NSString *)company{
-    if (_userIntru && _userIntru.length > 0) {
-        return _userIntru;
+
+- (NSString *)job_str{
+    if (_userhobby && _userhobby.length > 0) {
+        return _userhobby;
     }else{
         return @"未填写";
     }
 }
 
-- (NSString *)job_str{
-    if (_hobby && _hobby.length > 0) {
-        return _hobby;
-    }else{
-        return @"未填写";
-    }
-}
-- (NSString *)location{
-    if (_userName && _userName.length > 0) {
-        return _userName;
-    }else{
-        return @"未填写";
-    }
-}
 
 
 @end
