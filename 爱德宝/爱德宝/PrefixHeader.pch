@@ -1,0 +1,52 @@
+//
+//  PrefixHeader.pch
+//  爱德宝
+//
+//  Created by XIUDeveloper on 2017/3/8.
+//  Copyright © 2017年 杨岫峰. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#define KBASEURL @"http://112.74.28.179:8080/Chislim/"
+
+#define kKeyWindow [UIApplication sharedApplication].keyWindow
+#define BackImageName @"bg"
+//------------屏幕尺寸---------------
+
+//屏幕高
+#define KHEIGHT [UIScreen mainScreen].bounds.size.height
+
+//屏幕宽
+#define KWIDTH [UIScreen mainScreen].bounds.size.width
+
+#define imageNamed(a) [UIImage imageNamed:a]
+#define LAND_CONTORL_HEIGHT 50.f
+
+
+#define FULLRECT CGRectMake(0, 0, KWIDTH, KHEIGHT)
+
+#define SCREEN_BOUNDS   [UIScreen mainScreen].bounds
+#define SCREEN_SIZE     [UIScreen mainScreen].bounds.size
+#define XIU_WeakSelf(type)  __weak typeof(type) weak##type = type;
+#define SV self.view
+
+//static NSInteger const  NaigationBarHeight = 64;
+//static NSInteger const  TabBarHeight = 44;
+
+//------------屏幕尺寸---------------
+
+#import "UIView+Common.h"
+#import "XIU_BaseViewController.h"
+#import "Masonry.h"
+#import "MBProgressHUD.h"
+#import "UIView+BlocksKit.h"
+#import "AppDelegate.h"
+#import "UIColor+Hex.h"
+#import "XIU_User.h"
+#import "XIU_Login.h"
+#import "XIU_NetAPIManager.h"
+#import "UIColor+ColorStyle.h"
+#import "NSObject+Common.h"
+#endif /* PrefixHeader_pch */

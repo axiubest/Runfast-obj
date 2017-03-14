@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="movingObjectViewController">
+            <connections>
+                <outlet property="MonthButton" destination="utB-2B-ZQt" id="zVp-mE-9QX"/>
+                <outlet property="endLab" destination="oF6-ZY-bih" id="xuU-kS-sFH"/>
+                <outlet property="mubiaoLab" destination="SGw-4S-p5b" id="mf8-Sk-F9M"/>
+                <outlet property="slider" destination="QNB-Oh-0BU" id="0HV-tP-ti9"/>
+                <outlet property="startLab" destination="CqC-jE-znm" id="6nF-gA-nye"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="weekButton" destination="vcd-p1-THU" id="FeY-Mw-yBr"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="qMk-br-X2d">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017.2.2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CqC-jE-znm">
+                    <rect key="frame" x="20" y="384.5" width="55.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.7587890625" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utB-2B-ZQt">
+                    <rect key="frame" x="235" y="497" width="100" height="100"/>
+                    <color key="backgroundColor" red="0.11372549019607843" green="0.37254901960784315" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="clickedmonth:" destination="-1" eventType="touchUpInside" id="bkE-Hi-MRQ"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="近一月.png" translatesAutoresizingMaskIntoConstraints="NO" id="LT3-9X-dYj">
+                    <rect key="frame" x="260" y="512" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="1vD-pk-NBK"/>
+                        <constraint firstAttribute="width" secondItem="LT3-9X-dYj" secondAttribute="height" multiplier="1:1" id="cEP-Pw-XFS"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="练习一月" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbe-Fm-i38">
+                    <rect key="frame" x="258" y="562" width="54" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcd-p1-THU">
+                    <rect key="frame" x="40" y="497" width="100" height="100"/>
+                    <color key="backgroundColor" red="0.0" green="0.66666666666666663" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="vcd-p1-THU" secondAttribute="height" multiplier="1:1" id="CUN-Rw-rvW"/>
+                        <constraint firstAttribute="width" constant="100" id="iwU-ww-qCX"/>
+                    </constraints>
+                    <connections>
+                        <action selector="clickweek:" destination="-1" eventType="touchUpInside" id="xtP-x8-OgY"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="近一周.png" translatesAutoresizingMaskIntoConstraints="NO" id="3eq-fl-I2R">
+                    <rect key="frame" x="65" y="512" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="xMo-lW-Bkj"/>
+                        <constraint firstAttribute="width" secondItem="3eq-fl-I2R" secondAttribute="height" multiplier="1:1" id="ySK-Vb-YVx"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="练习一周" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfI-Bj-Lzr">
+                    <rect key="frame" x="63" y="562" width="54" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="QNB-Oh-0BU" customClass="ASValueTrackingSlider">
+                    <rect key="frame" x="18" y="318.5" width="339" height="31"/>
+                </slider>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="启始时间" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3j-ZJ-TRN">
+                    <rect key="frame" x="20" y="356" width="45" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" red="0.0" green="0.7587890625" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="结束时间" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2dp-9N-TQu">
+                    <rect key="frame" x="310" y="356.5" width="45" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的目标：100km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SGw-4S-p5b">
+                    <rect key="frame" x="88" y="100" width="200.5" height="29"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017.2.2" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oF6-ZY-bih">
+                    <rect key="frame" x="299.5" y="384" width="55.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="rfI-Bj-Lzr" firstAttribute="centerX" secondItem="3eq-fl-I2R" secondAttribute="centerX" id="2G4-kz-5dU"/>
+                <constraint firstItem="3eq-fl-I2R" firstAttribute="centerX" secondItem="vcd-p1-THU" secondAttribute="centerX" id="3X2-Bi-dib"/>
+                <constraint firstItem="oF6-ZY-bih" firstAttribute="centerY" secondItem="CqC-jE-znm" secondAttribute="centerY" id="7n4-sX-07S"/>
+                <constraint firstItem="utB-2B-ZQt" firstAttribute="centerY" secondItem="vcd-p1-THU" secondAttribute="centerY" id="G32-8m-Dr8"/>
+                <constraint firstItem="CqC-jE-znm" firstAttribute="top" secondItem="d3j-ZJ-TRN" secondAttribute="bottom" constant="15" id="GL8-Yb-t3w"/>
+                <constraint firstItem="utB-2B-ZQt" firstAttribute="height" secondItem="vcd-p1-THU" secondAttribute="height" id="KzC-Yh-hww"/>
+                <constraint firstAttribute="trailing" secondItem="qMk-br-X2d" secondAttribute="trailing" id="PrQ-gT-j74"/>
+                <constraint firstItem="2dp-9N-TQu" firstAttribute="centerY" secondItem="d3j-ZJ-TRN" secondAttribute="centerY" id="Pwn-eR-tAe"/>
+                <constraint firstItem="utB-2B-ZQt" firstAttribute="width" secondItem="vcd-p1-THU" secondAttribute="width" id="Qae-Ak-WcX"/>
+                <constraint firstItem="SGw-4S-p5b" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ygo-pN-gzN"/>
+                <constraint firstAttribute="bottom" secondItem="qMk-br-X2d" secondAttribute="bottom" id="Zg6-r0-y2Q"/>
+                <constraint firstItem="LT3-9X-dYj" firstAttribute="centerX" secondItem="utB-2B-ZQt" secondAttribute="centerX" id="aHl-nh-E5h"/>
+                <constraint firstItem="oF6-ZY-bih" firstAttribute="trailing" secondItem="2dp-9N-TQu" secondAttribute="trailing" id="aSG-Jv-pES"/>
+                <constraint firstItem="QNB-Oh-0BU" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="bsc-Be-eWC"/>
+                <constraint firstItem="SGw-4S-p5b" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="dSY-dy-8JB"/>
+                <constraint firstItem="rfI-Bj-Lzr" firstAttribute="top" secondItem="3eq-fl-I2R" secondAttribute="bottom" id="dTT-BY-mrB"/>
+                <constraint firstItem="qMk-br-X2d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="g1O-0C-s3t"/>
+                <constraint firstItem="LT3-9X-dYj" firstAttribute="centerY" secondItem="3eq-fl-I2R" secondAttribute="centerY" id="gqY-ks-eUG"/>
+                <constraint firstItem="3eq-fl-I2R" firstAttribute="centerY" secondItem="vcd-p1-THU" secondAttribute="centerY" constant="-10" id="iCI-gT-tnl"/>
+                <constraint firstItem="2dp-9N-TQu" firstAttribute="trailing" secondItem="QNB-Oh-0BU" secondAttribute="trailing" id="jpD-kr-OFZ"/>
+                <constraint firstAttribute="trailing" secondItem="QNB-Oh-0BU" secondAttribute="trailing" constant="20" id="jyj-Bb-8yC"/>
+                <constraint firstItem="vcd-p1-THU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="kms-ri-EIH"/>
+                <constraint firstItem="CqC-jE-znm" firstAttribute="leading" secondItem="d3j-ZJ-TRN" secondAttribute="leading" id="lam-qH-xTg"/>
+                <constraint firstItem="d3j-ZJ-TRN" firstAttribute="top" secondItem="QNB-Oh-0BU" secondAttribute="bottom" constant="7.5" id="lyc-Bn-KkE"/>
+                <constraint firstItem="QNB-Oh-0BU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="nM6-xZ-3tR"/>
+                <constraint firstAttribute="trailing" secondItem="utB-2B-ZQt" secondAttribute="trailing" constant="40" id="pC9-jJ-XOx"/>
+                <constraint firstItem="tbe-Fm-i38" firstAttribute="centerY" secondItem="rfI-Bj-Lzr" secondAttribute="centerY" id="pl8-5g-def"/>
+                <constraint firstItem="d3j-ZJ-TRN" firstAttribute="leading" secondItem="QNB-Oh-0BU" secondAttribute="leading" id="t3X-Yk-rkq"/>
+                <constraint firstItem="LT3-9X-dYj" firstAttribute="width" secondItem="LT3-9X-dYj" secondAttribute="height" multiplier="1:1" id="ve6-NB-awZ"/>
+                <constraint firstItem="tbe-Fm-i38" firstAttribute="centerX" secondItem="LT3-9X-dYj" secondAttribute="centerX" id="x4M-8R-8lL"/>
+                <constraint firstAttribute="bottom" secondItem="vcd-p1-THU" secondAttribute="bottom" constant="70" id="yFM-Hs-1ok"/>
+                <constraint firstItem="qMk-br-X2d" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ygg-hd-vcz"/>
+            </constraints>
+            <point key="canvasLocation" x="-136" y="-87"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="bg.png" width="782" height="1258"/>
+        <image name="近一周.png" width="100" height="100"/>
+        <image name="近一月.png" width="100" height="100"/>
+    </resources>
+</document>
