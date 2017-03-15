@@ -119,6 +119,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
  
+    UIColor *color = [UIColor lightGrayColor];
+      _PhoneNumTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入手机号" attributes:@{NSForegroundColorAttributeName: color}];
+      _PasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入手机号" attributes:@{NSForegroundColorAttributeName: color}];
     self.navigationItem.title = @"登 录";
     
     [self addTapRecognizerOfShareView];

@@ -51,7 +51,9 @@
 //http://localhost:8080/userbeancontrol/registuserbeaninfo?userphone=123456789&userpass=555
 
 - (void)request_ResignWithPhoneNumber:(NSString *)phone Psw:(NSString *)psw andBlock:(void (^)(id data, NSError *error))block {
-    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/registuserbeaninfo?" withParams:@{@"userphone" : phone, @"userpass" :psw} withMethodType:Get andBlock:^(id data, NSError *error) {
+    
+    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/registuserbeaninfo?" withParams:@{@"userphone" : phone, @"userpass" :psw, @"identified" : MAINUUID} withMethodType:Get andBlock:^(id data, NSError *error) {
+        
         NSDictionary *obj = [[data objectForKey:@"data"] objectForKey:@"user"];
         if (obj) {
             block(obj, nil);

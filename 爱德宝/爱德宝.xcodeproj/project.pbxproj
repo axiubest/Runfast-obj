@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041658301E78C572006F621D /* 里程.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416582D1E78C572006F621D /* 里程.png */; };
+		041658311E78C572006F621D /* 能耗.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416582E1E78C572006F621D /* 能耗.png */; };
+		041658321E78C572006F621D /* 时间.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416582F1E78C572006F621D /* 时间.png */; };
+		041658341E78C57F006F621D /* runresult_bottomImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 041658331E78C57F006F621D /* runresult_bottomImage.png */; };
+		041658381E78C592006F621D /* RunResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041658361E78C592006F621D /* RunResultViewController.m */; };
+		041658391E78C592006F621D /* RunResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041658371E78C592006F621D /* RunResultViewController.xib */; };
 		83ABA0781E6E56FE00F9B529 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83ABA0771E6E56FE00F9B529 /* main.m */; };
 		83ABA07B1E6E56FE00F9B529 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83ABA07A1E6E56FE00F9B529 /* AppDelegate.m */; };
 		83ABA0831E6E56FE00F9B529 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83ABA0821E6E56FE00F9B529 /* Assets.xcassets */; };
@@ -151,6 +157,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0416582D1E78C572006F621D /* 里程.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "里程.png"; sourceTree = "<group>"; };
+		0416582E1E78C572006F621D /* 能耗.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能耗.png"; sourceTree = "<group>"; };
+		0416582F1E78C572006F621D /* 时间.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "时间.png"; sourceTree = "<group>"; };
+		041658331E78C57F006F621D /* runresult_bottomImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runresult_bottomImage.png; sourceTree = "<group>"; };
+		041658351E78C592006F621D /* RunResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunResultViewController.h; sourceTree = "<group>"; };
+		041658361E78C592006F621D /* RunResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunResultViewController.m; sourceTree = "<group>"; };
+		041658371E78C592006F621D /* RunResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RunResultViewController.xib; sourceTree = "<group>"; };
 		83ABA0731E6E56FE00F9B529 /* 爱德宝.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "爱德宝.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		83ABA0771E6E56FE00F9B529 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		83ABA0791E6E56FE00F9B529 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -489,6 +502,9 @@
 			children = (
 				83ABA0A41E7031F100F9B529 /* MainPageViewController.h */,
 				83ABA0A51E7031F100F9B529 /* MainPageViewController.m */,
+				041658351E78C592006F621D /* RunResultViewController.h */,
+				041658361E78C592006F621D /* RunResultViewController.m */,
+				041658371E78C592006F621D /* RunResultViewController.xib */,
 				83B12E091E730859009EF55B /* XIU_GetVerificationCodeVC.h */,
 				83B12E0A1E730859009EF55B /* XIU_GetVerificationCodeVC.m */,
 				83B12DFD1E730453009EF55B /* XIU_ResignPhoneNumberVC.h */,
@@ -857,6 +873,7 @@
 		83B12DA81E717115009EF55B /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				041658331E78C57F006F621D /* runresult_bottomImage.png */,
 				83B12E6F1E7599A5009EF55B /* 180 - iPhone 6 Plus.png */,
 				83B12E6D1E759701009EF55B /* 头像.png */,
 				83B12DE01E72DD79009EF55B /* 圆点.png */,
@@ -867,6 +884,9 @@
 				83B12DBC1E719D06009EF55B /* 近一周.png */,
 				83B12DA91E717126009EF55B /* 箭头 (1).png */,
 				83B12DAA1E717126009EF55B /* 箭头.png */,
+				0416582D1E78C572006F621D /* 里程.png */,
+				0416582E1E78C572006F621D /* 能耗.png */,
+				0416582F1E78C572006F621D /* 时间.png */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -1005,16 +1025,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B12DE11E72DD79009EF55B /* 圆点.png in Resources */,
+				041658391E78C592006F621D /* RunResultViewController.xib in Resources */,
 				83B12DFC1E73042B009EF55B /* XIU_LoginViewController.xib in Resources */,
 				83B12E6C1E758469009EF55B /* QMS_QMSRunViewController.xib in Resources */,
+				041658321E78C572006F621D /* 时间.png in Resources */,
 				83B12DBE1E719D06009EF55B /* 近一周.png in Resources */,
 				83B12E701E7599A5009EF55B /* 180 - iPhone 6 Plus.png in Resources */,
 				83B12E561E7436FE009EF55B /* BLEViewController.xib in Resources */,
 				83ABA0861E6E56FE00F9B529 /* LaunchScreen.storyboard in Resources */,
 				83B12DBD1E719D06009EF55B /* 近一月.png in Resources */,
 				83B12DF21E72FF06009EF55B /* SliderTableViewCell.xib in Resources */,
+				041658311E78C572006F621D /* 能耗.png in Resources */,
 				83B12E6E1E759701009EF55B /* 头像.png in Resources */,
+				041658301E78C572006F621D /* 里程.png in Resources */,
 				83B12DED1E72FDCE009EF55B /* MoreViewController.xib in Resources */,
+				041658341E78C57F006F621D /* runresult_bottomImage.png in Resources */,
 				83ABA0831E6E56FE00F9B529 /* Assets.xcassets in Resources */,
 				83B12DF71E7302F5009EF55B /* AboutUsViewController.xib in Resources */,
 				83B12DCF1E71AA76009EF55B /* WordGradeCell.xib in Resources */,
@@ -1146,6 +1171,7 @@
 				83ABA0A31E70161000F9B529 /* LeftSlideViewController.m in Sources */,
 				83B12DF11E72FF06009EF55B /* SliderTableViewCell.m in Sources */,
 				83B12E111E7308AF009EF55B /* NSDictionary+Common.m in Sources */,
+				041658381E78C592006F621D /* RunResultViewController.m in Sources */,
 				83B12E081E7306DC009EF55B /* XIU_User.m in Sources */,
 				83B12E9A1E76F5D6009EF55B /* HistorygradeModel.m in Sources */,
 				83B12E281E7308F5009EF55B /* ActionSheetLocalePicker.m in Sources */,

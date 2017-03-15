@@ -59,41 +59,13 @@ static NSInteger jieshou;
     return self;
 }
 
-- (IBAction)chickedBackBtn:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = self.sensor.activePeripheral.name;
     self.sensor.delegate = self;
-    //[self.sensor notify:self.sensor.activePeripheral on:YES];
-//    CFStringRef s = CFUUIDCreateString(NULL, sensor.activePeripheral.UUID);
-//    textFromAdruino.text = (__bridge NSString*)s;
-    
-    //self.textFromAdruino.lineBreakMode = UILineBreakModeWordWrap;
-    //self.textFromAdruino.numberOfLines = 0;
-    tvRecv.layer.borderWidth = 1;
-    tvRecv.layer.borderColor = [[UIColor grayColor] CGColor];
-    tvRecv.layer.cornerRadius = 8;
-    tvRecv.layer.masksToBounds = YES;
-    
-    textFromAdruino.layer.borderWidth = 1;
-    textFromAdruino.layer.borderColor = [[UIColor grayColor] CGColor];
-    textFromAdruino.layer.cornerRadius = 8;
-    textFromAdruino.layer.masksToBounds = YES;
-    
-    lbDevice.layer.borderWidth = 1;
-    lbDevice.layer.borderColor = [[UIColor grayColor] CGColor];
-    lbDevice.layer.cornerRadius = 8;
-    lbDevice.layer.masksToBounds = YES;
-    
-    MsgToArduino.delegate = self;
-    MsgToArduino.layer.borderColor = [[UIColor blackColor] CGColor];
-    MsgToArduino.returnKeyType = UIReturnKeyDone;
+
 }
 
 
@@ -118,8 +90,7 @@ static NSInteger jieshou;
     
     //数据长度
     jieshou += [data length];
-    NSString * charariste = [NSString stringWithFormat:@"TX: %ld , RX: %ld",fasong,jieshou];
-    _count.text = charariste;
+
     NSString *value = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 
     tvRecv.text= [tvRecv.text stringByAppendingString:value];
@@ -157,10 +128,6 @@ static NSInteger jieshou;
     
     NSData *data = [MsgToArduino.text dataUsingEncoding:[NSString defaultCStringEncoding]];
     
-//   NSString *str = [NSString XIU_BLEStringAppendingHaracteristics:MsgToArduino.text WithFunc:@"p"];
-    
-//    NSData *data = [str dataUsingEncoding:[NSString defaultCStringEncoding]];
-    
     [sensor write:sensor.activePeripheral data:data];
     
     fasong += [data length];
@@ -168,52 +135,11 @@ static NSInteger jieshou;
     _count.text = charariste;
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    CGRect frame = textField.frame;
-    int offset = frame.origin.y + 32 - (self.view.frame.size.height - 216.0);
-    NSTimeInterval anm = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:anm];
-    if(offset > 0)
-    {
-        self.view.frame = CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
-    }
-    [UIView commitAnimations];
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
-    self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-}
-
--(void)setConnect
-{
-//    tvRecv.text = @"OK+CONN";
-}
-
--(void)setDisconnect
-{
-    
-//    tvRecv.text= [tvRecv.text stringByAppendingString:@"OK+LOST"];
-    
-}
-
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 
-}
-
-- (IBAction)TrackingSwitch:(id)sender {
-    
 }
 
 @end

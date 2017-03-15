@@ -15,7 +15,7 @@
 
 
 #define user_ranking @"user_ranking"
-
+#define MAINUUID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 
 #define sportDay @"sportDay"
 #define sportDis @"sportDis"

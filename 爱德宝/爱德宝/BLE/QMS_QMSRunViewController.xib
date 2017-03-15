@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -14,7 +14,6 @@
             <connections>
                 <outlet property="QuickBtn" destination="sSp-zo-U1o" id="DYT-D8-Kvy"/>
                 <outlet property="SearchBtnLab" destination="eqD-FA-TqW" id="bvx-Jn-uSd"/>
-                <outlet property="WaterView" destination="938-JG-cHN" id="lJH-iG-RlX"/>
                 <outlet property="averageSpeedLab" destination="Jut-nB-4su" id="0zH-eA-rSa"/>
                 <outlet property="blueToothImageView" destination="jFA-QA-7bG" id="89t-xb-zWG"/>
                 <outlet property="calorieLab" destination="VaX-YR-cFF" id="4a2-jo-WhR"/>
@@ -76,7 +75,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2d-35-D5s">
-                            <rect key="frame" x="325" y="32.5" width="31" height="30"/>
+                            <rect key="frame" x="325" y="33" width="31" height="30"/>
                             <state key="normal" title="帮助">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
@@ -415,7 +414,7 @@
                         <constraint firstItem="55I-WU-501" firstAttribute="height" secondItem="IPj-3e-MIO" secondAttribute="height" id="ucc-FU-j7N"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="938-JG-cHN" userLabel="water View" customClass="XIU_RippleView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="938-JG-cHN" userLabel="water View">
                     <rect key="frame" x="0.0" y="617" width="375" height="100"/>
                     <color key="backgroundColor" red="0.23921568627450979" green="0.23921568627450979" blue="0.23921568627450979" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -557,7 +556,7 @@
                 <constraint firstItem="gtw-aO-ua5" firstAttribute="top" secondItem="NzH-xb-B39" secondAttribute="bottom" constant="20" id="rpB-dY-nIc"/>
                 <constraint firstItem="55I-WU-501" firstAttribute="centerX" secondItem="Wat-UL-Sge" secondAttribute="centerX" id="xhj-tX-GfT"/>
             </constraints>
-            <point key="canvasLocation" x="386" y="-36"/>
+            <point key="canvasLocation" x="74" y="1"/>
         </view>
     </objects>
     <resources>
@@ -566,7 +565,7 @@
         <image name="下调" width="166" height="148"/>
         <image name="公里" width="72" height="72"/>
         <image name="分割线" width="1132" height="2"/>
-        <image name="卡路里" width="58" height="72"/>
+        <image name="卡路里" width="400" height="400"/>
         <image name="左箭头" width="32" height="32"/>
         <image name="心率" width="84" height="72"/>
         <image name="时间2" width="72" height="72"/>

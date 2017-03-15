@@ -77,6 +77,7 @@
 
     PhoneNumField.clearButtonMode = 1;
     PhoneNumField.font = [UIFont systemFontOfSize:15];
+    PhoneNumField.textColor = [UIColor whiteColor];
     [phoneView addSubview:PhoneNumField];
     self.PhoneNumField  = PhoneNumField;
     
@@ -93,7 +94,8 @@
     
     verificationField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入验证码" attributes:@{NSForegroundColorAttributeName: color}];
     verificationField.font = [UIFont systemFontOfSize:15];
-
+    verificationField.textColor = [UIColor whiteColor];
+    [verificationField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     verificationField.clearButtonMode = 1;
     [SV addSubview:verificationField];
     _verificationField = verificationField;
@@ -198,12 +200,12 @@
 
 
 -(void)textFieldDidChange :(UITextField *)theTextField{
-    if (theTextField.text.length != 0) {
+    if (_PhoneNumField.text.length != 0 && _verificationField.text.length != 0) {
         [self.nextButton setBackgroundColor:[UIColor blueColor]];
         self.nextButton.enabled = YES;
         [self.nextButton setTintColor:[UIColor whiteColor]];
     }else {
-        [self.nextButton setBackgroundColor:[UIColor colorWithHexString:@"#EEEEEE"]];
+
         [self.nextButton setTintColor:[UIColor grayColor]];
         self.nextButton.enabled = NO;
 

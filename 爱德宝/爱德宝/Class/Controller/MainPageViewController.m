@@ -5,9 +5,6 @@
 //  Created by huangzhenyu on 15/6/18.
 //  Copyright (c) 2015年 eamon. All rights reserved.
 //
-
-#import <CoreBluetooth/CoreBluetooth.h>
-
 #import "MainPageViewController.h"
 #import "AppDelegate.h"
 #import "HistoryViewController.h"
@@ -22,12 +19,12 @@
 #define arc_size KWIDTH
 #define progressWidth 15
 
-@interface MainPageViewController ()<BTSmartSensorDelegate,CBPeripheralManagerDelegate>
+@interface MainPageViewController ()
 {
 }
 @property (nonatomic, weak)CLDashboardProgressView *disProgressView;
 @property (nonatomic, weak)CLDashboardProgressView *dayProgressView;
-@property (strong, nonatomic) SerialGATT *sensor;
+
 @property (nonatomic, retain) NSMutableSet *peripheralViewControllerSet;
 @property (nonatomic,strong) CBPeripheralManager * centralManager;
 
@@ -35,26 +32,17 @@
 
 
 @implementation MainPageViewController
-@synthesize sensor;
-@synthesize peripheralViewControllerSet;
+
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"主界面";
-    
-    sensor = [[SerialGATT alloc] init];
-    [sensor setup];
-    sensor.delegate = self;
 
-    peripheralViewControllerSet = [[NSMutableSet alloc] init];
-    
-    self.centralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:dispatch_get_global_queue(0, 0)];
-
-    
     UIImageView *image = [[UIImageView alloc] initWithFrame:FULLRECT];
     image.image = [UIImage imageNamed:BackImageName];
     [self.view addSubview:image];
+    [self setBackImageView:self.view];
 
     [self createNavgationButtonWithImageNmae:@"我的" title:nil target:self action:@selector(openOrCloseLeftList) type:UINavigationItem_Type_LeftItem];
     
@@ -166,28 +154,12 @@
 
 - (void)clickedBLE {
     
-    [self setUpBlueTooth];
     
-    BLEListTableViewController *v = [[BLEListTableViewController alloc] init];
+    QMS_QMSRunViewController *v = [[QMS_QMSRunViewController alloc] init];
 
     [self.navigationController pushViewController:v animated:YES];
 }
 
-- (void)setUpBlueTooth {
-    if ([sensor activePeripheral]) {
-        [sensor.manager cancelPeripheralConnection:sensor.activePeripheral];
-        sensor.activePeripheral = nil;
-    }if ([self.peripheralViewControllerSet count]) {
-        sensor.peripherals = nil;
-        [peripheralViewControllerSet removeAllObjects];
-    }
-    
-
-    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(scanTimer:) userInfo:nil repeats:NO];
-    
-//    [sensor findBLKSoftPeripherals:5];
-    
-}
 
 - (void)createUI {
     UIButton *quickBt = [[UIButton alloc] init];
@@ -265,7 +237,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear");
+
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
 }
@@ -287,18 +259,6 @@
         default:
             break;
     }
-}
-
--(void) peripheralFound:(CBPeripheral *)peripheral
-{
-    if (!peripheral.name) {
-        return;
-    }
-    
-    BLEDeviceViewController *controller = [[BLEDeviceViewController alloc] init];
-    controller.peripheral = peripheral;
-    controller.sensor = sensor;
-    [peripheralViewControllerSet addObject:controller];
 }
 
 
