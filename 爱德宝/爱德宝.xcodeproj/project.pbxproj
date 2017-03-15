@@ -152,6 +152,11 @@
 		83B12E941E76E660009EF55B /* NSDate+convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12E931E76E660009EF55B /* NSDate+convenience.m */; };
 		83B12E971E76E6B4009EF55B /* UITableView+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12E961E76E6B4009EF55B /* UITableView+Common.m */; };
 		83B12E9A1E76F5D6009EF55B /* HistorygradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12E991E76F5D6009EF55B /* HistorygradeModel.m */; };
+		83B12ED01E799933009EF55B /* BackProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12EC91E799933009EF55B /* BackProgressView.m */; };
+		83B12ED11E799933009EF55B /* GraProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12ECB1E799933009EF55B /* GraProgressView.m */; };
+		83B12ED21E799933009EF55B /* ShapeProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12ECD1E799933009EF55B /* ShapeProgressView.m */; };
+		83B12ED31E799933009EF55B /* IndicatorProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12ECF1E799933009EF55B /* IndicatorProgressView.m */; };
+		83B12ED61E799953009EF55B /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12ED51E799953009EF55B /* Constant.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -422,6 +427,16 @@
 		83B12E961E76E6B4009EF55B /* UITableView+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Common.m"; sourceTree = "<group>"; };
 		83B12E981E76F5D6009EF55B /* HistorygradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistorygradeModel.h; sourceTree = "<group>"; };
 		83B12E991E76F5D6009EF55B /* HistorygradeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistorygradeModel.m; sourceTree = "<group>"; };
+		83B12EC81E799933009EF55B /* BackProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackProgressView.h; sourceTree = "<group>"; };
+		83B12EC91E799933009EF55B /* BackProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackProgressView.m; sourceTree = "<group>"; };
+		83B12ECA1E799933009EF55B /* GraProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraProgressView.h; sourceTree = "<group>"; };
+		83B12ECB1E799933009EF55B /* GraProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraProgressView.m; sourceTree = "<group>"; };
+		83B12ECC1E799933009EF55B /* ShapeProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeProgressView.h; sourceTree = "<group>"; };
+		83B12ECD1E799933009EF55B /* ShapeProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeProgressView.m; sourceTree = "<group>"; };
+		83B12ECE1E799933009EF55B /* IndicatorProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorProgressView.h; sourceTree = "<group>"; };
+		83B12ECF1E799933009EF55B /* IndicatorProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorProgressView.m; sourceTree = "<group>"; };
+		83B12ED41E799953009EF55B /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		83B12ED51E799953009EF55B /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -935,6 +950,7 @@
 		83B12E511E743246009EF55B /* BLE */ = {
 			isa = PBXGroup;
 			children = (
+				83B12EC71E79991E009EF55B /* progressView */,
 				83B12E681E758469009EF55B /* QMS_QMSRunViewController.h */,
 				83B12E691E758469009EF55B /* QMS_QMSRunViewController.m */,
 				83B12E6A1E758469009EF55B /* QMS_QMSRunViewController.xib */,
@@ -945,6 +961,8 @@
 				83B12E581E7451F7009EF55B /* SerialGATT.m */,
 				83B12E651E74FE14009EF55B /* BLEListTableViewController.h */,
 				83B12E661E74FE14009EF55B /* BLEListTableViewController.m */,
+				83B12ED41E799953009EF55B /* Constant.h */,
+				83B12ED51E799953009EF55B /* Constant.m */,
 			);
 			path = BLE;
 			sourceTree = "<group>";
@@ -955,6 +973,21 @@
 				83B12E601E7452CC009EF55B /* CoreBluetooth.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		83B12EC71E79991E009EF55B /* progressView */ = {
+			isa = PBXGroup;
+			children = (
+				83B12EC81E799933009EF55B /* BackProgressView.h */,
+				83B12EC91E799933009EF55B /* BackProgressView.m */,
+				83B12ECA1E799933009EF55B /* GraProgressView.h */,
+				83B12ECB1E799933009EF55B /* GraProgressView.m */,
+				83B12ECC1E799933009EF55B /* ShapeProgressView.h */,
+				83B12ECD1E799933009EF55B /* ShapeProgressView.m */,
+				83B12ECE1E799933009EF55B /* IndicatorProgressView.h */,
+				83B12ECF1E799933009EF55B /* IndicatorProgressView.m */,
+			);
+			name = progressView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1070,6 +1103,7 @@
 				83B12DD81E72D729009EF55B /* HistoryHeaderView.m in Sources */,
 				83B12DE71E72EFC2009EF55B /* ASValuePopUpView.m in Sources */,
 				83B12DC21E71A155009EF55B /* WordGradeViewController.m in Sources */,
+				83B12ED61E799953009EF55B /* Constant.m in Sources */,
 				83B12E941E76E660009EF55B /* NSDate+convenience.m in Sources */,
 				83ABA1621E70535600F9B529 /* ModeSelectionVC.m in Sources */,
 				83B12DEC1E72FDCE009EF55B /* MoreViewController.m in Sources */,
@@ -1085,10 +1119,12 @@
 				83ABA09B1E70144600F9B529 /* LeftSortsViewController.m in Sources */,
 				83ABA1241E7039E500F9B529 /* AFNetworkReachabilityManager.m in Sources */,
 				83ABA13B1E7039E500F9B529 /* NSObject+MJClass.m in Sources */,
+				83B12ED31E799933009EF55B /* IndicatorProgressView.m in Sources */,
 				83ABA1281E7039E500F9B529 /* AFURLSessionManager.m in Sources */,
 				83ABA1261E7039E500F9B529 /* AFURLRequestSerialization.m in Sources */,
 				83ABA1471E7039E500F9B529 /* SDWebImageManager.m in Sources */,
 				83ABA14E1E7039E500F9B529 /* UIImageView+WebCache.m in Sources */,
+				83B12ED01E799933009EF55B /* BackProgressView.m in Sources */,
 				83ABA1341E7039E500F9B529 /* ViewController+MASAdditions.m in Sources */,
 				83B12E4F1E7427FB009EF55B /* CLDashboardProgressLayer.m in Sources */,
 				83B12DB31E7189B9009EF55B /* movingObjectViewController.m in Sources */,
@@ -1103,6 +1139,7 @@
 				83ABA1401E7039E500F9B529 /* MKAnnotationView+WebCache.m in Sources */,
 				83B12E6B1E758469009EF55B /* QMS_QMSRunViewController.m in Sources */,
 				83B12DF61E7302F5009EF55B /* AboutUsViewController.m in Sources */,
+				83B12ED11E799933009EF55B /* GraProgressView.m in Sources */,
 				83B12E061E7306DC009EF55B /* XIU_Login.m in Sources */,
 				83ABA1411E7039E500F9B529 /* NSData+ImageContentType.m in Sources */,
 				83ABA1391E7039E500F9B529 /* MJPropertyKey.m in Sources */,
@@ -1166,6 +1203,7 @@
 				83B12E9A1E76F5D6009EF55B /* HistorygradeModel.m in Sources */,
 				83B12E281E7308F5009EF55B /* ActionSheetLocalePicker.m in Sources */,
 				83ABA1321E7039E500F9B529 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				83B12ED21E799933009EF55B /* ShapeProgressView.m in Sources */,
 				83B12E261E7308F5009EF55B /* ActionSheetDatePicker.m in Sources */,
 				83ABA1431E7039E500F9B529 /* SDWebImageCompat.m in Sources */,
 				83ABA1421E7039E500F9B529 /* SDImageCache.m in Sources */,
