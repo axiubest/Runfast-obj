@@ -9,7 +9,7 @@
 
 #import "QMS_QMSRunViewController.h"
 
-#import "BLEDeviceViewController.h"
+//#import "BLEDeviceViewController.h"
 #import "SerialGATT.h"
 
 
@@ -90,7 +90,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *slopeDownBtn;
 @property (weak, nonatomic) IBOutlet UIButton *speedDownBtn;
 @property (weak, nonatomic) IBOutlet UIButton *speedUpBtn;
-
+@property (nonatomic, strong) CBPeripheral *Peripheral;
 
 @property (nonatomic,strong) NSTimer *timer;
 
@@ -176,13 +176,12 @@
     
     self.centralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:dispatch_get_global_queue(0, 0)];
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
 
     
+    _mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(100, 100, KWIDTH - 100, 400) style:UITableViewStylePlain];
     _mainTableView.hidden = YES;
     _mainTableView.delegate = self;
     _mainTableView.dataSource = self;
-    
     [self.view addSubview:_mainTableView];
     _QuickBtn.hidden = YES;
     
@@ -239,32 +238,32 @@
     
 }
 
-- (void)chickedMainBtn:(UIButton *)Scan {
-
-    
-    
-    if ([sensor activePeripheral]) {
-
-        [sensor.manager cancelPeripheralConnection:sensor.activePeripheral];
-        sensor.activePeripheral = nil;
-        //            }
-    }
-    
-    if ([sensor peripherals]) {
-        
-        sensor.peripherals = nil;
-        [peripheralViewControllerArray removeAllObjects];
-        [_mainTableView reloadData];
-    }
-    
-    sensor.delegate = self;
-
-    _SearchBtnLab.text = @"正在搜索";
-    
-    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(scanTimer:) userInfo:nil repeats:NO];
-    
-    [sensor findBLKSoftPeripherals:5];
-}
+//- (void)chickedMainBtn:(UIButton *)Scan {
+//
+//    
+//    
+//    if ([sensor activePeripheral]) {
+//
+//        [sensor.manager cancelPeripheralConnection:sensor.activePeripheral];
+//        sensor.activePeripheral = nil;
+//        //            }
+//    }
+//    
+//    if ([sensor peripherals]) {
+//        
+//        sensor.peripherals = nil;
+//        [peripheralViewControllerArray removeAllObjects];
+//        [_mainTableView reloadData];
+//    }
+//    
+//    sensor.delegate = self;
+//
+//    _SearchBtnLab.text = @"正在搜索";
+//    
+//    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(scanTimer:) userInfo:nil repeats:NO];
+//    
+//    [sensor findBLKSoftPeripherals:5];
+//}
 
 
 #pragma mark--delegate 搜索到蓝牙设备回调方法
@@ -378,12 +377,7 @@
                     }
                     
                     self.timeLab.text = timeStr;
-                    
-                //发布通知到趣味跑
-                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                dic[@"plantRunDis"] = @([self.distanceLab.text floatValue]);
-                dic[@"takeTime"] = @([self dealTime:timeStr]);
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"plantRun" object:nil userInfo:dic];
+
                 }
             }
             
@@ -426,16 +420,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [sensor.manager stopScan];
-    NSUInteger row = [indexPath row];
+//    NSUInteger row = [indexPath row];
     
     [self AlertTableViewHidden];
     
-    BLEDeviceViewController *controller = [peripheralViewControllerArray objectAtIndex:row];
-    if (sensor.activePeripheral && sensor.activePeripheral != controller.peripheral) {
+//    BLEDeviceViewController *controller = [peripheralViewControllerArray objectAtIndex:row];
+    if (sensor.activePeripheral && sensor.activePeripheral != _Peripheral) {
         [sensor disconnect:sensor.activePeripheral];
     }
     
-    sensor.activePeripheral = controller.peripheral;
+    sensor.activePeripheral = _Peripheral;
     
     [sensor connect:sensor.activePeripheral];
     
@@ -455,10 +449,10 @@
     }
     
     // Configure the cell
-    NSUInteger row = [indexPath row];
-    BLEDeviceViewController *controller = [peripheralViewControllerArray objectAtIndex:row];
-    CBPeripheral *peripheral = [controller peripheral];
-    cell.textLabel.text = peripheral.name;
+//    NSUInteger row = [indexPath row];
+//    BLEDeviceViewController *controller = [peripheralViewControllerArray objectAtIndex:row];
+//    CBPeripheral *peripheral = [controller peripheral];
+    cell.textLabel.text = _Peripheral.name;
     
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     return cell;
@@ -471,8 +465,6 @@
     
     self.isConnect = YES;
 
-   self.blueToothImageView.image = [UIImage imageNamed:@"bluetooth_clect"];
-//    self.SearchBtnLab.text = [NSString stringWithFormat:@"结束"];
 }
 
 -(void)setDisconnect
@@ -481,7 +473,7 @@
     if ([self.myDelegate respondsToSelector:@selector(qmsRunViewControllerisStart:)]) {
         [self.myDelegate qmsRunViewControllerisStart:NO];
     }
-    self.blueToothImageView.image = [UIImage imageNamed:@"bluetooth_unclect"];
+
 }
 
 
@@ -503,10 +495,8 @@
         return;
     }
     
-    BLEDeviceViewController *controller = [[BLEDeviceViewController alloc] init];
-    controller.peripheral = peripheral;
-    controller.sensor = sensor;
-    [peripheralViewControllerArray addObject:controller];
+    _Peripheral = peripheral;
+    [peripheralViewControllerArray addObject:sensor];
     _mainTableView.hidden = NO;
     [_mainTableView reloadData];
 }
@@ -564,9 +554,7 @@
 
 
 }
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"plantRun" object:nil];
-}
+
 
 #pragma mark startbtn endbtn mainbtn hidden
 - (void)buttomButtonHidden:(BOOL)boolHidden {
@@ -577,11 +565,6 @@
 -(void)abNormalConnect{
     self.isConnect = NO;
     [self endBtnClick:nil];
-}
-
-#pragma mark help
-- (IBAction)clickedHelpButton:(id)sender {
-
 }
 
 @end

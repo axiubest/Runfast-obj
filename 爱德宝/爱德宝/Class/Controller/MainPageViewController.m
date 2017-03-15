@@ -13,32 +13,54 @@
 #import "BLEViewController.h"
 #import "BLEListTableViewController.h"
 #import "SerialGATT.h"
-#import "QMS_QMSRunViewController.h"
-#import "BLEDeviceViewController.h"
+
 #define vBackBarButtonItemName  @"backArrow.png"    //导航条返回默认图片名
 #define arc_size KWIDTH
 #define progressWidth 15
 
-@interface MainPageViewController ()
+@interface MainPageViewController ()<CBPeripheralManagerDelegate,BTSmartSensorDelegate, BLEListTableViewDelegate>
 {
+    CGFloat speedNum;
+    int slopeNum;
+    NSString *BLEStr;
+    
+    NSString *calories; //ca
+    
+    NSString *time;     //t
+    
+    NSString *distance; //dis
+    
+    NSString * heart;   //h
+    
+    NSString *slope;    //s
 }
+
+
 @property (nonatomic, weak)CLDashboardProgressView *disProgressView;
 @property (nonatomic, weak)CLDashboardProgressView *dayProgressView;
-
+// 是否连接成功
+@property (nonatomic, assign) BOOL isConnect;
 @property (nonatomic, retain) NSMutableSet *peripheralViewControllerSet;
 @property (nonatomic,strong) CBPeripheralManager * centralManager;
-
+@property (nonatomic, strong) CBPeripheral *Peripheral;
+@property (nonatomic,strong) NSTimer *timer;
+@property (strong, nonatomic) SerialGATT *sensor;
+@property (nonatomic, retain) NSMutableArray *peripheralViewControllerArray;
+@property (nonatomic, strong) NSString *tvRecv;
+@property (nonatomic, strong) NSString *speed;
 @end
 
 
 @implementation MainPageViewController
-
+@synthesize sensor;
+@synthesize peripheralViewControllerArray;
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"主界面";
-
+    _tvRecv = [NSString string];
+    _speed = [NSString string];
     UIImageView *image = [[UIImageView alloc] initWithFrame:FULLRECT];
     image.image = [UIImage imageNamed:BackImageName];
     [self.view addSubview:image];
@@ -51,8 +73,20 @@
     [self createUI];
     
     [self createProgressView];
+    
+    [self createBLE];
 }
 
+
+- (void)createBLE {
+    sensor = [[SerialGATT alloc] init];
+    [sensor setup];
+    sensor.delegate = self;
+    
+    peripheralViewControllerArray = [[NSMutableArray alloc] init];
+    
+    self.centralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:dispatch_get_global_queue(0, 0)];
+}
 
 #pragma mark draw
 
@@ -153,11 +187,15 @@
 
 
 - (void)clickedBLE {
-    
-    
-    QMS_QMSRunViewController *v = [[QMS_QMSRunViewController alloc] init];
+    if ([sensor activePeripheral]) {
+        [sensor.manager cancelPeripheralConnection:sensor.activePeripheral];
+        sensor.activePeripheral = nil;
+    }if ([self.peripheralViewControllerArray count]) {
+        sensor.peripherals = nil;
+        [peripheralViewControllerArray removeAllObjects];
+    }
+    [sensor findBLKSoftPeripherals:5];
 
-    [self.navigationController pushViewController:v animated:YES];
 }
 
 
@@ -249,7 +287,13 @@
     [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
 }
 
+#pragma mark--delegate 搜索到蓝牙设备回调方法
 
+#pragma mark select bluetooth method
+- (void)chickedAlertMetohd {
+    NSLog(@"ckicked btn of alert");
+    
+}
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral{
     
     switch (peripheral.state) {
@@ -262,11 +306,146 @@
 }
 
 
+-(void) peripheralFound:(CBPeripheral *)peripheral
+{
+    if (!peripheral.name) {
+        return;
+    }
+    
+    _Peripheral = peripheral;
+    [peripheralViewControllerArray addObject:sensor];
+//    _mainTableView.hidden = NO;
+//    [_mainTableView reloadData];
+    BLEListTableViewController *coller = [[BLEListTableViewController alloc] init];
+    coller.peripheralViewControllerArray = peripheralViewControllerArray;
+    coller.Peripheral = peripheral;
+    coller.MyDelegate = self;
+    [self pushViewControllerWithCcontroller: coller];
+    
+}
+
+
+-(void)setConnect
+{
+    
+    self.isConnect = YES;
+    
+}
+
+
+#pragma mark update data
+-(void) serialGATTCharValueUpdated:(NSString *)UUID value:(NSData *)data
+{
+    
+    NSString *value = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    
+    NSLog(@"value------%@----",value);
+    
+    
+    if ([_tvRecv containsString:@"FF"]) {
+        NSArray *subArr = [_tvRecv componentsSeparatedByString:@","];
+        NSLog(@"--%@---",subArr);
+        
+        for (NSString *str in subArr) {
+            if ([str containsString:@"st"]) continue;
+            if ([str containsString:@"mp"]) continue;
+            if ([str containsString:@"sf"]) continue;
+            if ([str containsString:@"ms"]) continue;
+            if ([str containsString:@"EE"])  continue;
+            if ([str containsString:@"ca"]) {
+//                self.calorieLab.text = [str substringFromIndex:2];
+            }
+            if ([str containsString:@"dis"]) {
+//                self.distanceLab.text = [str substringFromIndex:3];
+                continue;
+            }
+            if ([str containsString:@"h"]) {
+//                self.heartLab.text = [str substringFromIndex:1];
+                continue;
+            }
+            if ([str containsString:@"s"]) {
+//                self.slopeLab.text = [str substringFromIndex:1];
+//                NSLog(@"1111----%@--",self.speedlab.text);
+                slopeNum = [[str substringFromIndex:1] floatValue];
+            }
+            if ([str containsString:@"p"]) {
+//                self.speedlab.text = [str substringFromIndex:1];
+                speedNum = [[str substringFromIndex:1] floatValue];
+            }
+//            if ([str containsString:@"t"]) {
+//                NSString *timeStr = [str substringFromIndex:1];
+//                if (![timeStr isEqualToString:@"0.00"]) {
+//                    static dispatch_once_t onceToken;
+//                    dispatch_once(&onceToken, ^{
+//                        if ([self.myDelegate respondsToSelector:@selector(qmsRunViewControllerisStart:)]) {
+//                            [self.myDelegate qmsRunViewControllerisStart:YES];
+//                        }
+//                    });
+//                }
+//                
+//                self.timeLab.text = timeStr;
+//                
+//            }
+        }
+        
+        _tvRecv = @"";
+        
+    }else{
+        _tvRecv =  [_tvRecv stringByAppendingString:value];
+    }
+    
+}
+
+
+-(void)setDisconnect
+{
+//    self.isConnect = NO;
+//    if ([self.myDelegate respondsToSelector:@selector(qmsRunViewControllerisStart:)]) {
+//        [self.myDelegate qmsRunViewControllerisStart:NO];
+//    }
+    
+}
+
+
+//  蓝牙异常退出
+
+-(void)abNormalConnect{
+    self.isConnect = NO;
+//    [self endBtnClick:nil];
+}
+
+
+
+#pragma mark BLEListViewDelegate
+- (void)FindPeripheral {
+    [sensor.manager stopScan];
+    
+    if (sensor.activePeripheral && sensor.activePeripheral != _Peripheral) {
+        [sensor disconnect:sensor.activePeripheral];
+    }
+    
+    sensor.activePeripheral = _Peripheral;
+    
+    [sensor connect:sensor.activePeripheral];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 @end
-
 
 @implementation CreateButton
 

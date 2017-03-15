@@ -134,8 +134,6 @@
 		83B12E551E7436FE009EF55B /* BLEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12E531E7436FE009EF55B /* BLEViewController.m */; };
 		83B12E561E7436FE009EF55B /* BLEViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B12E541E7436FE009EF55B /* BLEViewController.xib */; };
 		83B12E591E7451F7009EF55B /* SerialGATT.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12E581E7451F7009EF55B /* SerialGATT.m */; };
-		83B12E5D1E745233009EF55B /* BLEDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12E5B1E745233009EF55B /* BLEDeviceViewController.m */; };
-		83B12E5E1E745233009EF55B /* BLEDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B12E5C1E745233009EF55B /* BLEDeviceViewController.xib */; };
 		83B12E611E7452CC009EF55B /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B12E601E7452CC009EF55B /* CoreBluetooth.framework */; };
 		83B12E671E74FE14009EF55B /* BLEListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12E661E74FE14009EF55B /* BLEListTableViewController.m */; };
 		83B12E6B1E758469009EF55B /* QMS_QMSRunViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12E691E758469009EF55B /* QMS_QMSRunViewController.m */; };
@@ -392,9 +390,6 @@
 		83B12E541E7436FE009EF55B /* BLEViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BLEViewController.xib; sourceTree = "<group>"; };
 		83B12E571E7451F7009EF55B /* SerialGATT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerialGATT.h; sourceTree = "<group>"; };
 		83B12E581E7451F7009EF55B /* SerialGATT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerialGATT.m; sourceTree = "<group>"; };
-		83B12E5A1E745233009EF55B /* BLEDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDeviceViewController.h; sourceTree = "<group>"; };
-		83B12E5B1E745233009EF55B /* BLEDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEDeviceViewController.m; sourceTree = "<group>"; };
-		83B12E5C1E745233009EF55B /* BLEDeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BLEDeviceViewController.xib; sourceTree = "<group>"; };
 		83B12E601E7452CC009EF55B /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		83B12E651E74FE14009EF55B /* BLEListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEListTableViewController.h; sourceTree = "<group>"; };
 		83B12E661E74FE14009EF55B /* BLEListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEListTableViewController.m; sourceTree = "<group>"; };
@@ -946,9 +941,6 @@
 				83B12E521E7436FE009EF55B /* BLEViewController.h */,
 				83B12E531E7436FE009EF55B /* BLEViewController.m */,
 				83B12E541E7436FE009EF55B /* BLEViewController.xib */,
-				83B12E5A1E745233009EF55B /* BLEDeviceViewController.h */,
-				83B12E5B1E745233009EF55B /* BLEDeviceViewController.m */,
-				83B12E5C1E745233009EF55B /* BLEDeviceViewController.xib */,
 				83B12E571E7451F7009EF55B /* SerialGATT.h */,
 				83B12E581E7451F7009EF55B /* SerialGATT.m */,
 				83B12E651E74FE14009EF55B /* BLEListTableViewController.h */,
@@ -1046,7 +1038,6 @@
 				83B12DCA1E71A4F2009EF55B /* 皇冠.png in Resources */,
 				83B12DAC1E717126009EF55B /* 箭头.png in Resources */,
 				83B12DD11E72D238009EF55B /* 皇冠other.png in Resources */,
-				83B12E5E1E745233009EF55B /* BLEDeviceViewController.xib in Resources */,
 				83B12DC81E71A33D009EF55B /* WordGradeHeaderView.xib in Resources */,
 				83B12DB41E7189B9009EF55B /* movingObjectViewController.xib in Resources */,
 				83B12DD51E72D611009EF55B /* touxiang.png in Resources */,
@@ -1094,7 +1085,6 @@
 				83ABA09B1E70144600F9B529 /* LeftSortsViewController.m in Sources */,
 				83ABA1241E7039E500F9B529 /* AFNetworkReachabilityManager.m in Sources */,
 				83ABA13B1E7039E500F9B529 /* NSObject+MJClass.m in Sources */,
-				83B12E5D1E745233009EF55B /* BLEDeviceViewController.m in Sources */,
 				83ABA1281E7039E500F9B529 /* AFURLSessionManager.m in Sources */,
 				83ABA1261E7039E500F9B529 /* AFURLRequestSerialization.m in Sources */,
 				83ABA1471E7039E500F9B529 /* SDWebImageManager.m in Sources */,

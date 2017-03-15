@@ -8,18 +8,17 @@
 
 #import "BLEListTableViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "BLEDeviceViewController.h"
 
-@interface BLEListTableViewController ()<UITableViewDelegate, UITableViewDataSource,BTSmartSensorDelegate,CBPeripheralManagerDelegate>
-@property (nonatomic,strong) CBPeripheralManager * centralManager;
+
+@interface BLEListTableViewController ()<UITableViewDelegate,UITableViewDataSource>
+
 
 
 @property (nonatomic, weak) UITableView *table;
 @end
 
 @implementation BLEListTableViewController
-@synthesize sensor;
-@synthesize peripheralViewControllerArray;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIImageView *i = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg"]];
@@ -34,32 +33,7 @@
     [self.view addSubview:table];
     
     
-    
-    
-    sensor = [[SerialGATT alloc] init];
-    [sensor setup];
-    sensor.delegate = self;
-    
-    peripheralViewControllerArray = [[NSMutableArray alloc] init];
-    
-    self.centralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:dispatch_get_global_queue(0, 0)];
-    
-    
-    if ([sensor activePeripheral]) {
-        
-        [sensor.manager cancelPeripheralConnection:sensor.activePeripheral];
-        sensor.activePeripheral = nil;
-    }
-    
-    if ([sensor peripherals]) {
-        
-        sensor.peripherals = nil;
-        [peripheralViewControllerArray removeAllObjects];
-        [table reloadData];
-    }
-    
-
-
+ 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,9 +43,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"----%ld", self.peripheralViewControllerArray.count);
-        return [self.peripheralViewControllerArray count];
-
+    return _peripheralViewControllerArray.count;
 }
 
 
@@ -83,41 +55,13 @@
     }
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
-    // Configure the cell
-    NSUInteger row = [indexPath row];
-    BLEDeviceViewController *controller = [peripheralViewControllerArray objectAtIndex:row];
-    CBPeripheral *peripheral = [controller peripheral];
-    cell.textLabel.text = peripheral.name;
-    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", _Peripheral.name];
 
     return cell;
 }
 
-
-- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral{
-    
-    switch (peripheral.state) {
-            //蓝牙开启且可用
-        case CBPeripheralManagerStatePoweredOn:
-            break;
-        default:
-            break;
-    }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [_MyDelegate FindPeripheral];
 }
-
--(void) peripheralFound:(CBPeripheral *)peripheral
-{
-    if (!peripheral.name) {
-        return;
-    }
-    
-    BLEDeviceViewController *controller = [[BLEDeviceViewController alloc] init];
-    controller.peripheral = peripheral;
-    controller.sensor = sensor;
-    [peripheralViewControllerArray addObject:controller];
-    _table.hidden = NO;
-    [_table reloadData];
-}
-
 
 @end

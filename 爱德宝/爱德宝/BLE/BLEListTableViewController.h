@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "SerialGATT.h"
 
+@protocol BLEListTableViewDelegate <NSObject>
+
+- (void)FindPeripheral;
+
+@end
+
 @interface BLEListTableViewController : UIViewController
 @property (nonatomic, retain) NSMutableArray *peripheralViewControllerArray;
 @property (strong, nonatomic) SerialGATT *sensor;
-
+@property (nonatomic, strong) CBPeripheral *Peripheral;
+@property (nonatomic, assign) id<BLEListTableViewDelegate> MyDelegate;
 @end

@@ -119,7 +119,6 @@
     printf("------------------------------------\r\n");
     printf("Peripheral Info :\r\n");
 //    printf("UUID : %s\r\n",CFStringGetCStringPtr(s, 0));
-    printf("RSSI : %d\r\n",[peripheral.RSSI intValue]);
     printf("Name : %s\r\n",[peripheral.name cStringUsingEncoding:NSStringEncodingConversionAllowLossy]);
 //    printf("isConnected : %d\r\n",peripheral.isConnected);
     printf("-------------------------------------\r\n");
