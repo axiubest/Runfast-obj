@@ -16,7 +16,15 @@
 @dynamic origin;
 @dynamic size;
 
+- (void)setHalfCornerRadius {
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = self.height / 2;
+}
 
+- (void)setCornerRadius:(CGFloat)radius {
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = radius;
+}
 - (void)doCircleFrame{
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = self.frame.size.width/2;

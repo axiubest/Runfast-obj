@@ -43,6 +43,7 @@ static dispatch_once_t onceToken;
                  withMethodType:(NetworkMethod)method
                        andBlock:(void (^)(id data, NSError *error))block{
     NSLog(@"%@, %@", aPath, params);
+    
     [self requestJsonDataWithPath:aPath withParams:params withMethodType:method autoShowError:YES andBlock:block];
 }
 

@@ -152,8 +152,9 @@
 
 - (void)save {
     [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%ld", (long)day] forKey:sportDay];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%lf", dis] forKey:sportDis];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%.0lf", dis] forKey:sportDis];
     [self pushViewControllerWithCcontroller:[[MainPageViewController alloc] init]];
+    
 }
 
 - (void)didReceiveMemoryWarning {

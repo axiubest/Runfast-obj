@@ -29,7 +29,7 @@
     user.allCir = [_allCir copy];
     user.allTime = [_allTime copy];
     user.userhobby = [_userhobby copy];
-    
+    user.userId = [_userId copy];
 
     return user;
 }

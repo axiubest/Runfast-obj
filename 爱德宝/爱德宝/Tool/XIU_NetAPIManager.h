@@ -22,4 +22,7 @@
 
 #pragma mark----History
 - (void)request_HistoryGradeBlock:(void (^)(id data, NSError *error))block;
+
+#pragma mark----Save
+- (void)request_SaveSportGradeWithKm:(NSString *)km Time:(NSString *)time KCar:(NSString *)Kcar Block:(void (^)(id data, NSError *error))block;
 @end

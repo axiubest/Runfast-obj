@@ -116,4 +116,19 @@
         
     }];
 }
+
+
+
+/**
+ http://localhost:8080/sporthistory/addsporthistory?userId=2&sportTime=2555&alldis=15.5&allCor=16.45
+ */
+- (void)request_SaveSportGradeWithKm:(NSString *)km Time:(NSString *)time KCar:(NSString *)Kcar Block:(void (^)(id data, NSError *error))block {
+    
+    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/sporthistory/addsporthistory?" withParams:@{@"userId":[NSNumber numberWithInt:[[[XIU_Login curLoginUser] userId] intValue]], @"sportTime" : [NSNumber numberWithFloat:[time floatValue]], @"alldis" :[NSNumber numberWithFloat:[time floatValue]], @"allCor" : [NSNumber numberWithFloat:[Kcar floatValue]]} withMethodType:Get andBlock:^(id data, NSError *error) {
+        NSLog(@"%@", data);
+        
+        
+    }];
+
+}
 @end

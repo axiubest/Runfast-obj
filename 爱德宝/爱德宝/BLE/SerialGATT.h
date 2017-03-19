@@ -31,8 +31,11 @@
 - (void) serialGATTCharValueUpdated: (NSString *)UUID value: (NSData *)data;
 - (void) setConnect;
 - (void) setDisconnect;
-
 - (void) abNormalConnect;
+
+@required
+- (void) CoreBluetoothNotCorrectlyInitialized;
+
 @end
 
 @interface SerialGATT : NSObject<CBCentralManagerDelegate, CBPeripheralDelegate> {

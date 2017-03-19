@@ -57,8 +57,25 @@ static XIU_User *curLoginUser;
         [defaults setObject:tmpDic forKey:kLoginUserDict];
 
         
-        curLoginUser = [XIU_User mj_objectWithKeyValues:loginData];
+//        curLoginUser = [XIU_User mj_objectWithKeyValues:loginData];
+        XIU_User *user = [[XIU_User alloc] init];
         
+        user.username = [loginData objectForKey:@"username"];
+         user.usersex = [loginData objectForKey:@"usersex"];
+         user.birth = [loginData objectForKey:@"birth"];
+         user.userImg = [loginData objectForKey:@"userImg"];
+         user.userhobby = [loginData objectForKey:@"userhobby"];
+         user.userphone = [loginData objectForKey:@"userphone"];
+         user.userpass = [loginData objectForKey:@"userpass"];
+         user.userfrom = [loginData objectForKey:@"userfrom"];
+         user.channelid = [loginData objectForKey:@"channelid"];
+         user.weight = [loginData objectForKey:@"weight"];
+         user.height = [loginData objectForKey:@"height"];
+         user.allDis = [loginData objectForKey:@"allDis"];
+         user.allCir = [loginData objectForKey:@"allCir"];
+         user.allTime = [loginData objectForKey:@"allTime"];
+         user.userId = [loginData objectForKey:@"id"];
+        curLoginUser = user;
         [defaults synchronize];
 
 #pragma mark 在此还应进行所有登录过的用户信息保存
@@ -74,7 +91,28 @@ static XIU_User *curLoginUser;
         NSDictionary *loginData = [[NSUserDefaults standardUserDefaults] objectForKey:kLoginUserDict];
         
         [[NSUserDefaults standardUserDefaults] synchronize];
-        curLoginUser = loginData? [XIU_User mj_objectWithKeyValues:loginData]: nil;
+        if (loginData) {
+            XIU_User *user = [[XIU_User alloc] init];
+            user.username = [loginData objectForKey:@"username"];
+            user.usersex = [loginData objectForKey:@"usersex"];
+            user.birth = [loginData objectForKey:@"birth"];
+            user.userImg = [loginData objectForKey:@"userImg"];
+            user.userhobby = [loginData objectForKey:@"userhobby"];
+            user.userphone = [loginData objectForKey:@"userphone"];
+            user.userpass = [loginData objectForKey:@"userpass"];
+            user.userfrom = [loginData objectForKey:@"userfrom"];
+            user.channelid = [loginData objectForKey:@"channelid"];
+            user.weight = [loginData objectForKey:@"weight"];
+            user.height = [loginData objectForKey:@"height"];
+            user.allDis = [loginData objectForKey:@"allDis"];
+            user.allCir = [loginData objectForKey:@"allCir"];
+            user.allTime = [loginData objectForKey:@"allTime"];
+            user.userId = [loginData objectForKey:@"id"];
+            curLoginUser = user;
+            return curLoginUser;
+
+        }
+        curLoginUser = nil;
     }
     return curLoginUser;
 

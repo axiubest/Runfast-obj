@@ -8,6 +8,18 @@
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
+#import <UIKit/UIKit.h>
+
+static  NSString *const USHARE_APPKEY = @"587d9de97f2c7464d9001cc4";
+static  NSString *const XIU_Social_WX_ID = @"";
+static  NSString *const XIU_Social_WX_Secret = @"";
+static  NSString *const XIU_Social_QQ_ID = @"";
+static  NSString *const XIU_Social_QQ_Secret = @"";
+static  NSString *const XIU_Social_Sina_Select = @"";
+static  NSString *const XIU_Social_Sina_ID = @"";
+static  NSString *const XIU_Social_RedirectURL = @"";
+
+
 
 #define TableView_ResignNib(Nib,identifier) [tableView registerNib:Nib forCellReuseIdentifier:identifier]
 

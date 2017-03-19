@@ -86,6 +86,8 @@
 {
     if ([manager state] != CBCentralManagerStatePoweredOn) {
         printf("CoreBluetooth is not correctly initialized !\n");
+        [delegate CoreBluetoothNotCorrectlyInitialized];
+
         return -1;
     }
     

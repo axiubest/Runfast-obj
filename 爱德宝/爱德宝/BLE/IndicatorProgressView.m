@@ -59,6 +59,7 @@
     startLine.cornerRadius = 2;
     startLine.masksToBounds = YES;
     
+    
     // 2.初始化num，初始化位置
     startLine.transform = CATransform3DMakeRotation(2*M_PI_4 + beginAngle, 0, 0, 1);
     

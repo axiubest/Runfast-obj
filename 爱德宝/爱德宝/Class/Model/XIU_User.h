@@ -15,7 +15,7 @@
 
 @property (readwrite, nonatomic, strong)NSString *username, *usersex, *birth, *userImg, *userhobby, *userphone, *userpass, *userfrom, *channelid;
 
-@property (readwrite, nonatomic, strong)NSNumber *weight, *height, *allDis, *allCir, *allTime;
+@property (readwrite, nonatomic, strong)NSNumber *weight, *height, *allDis, *allCir, *allTime, *userId;
 
 
 @end

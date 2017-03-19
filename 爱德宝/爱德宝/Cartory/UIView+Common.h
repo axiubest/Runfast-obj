@@ -26,7 +26,8 @@
 @property (nonatomic, strong, readonly) UIView *lastSubviewOnX;
 @property (nonatomic, strong, readonly) UIView *lastSubviewOnY;
 
-
+- (void)setHalfCornerRadius;
+- (void)setCornerRadius:(CGFloat)radius;
 - (void)doCircleFrame;
 
 

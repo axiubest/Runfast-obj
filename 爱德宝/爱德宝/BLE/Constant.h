@@ -24,8 +24,8 @@
 /** 总角度 */
 #define rotateAngle fabs(beginAngle - endAngle)
 /** 旋转速度(总分) */
-#define rotateSpeed 100
+#define rotateSpeed 25
 /** 分数(当前分) */
-#define SCORE ((100)*(0.9))
+#define SCORE ((100)*(0.22))
 /** 仪表盘旋转速度 */
-#define kProgressSpeed 0.03
+#define kProgressSpeed 0.04

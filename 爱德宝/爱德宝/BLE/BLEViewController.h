@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SerialGATT.h"
+@interface BLEViewController : XIU_BaseViewController
 
-@interface BLEViewController : UIViewController
-
+@property (strong, nonatomic) SerialGATT *sensor;
++(instancetype) shareInstance;
 @end

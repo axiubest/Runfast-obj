@@ -16,11 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    UIImageView *imageview = [[UIImageView alloc] initWithFrame:FULLRECT];
-//    imageview.image = [UIImage imageNamed:BackImageName];
-    
-//    [self.view addSubview:imageview];
-    
 
 }
 

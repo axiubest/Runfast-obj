@@ -53,8 +53,10 @@
     if (self) {
         _num = 0;
         
-        _numLabel = [[UILabel alloc]initWithFrame:CGRectMake((GLScreenWidth-150)/2, (GLScreenWidth-150)/2, 120, 80)];
-        _numLabel.textAlignment  = NSTextAlignmentCenter;
+        _numLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 120, 80)];
+        _numLabel.center = CGPointMake(KWIDTH/2 - 20, 150);
+
+        _numLabel.textAlignment  = NSTextAlignmentLeft;
         _numLabel.textColor = [UIColor whiteColor];
         _numLabel.font = [UIFont systemFontOfSize:100];
         _numLabel.alpha = 1.0;

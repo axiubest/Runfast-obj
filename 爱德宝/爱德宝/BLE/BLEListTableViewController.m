@@ -62,6 +62,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [_MyDelegate FindPeripheral];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

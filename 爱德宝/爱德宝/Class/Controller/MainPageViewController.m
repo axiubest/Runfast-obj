@@ -48,6 +48,9 @@
 @property (nonatomic, retain) NSMutableArray *peripheralViewControllerArray;
 @property (nonatomic, strong) NSString *tvRecv;
 @property (nonatomic, strong) NSString *speed;
+
+@property (nonatomic, weak) UILabel *allLabel;
+@property (nonatomic, weak) UILabel *nowDayLabel;
 @end
 
 
@@ -55,6 +58,19 @@
 @synthesize sensor;
 @synthesize peripheralViewControllerArray;
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+
+    
+    
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+    
+    _allLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:sportDis] ? [NSString stringWithFormat:@"%@Km", [[NSUserDefaults standardUserDefaults] objectForKey:sportDis]] : @"请设置目标" ;
+    self.nowDayLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:sportDay] ?[NSString stringWithFormat:@"%@天", [[NSUserDefaults standardUserDefaults] objectForKey:sportDay]]  :  @"0天";
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -93,6 +109,11 @@
 
 - (void)createProgressView {
     
+    NSInteger disNum = [[NSUserDefaults standardUserDefaults] objectForKey:sportDis] ?  [[[NSUserDefaults standardUserDefaults] objectForKey:sportDis] integerValue] : 100;;
+    
+    NSInteger allDayNum =  [[NSUserDefaults standardUserDefaults] objectForKey:sportDay] ? [[[NSUserDefaults standardUserDefaults] objectForKey:sportDay] integerValue] : 7;
+
+    
     CLDashboardProgressView *disprogress = [[CLDashboardProgressView alloc] initWithFrame:CGRectMake(0, 0, arc_size, arc_size)];
     disprogress.backgroundColor = [UIColor whiteColor];
     disprogress.outerRadius = 160; // 外圈半径
@@ -107,7 +128,7 @@
     
     disprogress.blockCount = 26;   // 进度块的数量
     disprogress.minValue = 0;      // 进度条最小数值
-    disprogress.maxValue = 100;    // 进度条最大数值
+    disprogress.maxValue = disNum;    // 进度条最大数值
     disprogress.currentValue = 10; // 进度条当前数值
     
     disprogress.showShadow = NO;  // 是否显示阴影
@@ -127,8 +148,8 @@
     CLDashboardProgressView *progress = [[CLDashboardProgressView alloc] initWithFrame:CGRectMake(0, 0, arc_size, arc_size)];
     progress.backgroundColor = [UIColor whiteColor];
     progress.outerRadius = _disProgressView.outerRadius - 30; // 外圈半径
-    progress.innerRadius = _disProgressView.innerRadius - 20;  // 内圈半径
-    progress.beginAngle = 140;    // 起始角度
+    progress.innerRadius = _disProgressView.innerRadius - 15;  // 内圈半径
+    progress.beginAngle = 120;    // 起始角度
     progress.blockAngle = 8;   // 每个进度块的角度
     progress.gapAngle = 0;     // 两个进度块的间隙的角度
     progress.progressColor = [UIColor whiteColor]; // 进度条填充色
@@ -138,7 +159,7 @@
     
     progress.blockCount = 26;   // 进度块的数量
     progress.minValue = 0;      // 进度条最小数值
-    progress.maxValue = 100;    // 进度条最大数值
+    progress.maxValue = allDayNum;    // 进度条最大数值
     progress.currentValue = 10; // 进度条当前数值
     
     progress.showShadow = NO;  // 是否显示阴影
@@ -163,28 +184,34 @@
     
     UILabel *allLab = [[UILabel alloc] init];
     allLab.textColor  = [UIColor lightGrayColor];
+    _allLabel = allLab;
     allLab.text = @"100km";
     [self.view addSubview:allLab];
     [allLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lab.mas_bottom);
         make.centerX.mas_equalTo(lab.mas_centerX);
     }];
-    
-    UILabel *nowDayLab = [[UILabel alloc] init];
-    nowDayLab.textColor  = [UIColor lightGrayColor];
-    nowDayLab.font = [UIFont systemFontOfSize:22 weight:1];
-    nowDayLab.text = @"100km";
-    [self.view addSubview:nowDayLab];
-    [nowDayLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(allLab.mas_bottom).with.offset(10);
-        make.centerX.mas_equalTo(allLab.mas_centerX);
-    }];
 
     
 }
 
 
-
+-(UILabel *)nowDayLabel {
+    if (!_nowDayLabel) {
+        UILabel *nowDayLab = [[UILabel alloc] init];
+        
+        nowDayLab.textColor  = [UIColor lightGrayColor];
+        nowDayLab.font = [UIFont systemFontOfSize:22 weight:1];
+        nowDayLab.text = @"100km";
+        _nowDayLabel = nowDayLab;
+        [self.view addSubview:nowDayLab];
+        [nowDayLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_allLabel.mas_bottom).with.offset(10);
+            make.centerX.mas_equalTo(_allLabel.mas_centerX);
+        }];
+    }
+    return _nowDayLabel;
+}
 
 - (void)clickedBLE {
     if ([sensor activePeripheral]) {
@@ -196,8 +223,12 @@
     }
     [sensor findBLKSoftPeripherals:5];
 
+    
 }
 
+- (void)CoreBluetoothNotCorrectlyInitialized {
+    [self HUDWithText:@"CoreBluetooth is not correctly initialized"];
+}
 
 - (void)createUI {
     UIButton *quickBt = [[UIButton alloc] init];
@@ -215,15 +246,18 @@
         make.right.equalTo(self.view).with.offset(-20);
         make.bottom.equalTo(self.view).with.offset(-20);
         make.height.equalTo(@45);
-        
     }];
     
-    CreateButton *historyBtn = [[CreateButton alloc] initWithFrame:CGRectMake(40, KHEIGHT - 200, 100, 100) Title:@"历史记录" ImageName:@"历史记录"];
+    CreateButton *historyBtn = [[CreateButton alloc] initWithFrame:CGRectMake(40, KHEIGHT - 230, 100, 100) Title:@"历史记录" ImageName:@"历史记录"];
     [historyBtn bk_whenTapped:^{
-
+        if ([XIU_Login isLogin]) {
             HistoryViewController *vc = [[HistoryViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }];
+            [self.navigationController pushViewController:vc animated:YES];
+
+        }else {
+            [self HUDWithText:@"您未登录请登陆"];
+        }
+             }];
     [self.view addSubview:historyBtn];
     
 
@@ -250,12 +284,18 @@
     UIView *line2 = [[UIView alloc] init];
     line2.backgroundColor = [UIColor darkGrayColor];
     [self.view addSubview:line2];
-    line2.frame = CGRectMake(20, historyBtn.y + historyBtn.height + 10, KWIDTH - 40, 1);
+    line2.frame = CGRectMake(20, historyBtn.y + historyBtn.height + 30, KWIDTH - 40, 1);
 }
 
 - (void)clickedQuickStartBtn {
-    BLEViewController *ble = [[BLEViewController alloc] init];
+    if (sensor.activePeripheral && sensor.activePeripheral != _Peripheral) {
+        [self HUDWithText:@"请连接正确蓝牙跑步机设备"];
+    }else {
+        
+    BLEViewController *ble = [BLEViewController shareInstance];
+    ble.sensor = sensor;
     [self.navigationController pushViewController:ble animated:YES];
+    }
 }
 
 - (void) openOrCloseLeftList
@@ -280,12 +320,7 @@
     [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
-}
+
 
 #pragma mark--delegate 搜索到蓝牙设备回调方法
 
@@ -314,8 +349,6 @@
     
     _Peripheral = peripheral;
     [peripheralViewControllerArray addObject:sensor];
-//    _mainTableView.hidden = NO;
-//    [_mainTableView reloadData];
     BLEListTableViewController *coller = [[BLEListTableViewController alloc] init];
     coller.peripheralViewControllerArray = peripheralViewControllerArray;
     coller.Peripheral = peripheral;
@@ -339,61 +372,22 @@
     
     NSString *value = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     
-    NSLog(@"value------%@----",value);
-    
-    
     if ([_tvRecv containsString:@"FF"]) {
-        NSArray *subArr = [_tvRecv componentsSeparatedByString:@","];
-        NSLog(@"--%@---",subArr);
-        
-        for (NSString *str in subArr) {
-            if ([str containsString:@"st"]) continue;
-            if ([str containsString:@"mp"]) continue;
-            if ([str containsString:@"sf"]) continue;
-            if ([str containsString:@"ms"]) continue;
-            if ([str containsString:@"EE"])  continue;
-            if ([str containsString:@"ca"]) {
-//                self.calorieLab.text = [str substringFromIndex:2];
-            }
-            if ([str containsString:@"dis"]) {
-//                self.distanceLab.text = [str substringFromIndex:3];
-                continue;
-            }
-            if ([str containsString:@"h"]) {
-//                self.heartLab.text = [str substringFromIndex:1];
-                continue;
-            }
-            if ([str containsString:@"s"]) {
-//                self.slopeLab.text = [str substringFromIndex:1];
-//                NSLog(@"1111----%@--",self.speedlab.text);
-                slopeNum = [[str substringFromIndex:1] floatValue];
-            }
-            if ([str containsString:@"p"]) {
-//                self.speedlab.text = [str substringFromIndex:1];
-                speedNum = [[str substringFromIndex:1] floatValue];
-            }
-//            if ([str containsString:@"t"]) {
-//                NSString *timeStr = [str substringFromIndex:1];
-//                if (![timeStr isEqualToString:@"0.00"]) {
-//                    static dispatch_once_t onceToken;
-//                    dispatch_once(&onceToken, ^{
-//                        if ([self.myDelegate respondsToSelector:@selector(qmsRunViewControllerisStart:)]) {
-//                            [self.myDelegate qmsRunViewControllerisStart:YES];
-//                        }
-//                    });
-//                }
-//                
-//                self.timeLab.text = timeStr;
-//                
-//            }
+             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+             dic[@"main"] = _tvRecv;
+
+        NSNotification * notice = [NSNotification notificationWithName:@"RunMainNotification" object:nil userInfo:dic];
+        [[NSNotificationCenter defaultCenter]postNotification:notice];
+
+        _tvRecv = @"";
+
         }
         
-        _tvRecv = @"";
-        
-    }else{
+    
+    else{
         _tvRecv =  [_tvRecv stringByAppendingString:value];
     }
-    
+//
 }
 
 

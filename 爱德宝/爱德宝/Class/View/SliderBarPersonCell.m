@@ -20,7 +20,7 @@
         [_PersonImageView sd_setImageWithURL:[NSURL URLWithString:[XIU_Login curLoginUser].userImg] placeholderImage:[UIImage imageNamed:@"头像"]];
     }else {
         _PersonNumber.text = @"总排名：未知";
-        _PersonName.text = @"游客";
+        _PersonName.text = @"未登录，请点击登陆";
         _PersondistanceNumber.text = @"总里程";
     }
 }

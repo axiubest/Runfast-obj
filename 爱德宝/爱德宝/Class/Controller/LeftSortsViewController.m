@@ -113,26 +113,39 @@
             
             break;
         case 1: {
-            WordGradeViewController *vc = [[WordGradeViewController alloc] init];
-            [self pushViewControllerWithCcontroller:vc];
-        }
+            if ([XIU_Login isLogin]) {
+                WordGradeViewController *vc = [[WordGradeViewController alloc] init];
+                [self pushViewControllerWithCcontroller:vc];
+  
+            }else {
+                [self HUDWithText:@"您未登录请登陆"];
+            }
+                   }
             
             break;
         case 2: {
+            if ([XIU_Login isLogin]) {
+
             movingObjectViewController *vc = [[movingObjectViewController alloc] init];
             [self pushViewControllerWithCcontroller:vc];
-            
+            }else {
+                [self HUDWithText:@"您未登录请登陆"];
+            }
 
         }
           
             break;
         case 3: {
+            if ([XIU_Login isLogin]) {
+
             HistoryViewController *vc = [[HistoryViewController alloc] init];
             [self pushViewControllerWithCcontroller:vc];
         }
-            
+        else {
+            [self HUDWithText:@"您未登录请登陆"];
+        }
             break;
-        
+        }
         case 4:{
             MoreViewController *vc = [[MoreViewController alloc] init];
              [self pushViewControllerWithCcontroller:vc];

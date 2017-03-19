@@ -9,16 +9,24 @@
 #import "MoreViewController.h"
 #import "SliderTableViewCell.h"
 #import "AboutUsViewController.h"
+#import "XIU_ShareView.h"
 @interface MoreViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 @end
 
 @implementation MoreViewController
 
+-(NSMutableArray *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [[NSMutableArray alloc] initWithObjects:@"屏幕常亮",@"关于", @"分享",nil];
+    }
+    return _dataSource;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -28,7 +36,7 @@
     }
 
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-    cell.textLabel.text = @"关于";
+    cell.textLabel.text = self.dataSource[indexPath.row];
     cell.textLabel.textColor  =[UIColor whiteColor];
     cell.backgroundColor = [UIColor clearColor];
     cell.accessoryType  = UITableViewCellAccessoryDisclosureIndicator;
@@ -40,6 +48,8 @@
     if (indexPath.row == 1) {
         AboutUsViewController *v = [[AboutUsViewController alloc] init];
         [self.navigationController pushViewController:v animated:YES];
+    }if (indexPath.row == 2) {
+        [XIU_ShareView showShareView];
     }
 }
 
