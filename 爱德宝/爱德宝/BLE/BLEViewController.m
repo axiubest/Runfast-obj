@@ -14,7 +14,7 @@
 #import "ShapeProgressView.h"
 #import "SerialGATT.h"
 #import "RunResultViewController.h"
-
+#import "NSString+CHISLIM_BLE.h"
 @interface BLEViewController ()
 {
     CGFloat _topOffset;
@@ -48,16 +48,29 @@
 @property (weak, nonatomic) IBOutlet UILabel *KmLab;
 @property (weak, nonatomic) IBOutlet UILabel *KcalLab;
 
+@property (weak, nonatomic) IBOutlet UIImageView *BmpImageView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *TimeImageView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *KmImageView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *KcalImageView;
 
 @property (strong, nonatomic) UILabel *maxLab;
 @property (strong, nonatomic) UILabel *minLab;
 
 @property (weak, nonatomic) IBOutlet UILabel *slopeLab;
 
-
+@property (nonatomic, strong) NSMutableArray *KcarImageArr;
+@property (nonatomic, strong) NSMutableArray *KmImageArr;
+@property (nonatomic, strong) NSMutableArray *TimeImageArr;
+@property (nonatomic, strong) NSMutableArray *BmpImageArr;
 @end
 
 @implementation BLEViewController
+
+
+
 
 
 static BLEViewController* _instance = nil;
@@ -89,6 +102,7 @@ static BLEViewController* _instance = nil;
  
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(notice:) name:@"RunMainNotification" object:nil];
+    [self addTap];
     
     
 }
@@ -101,13 +115,83 @@ static BLEViewController* _instance = nil;
     [_startButton  setHalfCornerRadius];
     self.maxLab.text = @"25";
     self.minLab.text = @"0";
+    _BmpImageView.animationImages = self.BmpImageArr;
+    _BmpImageView.animationDuration = 6*0.15;
+    _BmpImageView.animationRepeatCount = 0;
+    [_BmpImageView startAnimating];
+    _KmImageView.animationImages = self.KmImageArr;
+    _KmImageView.animationDuration = 6*0.15;
+    _KmImageView.animationRepeatCount = 0;
+    [_KmImageView startAnimating];
+    _KcalImageView.animationImages = self.KcarImageArr;
+    _KcalImageView.animationDuration = 6*0.15;
+    _KcalImageView.animationRepeatCount = 0;
+    [_KcalImageView startAnimating];
+    _TimeImageView.animationImages = self.TimeImageArr;
+    _TimeImageView.animationDuration = 6*0.15;
+    _TimeImageView.animationRepeatCount = 0;
+    [_TimeImageView startAnimating];
+    
+    _carSque.userInteractionEnabled = YES;
+    
+}
+
+- (void)addTap {
+    UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipesLeft:)];
+    UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipesRight:)];
+    
+    left.direction = UISwipeGestureRecognizerDirectionLeft;
+    right.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    [self.carSque addGestureRecognizer:left];
+    [self.carSque addGestureRecognizer:right];
+}
+
+- (void)handleSwipesLeft:(UISwipeGestureRecognizer *)sender {
+    if (speedNum>0) {
+        speedNum-=0.1;
+    }else{
+        speedNum = 0;
+    }
+    if (speedNum<0.6) {
+        speedNum = 0.6;
+        //return;(if you do,the app will improve performance)
+    }
+    
+    [self setUpBLEValue:[NSString stringWithFormat:@"%.1f", speedNum] WithAttribute:@"p"];
+    [self changeRadarViewJian];
+}
+- (void)handleSwipesRight:(UISwipeGestureRecognizer *)sender {
+    if (speedNum<0.6) {
+        speedNum = 0.6;
+    }
+    if (speedNum<18) {
+        speedNum+=0.1;
+    }else{
+        speedNum = 18;
+    }
+    
+    [self setUpBLEValue:[NSString stringWithFormat:@"%.1f", speedNum] WithAttribute:@"p"];
+    [self changeRadarViewPlus];
+}
+
+
+- (void)setUpBLEValue:(NSString *)value WithAttribute:(NSString *)attribute {
+    //    value = @"1";
+    NSString *str = [NSString XIU_BLEStringAppendingHaracteristics:value WithFunc:attribute];
+    
+
+    NSData *data = [str dataUsingEncoding:[NSString defaultCStringEncoding]];
+    [self.sensor write:self.sensor.activePeripheral data:data];
+
 }
 
 #pragma mark create lable
 -(void)notice:(NSNotification *)sender{
-    NSLog(@"%@", sender);
+    
     
     NSString *BaseString = [[sender userInfo] objectForKey:@"main"];
+    
     if ([BaseString containsString:@"FF"]) {
         NSArray *subArr = [BaseString componentsSeparatedByString:@","];
         NSLog(@"--%@---",subArr);
@@ -116,7 +200,13 @@ static BLEViewController* _instance = nil;
             if ([str containsString:@"st"]) continue;
             if ([str containsString:@"mp"]) continue;
             if ([str containsString:@"sf"]) continue;
-            if ([str containsString:@"ms"]) continue;
+            if ([str containsString:@"ms"]) {
+                _maxLab.text = [str substringFromIndex:2];
+                continue;
+            }if ([str containsString:@"mi"]) {
+                _minLab.text = [str substringFromIndex:2];
+                continue;
+            }
             if ([str containsString:@"EE"])  continue;
             if ([str containsString:@"ca"]) {
                 self.KcalLab.text = [str substringFromIndex:2];
@@ -137,15 +227,10 @@ static BLEViewController* _instance = nil;
             if ([str containsString:@"p"]) {
                 self.graView.num = [[str substringFromIndex:1] floatValue];
                 speedNum = [[str substringFromIndex:1] floatValue];
+                [self valueForProgressView];
             }if ([str containsString:@"t"]) {
                 NSString *timeStr = [str substringFromIndex:1];
                 if (![timeStr isEqualToString:@"0.00"]) {
-//                    static dispatch_once_t onceToken;
-//                    dispatch_once(&onceToken, ^{
-//                        if ([self.myDelegate respondsToSelector:@selector(qmsRunViewControllerisStart:)]) {
-//                            [self.myDelegate qmsRunViewControllerisStart:YES];
-//                        }
-//                    });
                 }
                 
                 self.TimeLab.text = timeStr;
@@ -155,18 +240,14 @@ static BLEViewController* _instance = nil;
     }
 }
 
-- (void)changeValue {
-    if (!self.proTimer) {
-        self.proTimer = [NSTimer scheduledTimerWithTimeInterval:kProgressSpeed target:self selector:@selector(changeRadarView) userInfo:nil repeats:YES];
-        //        [[NSRunLoop mainRunLoop] addTimer:self.proTimer forMode:NSRunLoopCommonModes];
-    }
+
+- (void)valueForProgressView {
+    self.graView.num = speedNum;
+    self.radarView.arcAngle = speedNum;
+    self.indicatorView.arcAngle = speedNum;
+    [self.indicatorView changeRedrawRange];
+    [self.radarView changeRedrawRange];
 }
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self changeValue];
-}
-
-
 
 #pragma mark - private
 - (void)initProgressView{
@@ -243,30 +324,27 @@ static BLEViewController* _instance = nil;
 
 
 #pragma mark - progress control
-/** 7.1 增加：进度条定时器回调 */
-- (void)changeRadarView{
+- (void)changeRadarViewPlus{
     // 1.进度块
-    
+    CGFloat maxFloat = [self.maxLab.text floatValue];
     self.graView.num += 1;
-    if (self.graView.num > 100) {
-        self.graView.num = 100;
+    if (self.graView.num > maxFloat) {
+        self.graView.num = maxFloat;
         [self HUDWithText:@"已达到最大值"];
         
     }
     // 2.扇形
     self.radarView.arcAngle += 1;
-    if (self.radarView.arcAngle >= SCORE)  {
-        self.radarView.arcAngle = SCORE;
+    if (self.radarView.arcAngle >= maxFloat)  {
+        self.radarView.arcAngle = maxFloat;
         [self.radarView changeRedrawRange];
     }
     
     // 3.指针
     self.indicatorView.arcAngle += 1;
-    if (self.indicatorView.arcAngle >= SCORE)  {
-        self.indicatorView.arcAngle = SCORE;
+    if (self.indicatorView.arcAngle >= maxFloat)  {
+        self.indicatorView.arcAngle = maxFloat;
         [self.indicatorView changeRedrawRange];
-        [self.proTimer invalidate];
-        self.proTimer = nil;
         return;
     }
     
@@ -275,7 +353,30 @@ static BLEViewController* _instance = nil;
     [self.radarView changeRedrawRange];
 }
 
+- (void)changeRadarViewJian{
+    CGFloat minFloat = [_minLab.text floatValue];
+    self.graView.num -= 1;
+    if (self.graView.num < minFloat) {
+        self.graView.num = minFloat;
+        [self HUDWithText:@"已达到最小值"];
+    }
+    self.radarView.arcAngle -= 1;
+    if (self.radarView.arcAngle <= minFloat)  {
+        self.radarView.arcAngle = minFloat;
+        [self.radarView changeRedrawRange];
+    }
+    
+    self.indicatorView.arcAngle -= 1;
+    if (self.indicatorView.arcAngle <= minFloat)  {
+        self.indicatorView.arcAngle = minFloat;
+        [self.indicatorView changeRedrawRange];
 
+        return;
+    }
+    
+    [self.indicatorView changeRedrawRange];
+    [self.radarView changeRedrawRange];
+}
 
 - (IBAction)clickedEndButton:(id)sender {
     NSString *str = @"EE,A0,IDchislim,107,FF";
@@ -294,10 +395,7 @@ static BLEViewController* _instance = nil;
         result.Kcal = _KcalLab.text;
         result.Time = _TimeLab.text;
         [self.navigationController pushViewController:result animated:YES];
-//    }
-//    else {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
+
 }
 
 
@@ -309,11 +407,6 @@ static BLEViewController* _instance = nil;
     [_sensor write:_sensor.activePeripheral data:data];
     self.startButton.hidden = YES;
     self.endButton.hidden = NO;
-#warning 进度条降低控制
-//    if (!self.proTimer) {
-//        self.proTimer = [NSTimer scheduledTimerWithTimeInterval:kProgressSpeed target:self selector:@selector(changeLowView) userInfo:nil repeats:YES];
-//                [[NSRunLoop mainRunLoop] addTimer:self.proTimer forMode:NSRunLoopCommonModes];
-//    }
 }
 - (void)changeLowView {
     
@@ -428,5 +521,60 @@ static BLEViewController* _instance = nil;
 
     }
     return _minLab;
+}
+
+
+-(NSMutableArray *)KcarImageArr {
+    if (!_KcarImageArr) {
+        _KcarImageArr = [NSMutableArray array];
+        for (int i = 1; i < 5; i++) {
+            NSString *str = [NSString stringWithFormat:@"icon_calories%d", i];
+            UIImage *img = [UIImage imageNamed:str];
+            [_KcarImageArr addObject:img];
+        }
+    }
+    return _KcarImageArr;
+
+}
+
+-(NSMutableArray *)KmImageArr {
+    if (!_KmImageArr) {
+        _KmImageArr = [NSMutableArray array];
+        for (int i = 1; i < 6; i++) {
+            NSString *str = [NSString stringWithFormat:@"icon_distance%d", i];
+            UIImage *img = [UIImage imageNamed:str];
+            [_KmImageArr addObject:img];
+            
+        }
+    }
+    return _KmImageArr;
+    
+}
+
+-(NSMutableArray *)TimeImageArr {
+    if (!_TimeImageArr) {
+        _TimeImageArr = [NSMutableArray array];
+        for (int i = 1; i < 5; i++) {
+            NSString *str = [NSString stringWithFormat:@"time%d", i];
+            UIImage *img = [UIImage imageNamed:str];
+            [_TimeImageArr addObject:img];
+        }
+    }
+    return _TimeImageArr;
+    
+}
+
+-(NSMutableArray *)BmpImageArr {
+    if (!_BmpImageArr) {
+        _BmpImageArr = [NSMutableArray array];
+        for (int i = 1; i < 7; i++) {
+            NSString *str = [NSString stringWithFormat:@"icon_heart%d", i];
+            UIImage *img = [UIImage imageNamed:str];
+            [_BmpImageArr addObject:img];
+
+        }
+    }
+    return _BmpImageArr;
+    
 }
 @end

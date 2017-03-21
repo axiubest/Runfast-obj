@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) XIU_User *curUser;
 + (CGFloat)cellHeight;
+@property (strong, nonatomic) UIImageView *userIconView;
 
 @end

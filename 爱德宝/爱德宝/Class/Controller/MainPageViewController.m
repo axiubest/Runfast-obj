@@ -63,8 +63,6 @@
     [super viewWillAppear:animated];
     
 
-    
-    
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
     
@@ -289,13 +287,17 @@
 
 - (void)clickedQuickStartBtn {
     if (sensor.activePeripheral && sensor.activePeripheral != _Peripheral) {
-        [self HUDWithText:@"请连接正确蓝牙跑步机设备"];
-    }else {
-        
-    BLEViewController *ble = [BLEViewController shareInstance];
-    ble.sensor = sensor;
-    [self.navigationController pushViewController:ble animated:YES];
+        [self HUDWithText:@"无服务"];
+        return;
     }
+    else if ([self isConnect]) {
+        BLEViewController *ble = [BLEViewController shareInstance];
+        ble.sensor = sensor;
+        [self.navigationController pushViewController:ble animated:YES];
+        return;
+    }
+    [self HUDWithText:@"连接错误请重新连接"];
+
 }
 
 - (void) openOrCloseLeftList
@@ -449,6 +451,7 @@
         
         UIImageView *image = [[UIImageView alloc] init];
         image.image = [UIImage imageNamed:ImageName];
+        image.userInteractionEnabled = YES;
         [self addSubview:image];
         
         UILabel *lab = [[UILabel alloc] init];

@@ -40,7 +40,7 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0Z-WO-cYJ">
-                        <rect key="frame" x="129" y="52" width="219" height="181"/>
+                        <rect key="frame" x="109" y="52" width="249" height="181"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="总时间" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLu-nh-evO">
                                 <rect key="frame" x="15" y="80" width="52" height="21"/>
@@ -61,20 +61,20 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40Kcal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7L-fI-6Qx">
-                                <rect key="frame" x="87" y="35" width="78" height="29"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <rect key="frame" x="87" y="39.5" width="58" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4:40" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nuc-w3-xje">
-                                <rect key="frame" x="87" y="76" width="53" height="29"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <rect key="frame" x="87" y="80.5" width="39.5" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40Kcal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpg-dZ-s34">
-                                <rect key="frame" x="87" y="117" width="78" height="29"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <rect key="frame" x="87" y="121.5" width="58" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -101,11 +101,11 @@
                     <constraint firstAttribute="bottomMargin" secondItem="d0Z-WO-cYJ" secondAttribute="bottom" constant="-0.5" id="4Il-2u-zVc"/>
                     <constraint firstItem="UDk-b5-Xa6" firstAttribute="centerY" secondItem="qj9-Td-Fve" secondAttribute="centerY" id="ELu-Jo-FEM"/>
                     <constraint firstItem="qj9-Td-Fve" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Gh5-uF-UVV"/>
-                    <constraint firstItem="d0Z-WO-cYJ" firstAttribute="leading" secondItem="UDk-b5-Xa6" secondAttribute="trailing" constant="30" id="S7o-wr-KmP"/>
+                    <constraint firstItem="d0Z-WO-cYJ" firstAttribute="leading" secondItem="UDk-b5-Xa6" secondAttribute="trailing" constant="10" id="S7o-wr-KmP"/>
                     <constraint firstItem="UDk-b5-Xa6" firstAttribute="centerX" secondItem="u2L-ZH-lJu" secondAttribute="centerX" id="T0a-l2-26h"/>
                     <constraint firstItem="d0Z-WO-cYJ" firstAttribute="top" secondItem="UDk-b5-Xa6" secondAttribute="bottom" constant="10" id="TQf-pK-XGD"/>
                     <constraint firstItem="u2L-ZH-lJu" firstAttribute="leading" secondItem="qj9-Td-Fve" secondAttribute="trailing" constant="20" id="UTc-tT-Lzu"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="d0Z-WO-cYJ" secondAttribute="trailing" constant="10" id="Xdt-mM-cD5"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="d0Z-WO-cYJ" secondAttribute="trailing" id="Xdt-mM-cD5"/>
                     <constraint firstItem="qj9-Td-Fve" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="cuF-Qi-qJ1"/>
                     <constraint firstAttribute="bottom" secondItem="u2L-ZH-lJu" secondAttribute="bottom" id="dTx-tP-ltx"/>
                     <constraint firstItem="u2L-ZH-lJu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="i98-qq-EDR"/>
@@ -118,7 +118,7 @@
                 <outlet property="kCarLab" destination="R7L-fI-6Qx" id="ZEa-Bf-Vmc"/>
                 <outlet property="timeLab" destination="nuc-w3-xje" id="lhD-To-jnB"/>
             </connections>
-            <point key="canvasLocation" x="116" y="45.5"/>
+            <point key="canvasLocation" x="195" y="15"/>
         </tableViewCell>
     </objects>
     <resources>

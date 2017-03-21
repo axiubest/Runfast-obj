@@ -10,11 +10,10 @@
 #import "UIImageView+WebCache.h"
 #import "XIU_MyCenterModifyAvatarCell.h"
 static CGFloat const kPaddingLeftWidth = 15.0f;
-static CGFloat const kLoginPaddingLeftWidth = 18.0f;
+
 
 @interface XIU_MyCenterModifyAvatarCell ()
 @property (strong, nonatomic) UILabel *titleLabel;
-@property (strong, nonatomic) UIImageView *userIconView;
 
 @end
 @implementation XIU_MyCenterModifyAvatarCell

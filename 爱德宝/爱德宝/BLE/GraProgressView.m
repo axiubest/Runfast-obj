@@ -37,12 +37,11 @@
 }
 
 #pragma mark - set方法赋值 重绘
-- (void)setNum:(NSInteger)num
+- (void)setNum:(CGFloat)num
 {
     _num = num;
     [self setNeedsDisplay];
-    _numLabel.text = [NSString stringWithFormat:@"%ld", num];
-    [_numLabel sizeToFit];
+    _numLabel.text = [NSString stringWithFormat:@"%.1f", num];
 }
 
 
@@ -56,9 +55,9 @@
         _numLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 120, 80)];
         _numLabel.center = CGPointMake(KWIDTH/2 - 20, 150);
 
-        _numLabel.textAlignment  = NSTextAlignmentLeft;
+        _numLabel.textAlignment  = NSTextAlignmentCenter;
         _numLabel.textColor = [UIColor whiteColor];
-        _numLabel.font = [UIFont systemFontOfSize:100];
+        _numLabel.font = [UIFont systemFontOfSize:60];
         _numLabel.alpha = 1.0;
         [self addSubview:_numLabel];
     }

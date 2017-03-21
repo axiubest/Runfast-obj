@@ -12,12 +12,16 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BLEViewController">
             <connections>
+                <outlet property="BmpImageView" destination="D3T-a0-jKJ" id="NkR-gY-Kgw"/>
                 <outlet property="BpmLab" destination="L1N-pZ-fzu" id="ESx-Ly-YSZ"/>
                 <outlet property="BpmView" destination="4IH-Gg-UZY" id="2rA-DJ-sXm"/>
+                <outlet property="KcalImageView" destination="woZ-As-bXX" id="Q34-l8-w6s"/>
                 <outlet property="KcalLab" destination="pXc-Md-xhc" id="hGG-5z-rwv"/>
                 <outlet property="KcalView" destination="d1f-hR-nBS" id="1DV-lD-dxZ"/>
+                <outlet property="KmImageView" destination="EcY-cQ-3qF" id="xPm-o6-xbF"/>
                 <outlet property="KmLab" destination="hVo-MI-HDP" id="zHZ-md-IQR"/>
                 <outlet property="KmView" destination="p7s-9N-3FK" id="8P7-FT-Fxv"/>
+                <outlet property="TimeImageView" destination="DHS-BX-i8J" id="0ho-L1-PgV"/>
                 <outlet property="TimeLab" destination="GBY-yJ-FDG" id="vPV-yr-PHP"/>
                 <outlet property="TimeView" destination="oV4-9y-7uU" id="g8N-7q-ByH"/>
                 <outlet property="endButton" destination="vn6-p2-TKI" id="aFe-ev-bJw"/>
@@ -61,7 +65,7 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oV4-9y-7uU" userLabel="TimeView">
-                    <rect key="frame" x="92.5" y="507" width="70" height="70"/>
+                    <rect key="frame" x="93" y="507" width="70" height="70"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="时间 (1).png" translatesAutoresizingMaskIntoConstraints="NO" id="DHS-BX-i8J">
                             <rect key="frame" x="0.0" y="35" width="35" height="35"/>
@@ -97,7 +101,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p7s-9N-3FK" userLabel="KmView">
-                    <rect key="frame" x="212.5" y="509.5" width="70" height="65"/>
+                    <rect key="frame" x="213" y="510" width="70" height="65"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="速度计.png" translatesAutoresizingMaskIntoConstraints="NO" id="EcY-cQ-3qF">
                             <rect key="frame" x="0.0" y="30" width="35" height="35"/>

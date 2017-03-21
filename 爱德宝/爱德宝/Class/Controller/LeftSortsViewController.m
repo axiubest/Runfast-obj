@@ -28,12 +28,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.tableview reloadData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     UITableView *tableview = [[UITableView alloc] init];
     self.tableview = tableview;
@@ -153,9 +151,9 @@
             
             break;
         case 5:{
+            [self.tableview reloadData];
             [XIU_Login doLogOut];
             [self HUDWithText:@"您已退出登录"];
-            [self.tableview reloadData];
         }
             
             break;

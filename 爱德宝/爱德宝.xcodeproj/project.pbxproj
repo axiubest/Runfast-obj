@@ -178,6 +178,26 @@
 		83B12F221E7E8E06009EF55B /* 时间 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F211E7E8E06009EF55B /* 时间 (1).png */; };
 		83B12F261E7EAB97009EF55B /* RunResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12F241E7EAB97009EF55B /* RunResultViewController.m */; };
 		83B12F271E7EAB97009EF55B /* RunResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F251E7EAB97009EF55B /* RunResultViewController.xib */; };
+		83B12F3B1E800E91009EF55B /* icon_calories1.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F281E800E91009EF55B /* icon_calories1.png */; };
+		83B12F3C1E800E91009EF55B /* icon_calories2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F291E800E91009EF55B /* icon_calories2.png */; };
+		83B12F3D1E800E91009EF55B /* icon_calories3.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F2A1E800E91009EF55B /* icon_calories3.png */; };
+		83B12F3E1E800E91009EF55B /* icon_calories4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F2B1E800E91009EF55B /* icon_calories4.png */; };
+		83B12F3F1E800E91009EF55B /* icon_distance1.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F2C1E800E91009EF55B /* icon_distance1.png */; };
+		83B12F401E800E91009EF55B /* icon_distance2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F2D1E800E91009EF55B /* icon_distance2.png */; };
+		83B12F411E800E91009EF55B /* icon_distance3.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F2E1E800E91009EF55B /* icon_distance3.png */; };
+		83B12F421E800E91009EF55B /* icon_distance4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F2F1E800E91009EF55B /* icon_distance4.png */; };
+		83B12F431E800E91009EF55B /* icon_distance5.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F301E800E91009EF55B /* icon_distance5.png */; };
+		83B12F441E800E91009EF55B /* icon_heart1.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F311E800E91009EF55B /* icon_heart1.png */; };
+		83B12F451E800E91009EF55B /* icon_heart2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F321E800E91009EF55B /* icon_heart2.png */; };
+		83B12F461E800E91009EF55B /* icon_heart3.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F331E800E91009EF55B /* icon_heart3.png */; };
+		83B12F471E800E91009EF55B /* icon_heart4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F341E800E91009EF55B /* icon_heart4.png */; };
+		83B12F481E800E91009EF55B /* icon_heart5.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F351E800E91009EF55B /* icon_heart5.png */; };
+		83B12F491E800E91009EF55B /* icon_heart6.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F361E800E91009EF55B /* icon_heart6.png */; };
+		83B12F4A1E800E91009EF55B /* time1.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F371E800E91009EF55B /* time1.png */; };
+		83B12F4B1E800E91009EF55B /* time2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F381E800E91009EF55B /* time2.png */; };
+		83B12F4C1E800E91009EF55B /* time3.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F391E800E91009EF55B /* time3.png */; };
+		83B12F4D1E800E91009EF55B /* time4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F3A1E800E91009EF55B /* time4.png */; };
+		83B12F501E80228D009EF55B /* NSString+CHISLIM_BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12F4F1E80228D009EF55B /* NSString+CHISLIM_BLE.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -499,6 +519,27 @@
 		83B12F231E7EAB97009EF55B /* RunResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunResultViewController.h; sourceTree = "<group>"; };
 		83B12F241E7EAB97009EF55B /* RunResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunResultViewController.m; sourceTree = "<group>"; };
 		83B12F251E7EAB97009EF55B /* RunResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RunResultViewController.xib; sourceTree = "<group>"; };
+		83B12F281E800E91009EF55B /* icon_calories1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_calories1.png; sourceTree = "<group>"; };
+		83B12F291E800E91009EF55B /* icon_calories2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_calories2.png; sourceTree = "<group>"; };
+		83B12F2A1E800E91009EF55B /* icon_calories3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_calories3.png; sourceTree = "<group>"; };
+		83B12F2B1E800E91009EF55B /* icon_calories4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_calories4.png; sourceTree = "<group>"; };
+		83B12F2C1E800E91009EF55B /* icon_distance1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_distance1.png; sourceTree = "<group>"; };
+		83B12F2D1E800E91009EF55B /* icon_distance2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_distance2.png; sourceTree = "<group>"; };
+		83B12F2E1E800E91009EF55B /* icon_distance3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_distance3.png; sourceTree = "<group>"; };
+		83B12F2F1E800E91009EF55B /* icon_distance4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_distance4.png; sourceTree = "<group>"; };
+		83B12F301E800E91009EF55B /* icon_distance5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_distance5.png; sourceTree = "<group>"; };
+		83B12F311E800E91009EF55B /* icon_heart1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_heart1.png; sourceTree = "<group>"; };
+		83B12F321E800E91009EF55B /* icon_heart2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_heart2.png; sourceTree = "<group>"; };
+		83B12F331E800E91009EF55B /* icon_heart3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_heart3.png; sourceTree = "<group>"; };
+		83B12F341E800E91009EF55B /* icon_heart4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_heart4.png; sourceTree = "<group>"; };
+		83B12F351E800E91009EF55B /* icon_heart5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_heart5.png; sourceTree = "<group>"; };
+		83B12F361E800E91009EF55B /* icon_heart6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_heart6.png; sourceTree = "<group>"; };
+		83B12F371E800E91009EF55B /* time1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time1.png; sourceTree = "<group>"; };
+		83B12F381E800E91009EF55B /* time2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time2.png; sourceTree = "<group>"; };
+		83B12F391E800E91009EF55B /* time3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time3.png; sourceTree = "<group>"; };
+		83B12F3A1E800E91009EF55B /* time4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time4.png; sourceTree = "<group>"; };
+		83B12F4E1E80228D009EF55B /* NSString+CHISLIM_BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CHISLIM_BLE.h"; sourceTree = "<group>"; };
+		83B12F4F1E80228D009EF55B /* NSString+CHISLIM_BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CHISLIM_BLE.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -688,6 +729,8 @@
 		83ABA09C1E70147F00F9B529 /* Cartory */ = {
 			isa = PBXGroup;
 			children = (
+				83B12F4E1E80228D009EF55B /* NSString+CHISLIM_BLE.h */,
+				83B12F4F1E80228D009EF55B /* NSString+CHISLIM_BLE.m */,
 				83B12E921E76E660009EF55B /* NSDate+convenience.h */,
 				83B12E931E76E660009EF55B /* NSDate+convenience.m */,
 				83B12E891E76E466009EF55B /* NSDate+Common.h */,
@@ -965,6 +1008,25 @@
 		83B12DA81E717115009EF55B /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				83B12F281E800E91009EF55B /* icon_calories1.png */,
+				83B12F291E800E91009EF55B /* icon_calories2.png */,
+				83B12F2A1E800E91009EF55B /* icon_calories3.png */,
+				83B12F2B1E800E91009EF55B /* icon_calories4.png */,
+				83B12F2C1E800E91009EF55B /* icon_distance1.png */,
+				83B12F2D1E800E91009EF55B /* icon_distance2.png */,
+				83B12F2E1E800E91009EF55B /* icon_distance3.png */,
+				83B12F2F1E800E91009EF55B /* icon_distance4.png */,
+				83B12F301E800E91009EF55B /* icon_distance5.png */,
+				83B12F311E800E91009EF55B /* icon_heart1.png */,
+				83B12F321E800E91009EF55B /* icon_heart2.png */,
+				83B12F331E800E91009EF55B /* icon_heart3.png */,
+				83B12F341E800E91009EF55B /* icon_heart4.png */,
+				83B12F351E800E91009EF55B /* icon_heart5.png */,
+				83B12F361E800E91009EF55B /* icon_heart6.png */,
+				83B12F371E800E91009EF55B /* time1.png */,
+				83B12F381E800E91009EF55B /* time2.png */,
+				83B12F391E800E91009EF55B /* time3.png */,
+				83B12F3A1E800E91009EF55B /* time4.png */,
 				83B12F211E7E8E06009EF55B /* 时间 (1).png */,
 				83B12F1F1E7E8DEF009EF55B /* 徒步2.png */,
 				83B12F1D1E7E8DEA009EF55B /* 心电.png */,
@@ -1239,19 +1301,28 @@
 			files = (
 				83B12F011E7D8635009EF55B /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				83B12DE11E72DD79009EF55B /* 圆点.png in Resources */,
+				83B12F491E800E91009EF55B /* icon_heart6.png in Resources */,
 				83B12DFC1E73042B009EF55B /* XIU_LoginViewController.xib in Resources */,
+				83B12F481E800E91009EF55B /* icon_heart5.png in Resources */,
 				041658321E78C572006F621D /* 时间.png in Resources */,
+				83B12F3F1E800E91009EF55B /* icon_distance1.png in Resources */,
 				83B12DBE1E719D06009EF55B /* 近一周.png in Resources */,
+				83B12F4A1E800E91009EF55B /* time1.png in Resources */,
 				83B12E701E7599A5009EF55B /* 180 - iPhone 6 Plus.png in Resources */,
 				83B12E561E7436FE009EF55B /* BLEViewController.xib in Resources */,
+				83B12F431E800E91009EF55B /* icon_distance5.png in Resources */,
 				83ABA0861E6E56FE00F9B529 /* LaunchScreen.storyboard in Resources */,
 				83B12DBD1E719D06009EF55B /* 近一月.png in Resources */,
 				83B12DF21E72FF06009EF55B /* SliderTableViewCell.xib in Resources */,
 				041658311E78C572006F621D /* 能耗.png in Resources */,
 				83B12E6E1E759701009EF55B /* 头像.png in Resources */,
 				041658301E78C572006F621D /* 里程.png in Resources */,
+				83B12F3B1E800E91009EF55B /* icon_calories1.png in Resources */,
+				83B12F471E800E91009EF55B /* icon_heart4.png in Resources */,
 				83B12F271E7EAB97009EF55B /* RunResultViewController.xib in Resources */,
 				83B12DED1E72FDCE009EF55B /* MoreViewController.xib in Resources */,
+				83B12F451E800E91009EF55B /* icon_heart2.png in Resources */,
+				83B12F461E800E91009EF55B /* icon_heart3.png in Resources */,
 				041658341E78C57F006F621D /* runresult_bottomImage.png in Resources */,
 				83ABA0831E6E56FE00F9B529 /* Assets.xcassets in Resources */,
 				83B12DF71E7302F5009EF55B /* AboutUsViewController.xib in Resources */,
@@ -1259,21 +1330,31 @@
 				83B12F1E1E7E8DEA009EF55B /* 心电.png in Resources */,
 				83B12DCA1E71A4F2009EF55B /* 皇冠.png in Resources */,
 				83B12DAC1E717126009EF55B /* 箭头.png in Resources */,
+				83B12F3D1E800E91009EF55B /* icon_calories3.png in Resources */,
 				83B12DD11E72D238009EF55B /* 皇冠other.png in Resources */,
 				83B12DC81E71A33D009EF55B /* WordGradeHeaderView.xib in Resources */,
+				83B12F3C1E800E91009EF55B /* icon_calories2.png in Resources */,
 				83B12F1C1E7E8DE2009EF55B /* 速度计.png in Resources */,
 				83B12DB41E7189B9009EF55B /* movingObjectViewController.xib in Resources */,
+				83B12F441E800E91009EF55B /* icon_heart1.png in Resources */,
+				83B12F401E800E91009EF55B /* icon_distance2.png in Resources */,
 				83B12DD51E72D611009EF55B /* touxiang.png in Resources */,
 				83B12DC31E71A155009EF55B /* WordGradeViewController.xib in Resources */,
+				83B12F4D1E800E91009EF55B /* time4.png in Resources */,
 				83B12F201E7E8DEF009EF55B /* 徒步2.png in Resources */,
 				83B12DDA1E72D732009EF55B /* HistoryHeaderView.xib in Resources */,
 				83ABA1631E70535600F9B529 /* ModeSelectionVC.xib in Resources */,
+				83B12F411E800E91009EF55B /* icon_distance3.png in Resources */,
 				83B12DDF1E72DBC5009EF55B /* HistoryGradeCell.xib in Resources */,
+				83B12F421E800E91009EF55B /* icon_distance4.png in Resources */,
 				83B12DAB1E717126009EF55B /* 箭头 (1).png in Resources */,
 				83B12F221E7E8E06009EF55B /* 时间 (1).png in Resources */,
+				83B12F3E1E800E91009EF55B /* icon_calories4.png in Resources */,
 				83ABA08E1E6E58C800F9B529 /* bg.png in Resources */,
+				83B12F4B1E800E91009EF55B /* time2.png in Resources */,
 				83B12F041E7D8635009EF55B /* WeiboSDK.bundle in Resources */,
 				83ABA15E1E704E2700F9B529 /* HistoryViewController.xib in Resources */,
+				83B12F4C1E800E91009EF55B /* time3.png in Resources */,
 				83ABA1591E703B9F00F9B529 /* SliderBarPersonCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1388,6 +1469,7 @@
 				83ABA14F1E7039E500F9B529 /* UIView+WebCacheOperation.m in Sources */,
 				83ABA0781E6E56FE00F9B529 /* main.m in Sources */,
 				83ABA0A91E7033F000F9B529 /* XIU_BaseViewController.m in Sources */,
+				83B12F501E80228D009EF55B /* NSString+CHISLIM_BLE.m in Sources */,
 				83ABA1371E7039E500F9B529 /* MJFoundation.m in Sources */,
 				83ABA14A1E7039E500F9B529 /* UIImage+GIF.m in Sources */,
 				83ABA1251E7039E500F9B529 /* AFSecurityPolicy.m in Sources */,

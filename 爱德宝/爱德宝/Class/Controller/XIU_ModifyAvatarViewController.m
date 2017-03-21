@@ -23,6 +23,9 @@
  个人信息修改
  */
 @interface XIU_ModifyAvatarViewController ()
+{
+    XIU_MyCenterModifyAvatarCell *UserHeaderIconcell;
+}
 @property (strong, nonatomic) XIU_User *curUser;
 @property (nonatomic, strong) UITableView *XIUTableView;
 
@@ -31,13 +34,20 @@
 #define kPaddingLeftWidth 15.0
 @implementation XIU_ModifyAvatarViewController
 
+-(XIU_User *)curUser {
+    if (!_curUser) {
+        _curUser = [[XIU_User alloc] init];
+    }
+    return _curUser;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setBackImageView:self.view];
     
     self.title = @"个人信息";
-    self.curUser =[XIU_Login curLoginUser];
+    self.curUser = [XIU_Login curLoginUser];
     
     //    添加myTableView
     _XIUTableView = ({
@@ -62,10 +72,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 && indexPath.row == 0) {
-        XIU_MyCenterModifyAvatarCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_XIU_MyCenterModifyAvatar forIndexPath:indexPath];
-        cell.curUser = _curUser;
-        [tableView addLineforPlainCell:cell forRowAtIndexPath:indexPath withLeftSpace:kPaddingLeftWidth];
-        return cell;
+        UserHeaderIconcell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_XIU_MyCenterModifyAvatar forIndexPath:indexPath];
+        UserHeaderIconcell.curUser = _curUser;
+        [tableView addLineforPlainCell:UserHeaderIconcell forRowAtIndexPath:indexPath withLeftSpace:kPaddingLeftWidth];
+        return UserHeaderIconcell;
     }else {
         
         
@@ -78,7 +88,6 @@
                     NSLog(@"%@", self.curUser);
                     
                     [cell setTitleStr:@"昵称" valueStr:[XIU_Login curLoginUser].username];
-                    NSLog(@"%@", [XIU_Login curLoginUser].username);
                     
                     break;
                 case 1:
@@ -229,10 +238,7 @@
         //        }
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     }else if (buttonIndex == 1){
-        //        相册
-        //        if (![Helper checkPhotoLibraryAuthorizationStatus]) {
-        //            return;
-        //        }
+
         picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     }
     [self presentViewController:picker animated:YES completion:nil];//进入照相界面
@@ -247,6 +253,7 @@
         if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
             originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
             UIImageWriteToSavedPhotosAlbum(originalImage, self, nil, NULL);
+            UserHeaderIconcell.userIconView.image = originalImage;
         }
     }];
 }

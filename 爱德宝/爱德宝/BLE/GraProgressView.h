@@ -10,7 +10,7 @@
 
 @interface GraProgressView : UIView
 
-@property (nonatomic, assign) NSInteger num;
+@property (nonatomic, assign) CGFloat num;
 
 @property (nonatomic, strong) UILabel *numLabel;
 @end

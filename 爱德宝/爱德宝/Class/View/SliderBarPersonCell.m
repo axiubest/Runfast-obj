@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
     if ([XIU_Login isLogin]) {
         _PersonName.text = [XIU_Login curLoginUser].username;
         _PersonNumber.text =[NSString stringWithFormat:@"总排名:%@", [XIU_Login curLoginUser].username];

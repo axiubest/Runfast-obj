@@ -8,7 +8,7 @@
 
 #import "XIU_MyCenterTitleValueMoreCell.h"
 static CGFloat const kPaddingLeftWidth = 15.0f;
-static CGFloat const kLoginPaddingLeftWidth = 18.0f;
+
 @interface XIU_MyCenterTitleValueMoreCell ()
 
 @property (strong, nonatomic) UILabel *titleLabel, *valueLabel;
