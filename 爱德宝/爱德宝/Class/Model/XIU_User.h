@@ -13,7 +13,7 @@
 //    NSString * _userName, *_userPhone, *_userImage, *_userPass, *_userEmail, *_userSex, *_userBirth, *_userIntru, *_channelId, *_hobby;
 }
 
-@property (readwrite, nonatomic, strong)NSString *username, *usersex, *birth, *userImg, *userhobby, *userphone, *userpass, *userfrom, *channelid;
+@property (readwrite, nonatomic, strong)NSString *username, *usersex, *birth, *userImg, *userhobby, *userphone, *userpass, *userfrom, *channelid, *identified;
 
 @property (readwrite, nonatomic, strong)NSNumber *weight, *height, *allDis, *allCir, *allTime, *userId;
 

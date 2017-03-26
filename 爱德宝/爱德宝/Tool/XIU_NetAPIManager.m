@@ -12,6 +12,7 @@
 
 #import "WorldGradeModel.h"
 #import "HistorygradeModel.h"
+#import "QuestionModel.h"
 @implementation XIU_NetAPIManager
 
 + (instancetype)sharedManager {
@@ -26,19 +27,36 @@
 
 
 - (void)request_Login_WithPath:(NSString *)path Params:(id)params andBlock:(void (^)(id data, NSError *error))block {
-        
+    NSLog(@"%@---%@", path, params);
+    
     [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Get andBlock:^(id data, NSError *error) {
-        id requestData = [[data objectForKey:@"data"] objectForKey:@"user"];
+        id loginData = [[data objectForKey:@"data"] objectForKey:@"user"];
         
         if ([[data objectForKey:@"data"] objectForKey:@"ranking"]) {
-                 [[NSUserDefaults standardUserDefaults]setObject:[data valueForKey:@"ranking"] forKey:@"user_ranking"]; ;
+                 [[NSUserDefaults standardUserDefaults]setObject:[[data objectForKey:@"data"] objectForKey:@"ranking"] forKey:user_ranking];
+            
         }
    
         
-        if (requestData) {
-            [XIU_Login doLogin:requestData];
-            XIU_User *user = [XIU_User mj_objectWithKeyValues:requestData];
-
+        if (loginData) {
+            [XIU_Login doLogin:loginData];
+            XIU_User *user = [[XIU_User alloc] init];
+            user.username = [loginData objectForKey:@"username"];
+            user.usersex = [loginData objectForKey:@"usersex"];
+            user.birth = [loginData objectForKey:@"birth"];
+            user.userImg = [loginData objectForKey:@"userImg"];
+            user.userhobby = [loginData objectForKey:@"userhobby"];
+            user.userphone = [loginData objectForKey:@"userphone"];
+            user.userpass = [loginData objectForKey:@"userpass"];
+            user.userfrom = [loginData objectForKey:@"userfrom"];
+            user.channelid = [loginData objectForKey:@"channelid"];
+            user.weight = [loginData objectForKey:@"weight"];
+            user.height = [loginData objectForKey:@"height"];
+            user.allDis = [loginData objectForKey:@"allDis"];
+            user.allCir = [loginData objectForKey:@"allCir"];
+            user.allTime = [loginData objectForKey:@"allTime"];
+            user.userId = [loginData objectForKey:@"id"];
+            user.identified = [loginData objectForKey:@"identified"];
             block(user, nil);
 
         }else {
@@ -124,11 +142,70 @@
  */
 - (void)request_SaveSportGradeWithKm:(NSString *)km Time:(NSString *)time KCar:(NSString *)Kcar Block:(void (^)(id data, NSError *error))block {
     
-    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/sporthistory/addsporthistory?" withParams:@{@"userId":[NSNumber numberWithInt:[[[XIU_Login curLoginUser] userId] intValue]], @"sportTime" : [NSNumber numberWithFloat:[time floatValue]], @"alldis" :[NSNumber numberWithFloat:[time floatValue]], @"allCor" : [NSNumber numberWithFloat:[Kcar floatValue]]} withMethodType:Get andBlock:^(id data, NSError *error) {
-        NSLog(@"%@", data);
+    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/sporthistory/addsporthistory?" withParams:@{@"userId":[NSNumber numberWithInt:[[[XIU_Login curLoginUser] userId] intValue]], @"sportTime" : [NSNumber numberWithFloat:[time integerValue]], @"alldis" :[NSNumber numberWithFloat:[km floatValue]], @"allCor" : [NSNumber numberWithFloat:[Kcar floatValue]]} withMethodType:Get andBlock:^(id data, NSError *error) {
         
+        NSLog(@"%@", data);
+        if (data) {
+          NSDictionary *obj = [[data objectForKey:@"data"] objectForKey:@"userBean"];
+            NSDictionary* localSavr =  [[data objectForKey:@"data"] objectForKey:@"sportHistoryBean"];
+//          CGFloat *f =  [[[NSUserDefaults standardUserDefaults] objectForKey:sportDis] floatValue];
+          CGFloat f = [[[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis] floatValue];
+            CGFloat now = [[localSavr objectForKey:@"alldis"] floatValue];
+            CGFloat num = f + now;
+            [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%.0f", num] forKey:sport_now_dis];
+            
+            [XIU_Login doLogin:obj];
+                block(data, nil);
+        }else {
+            block(nil, error);
+        }
         
     }];
 
+}
+
+
+- (void)request_UpdateUserInformationWithModel:(XIU_User *)user Block:(void (^)(id data, NSError *error))block {
+    
+    NSLog(@"%@", user);
+    if (user.birth.length < 1) {
+        user.birth = @"1970.1.1";
+    }
+
+    
+    
+    
+    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/updateuserbeaninfo?" withParams:@{@"id":user.userId,@"name":user.username,@"usersex":user.usersex,@"birt":user.birth ,@"userhobby":user.userhobby,@"userImg":user.userImg,@"weight":user.weight,@"height":user.height} withMethodType:Get andBlock:^(id data, NSError *error) {
+        if (data) {
+            
+            block(data, nil);
+        }else {
+            block(nil, error);
+        }
+    }];
+}
+
+
+- (void)request_QuestionWithPage:(int)page Block:(void (^)(id data, NSError *error))block {
+    
+    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:[NSString stringWithFormat:@"http://112.74.28.179:8080/adbs/questionControl/getquestionlist?keyWord=&page=%d&size=8", page] withParams:nil withMethodType:Get andBlock:^(id data, NSError *error) {
+        if (data) {
+            NSMutableArray *arr = [NSMutableArray array];
+            NSArray *obj =  [[data objectForKey:@"data"]objectForKey:@"questionlist"];
+            for (NSDictionary *dic in obj) {
+                QuestionModel *m  =[[QuestionModel alloc] init];
+              m.quesAnswer =  [dic objectForKey:@"quesAnswer"];
+              m.quesTitle =  [dic objectForKey:@"quesTitle"];
+            m.countUseful =  [dic objectForKey:@"countUseful"];
+                
+                            m.quesType =  [dic objectForKey:@"quesType"];
+                [arr addObject:m];
+            }
+            block(arr, nil);
+        } else {
+            block(nil, error);
+        }
+        
+    }];
 }
 @end

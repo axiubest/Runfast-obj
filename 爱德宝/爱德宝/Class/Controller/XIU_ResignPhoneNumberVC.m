@@ -14,6 +14,7 @@
 
 #import "XIU_GraphicVerificationView.h"
 
+
 @interface XIU_ResignPhoneNumberVC ()
 
 
@@ -30,6 +31,8 @@
  下一步
  */
 @property (nonatomic, weak)UIButton *nextButton;
+
+@property (nonatomic,strong) NSString *messageCode;
 
 @property (nonatomic, weak)XIU_GraphicVerificationView *graphicVerificView;
 @end
@@ -243,6 +246,9 @@
 //        return;
 //    }
     NSLog(@"手机号输入正确进入网络请求判断手机号是否可以绑定");
+    
+    
+    
     XIU_GetVerificationCodeVC *verification = [[XIU_GetVerificationCodeVC alloc] init];
     verification.PhoneNumberStr = self.PhoneNumField.text;
     [self.navigationController pushViewController:verification animated:YES];

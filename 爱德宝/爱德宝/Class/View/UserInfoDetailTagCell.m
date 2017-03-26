@@ -8,7 +8,6 @@
 
 #import "UserInfoDetailTagCell.h"
 static CGFloat const kPaddingLeftWidth = 15.0f;
-static CGFloat const kLoginPaddingLeftWidth = 18.0f;
 @interface UserInfoDetailTagCell ()
 @property (strong, nonatomic) UILabel *titleL, *valueL;
 @end

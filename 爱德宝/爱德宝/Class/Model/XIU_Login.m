@@ -10,8 +10,7 @@
 #import "MJExtension.h"
 #import "NSDictionary+Common.h"
 
-#define kLoginStatus @"login_status"
-#define kLoginUserDict @"user_dict"
+
 
 
 static XIU_User *curLoginUser;
@@ -78,7 +77,6 @@ static XIU_User *curLoginUser;
         curLoginUser = user;
         [defaults synchronize];
 
-#pragma mark 在此还应进行所有登录过的用户信息保存
     }else {
         [XIU_Login doLogOut];
     }
@@ -90,9 +88,10 @@ static XIU_User *curLoginUser;
     if (!curLoginUser) {
         NSDictionary *loginData = [[NSUserDefaults standardUserDefaults] objectForKey:kLoginUserDict];
         
+        XIU_User *user = [[XIU_User alloc] init];
+
         [[NSUserDefaults standardUserDefaults] synchronize];
         if (loginData) {
-            XIU_User *user = [[XIU_User alloc] init];
             user.username = [loginData objectForKey:@"username"];
             user.usersex = [loginData objectForKey:@"usersex"];
             user.birth = [loginData objectForKey:@"birth"];
@@ -108,22 +107,47 @@ static XIU_User *curLoginUser;
             user.allCir = [loginData objectForKey:@"allCir"];
             user.allTime = [loginData objectForKey:@"allTime"];
             user.userId = [loginData objectForKey:@"id"];
+            user.identified = [loginData objectForKey:@"identified"];
             curLoginUser = user;
-            return curLoginUser;
+            NSLog(@"%@" ,curLoginUser);
 
+            return curLoginUser;
+            
         }
-        curLoginUser = nil;
     }
     return curLoginUser;
 
 }
 
+
++(void)saveNewUserInfoWithUser:(XIU_User *)user {
+    
+  NSDictionary *dic = @{@"id":user.userId,
+                        @"usersex":user.usersex,
+                        @"allCir":user.allCir,
+                        @"allDis":user.allDis,
+                        @"channelid":user.channelid,
+                        @"birth":user.birth ? user.birth : @"",
+                        @"weight":user.weight,
+                        @"userpass":user.userpass,
+                        @"username":user.username,
+                        @"userphone":user.userphone,
+                        @"height":user.height,
+                        @"userImg":user.userImg,
+                        @"userhobby":user.userhobby,
+                        @"userfrom":user.userfrom,
+                        @"allTime":user.allTime,
+                        @"identified":user.identified ? user.identified : @""};
+    [[NSUserDefaults standardUserDefaults] setObject:dic forKey:kLoginUserDict];
+   }
+
 +(void)doLogOut {
     if ([self isLogin]) {
         
-        [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:kLoginStatus];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLoginStatus];
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:kLoginUserDict];
 
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:user_ranking];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 //    推送注销

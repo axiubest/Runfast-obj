@@ -9,7 +9,7 @@
 #import "XIU_LoginViewController.h"
 #import "XIU_ResignPhoneNumberVC.h"
 #import "XIU_LoginService.h"
-
+#import "QMS_ForgetPassword.h"
 @interface XIU_LoginViewController ()
 {
     BOOL IsPasswordHidden;
@@ -188,16 +188,13 @@
       if (success) {
           XIU_WeakSelf(self);
 
-          [_XIUDelegate login];
+          [_XIUDelegate poplogin];
           [weakself.navigationController popViewControllerAnimated:YES];
 
       }else {
 
       }
   }];
-    
-    
-
 }
 
 #pragma mark chciked register button method
@@ -209,15 +206,14 @@
 
 #pragma makr chicked forget password button
 - (IBAction)chickedForgetPasswordBtn:(id)sender {
-    
+    QMS_ForgetPassword *forget = [[QMS_ForgetPassword alloc] init];
+    [self.navigationController pushViewController:forget animated:YES];
 }
 
 
 - (void)chickedShareView:(UIView *)views {
     
-
     switch (views.tag) {
-            
             
         case 1000:
             NSLog(@"微信分享");

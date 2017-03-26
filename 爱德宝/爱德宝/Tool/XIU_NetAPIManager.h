@@ -25,4 +25,10 @@
 
 #pragma mark----Save
 - (void)request_SaveSportGradeWithKm:(NSString *)km Time:(NSString *)time KCar:(NSString *)Kcar Block:(void (^)(id data, NSError *error))block;
+
+#pragma mark update user Info
+- (void)request_UpdateUserInformationWithModel:(XIU_User *)user Block:(void (^)(id data, NSError *error))block;
+
+#pragma  mark help
+- (void)request_QuestionWithPage:(int)page Block:(void (^)(id data, NSError *error))block;
 @end

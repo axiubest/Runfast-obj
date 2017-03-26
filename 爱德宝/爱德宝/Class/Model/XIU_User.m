@@ -13,6 +13,8 @@
 
 //*userName, *userImage, *userPass, *userPhone, *userEmail, *userSex, *userBirth, *userIntru, *channelId, *hobby;
 
+
+
 -(id)copyWithZone:(NSZone*)zone {
     XIU_User *user = [[[self class] allocWithZone:zone] init];
     user.username = [_username copy];
@@ -30,18 +32,29 @@
     user.allTime = [_allTime copy];
     user.userhobby = [_userhobby copy];
     user.userId = [_userId copy];
-
+    user.identified = [_identified copy];
     return user;
 }
 
 
 //choose XIU_User safe;
-- (NSString *)description {
-    return @"0x0";
+//- (NSString *)description {
+//    return @"..............";
+//}
+
+
+
+
+
+-(NSString *)birth {
+    if (!(_birth.length > 0 || _birth)) {
+        return @"1970-1-1";
+    }else {
+        return _birth;
+    }
 }
 
-
-- (NSString *)job_str{
+- (NSString *)userhobby{
     if (_userhobby && _userhobby.length > 0) {
         return _userhobby;
     }else{

@@ -11,5 +11,6 @@
 @interface BLEViewController : XIU_BaseViewController
 
 @property (strong, nonatomic) SerialGATT *sensor;
-+(instancetype) shareInstance;
+//+(instancetype) shareInstance;
+@property (nonatomic, assign) BOOL isContent;
 @end

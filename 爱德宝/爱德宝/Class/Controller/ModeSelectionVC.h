@@ -8,6 +8,15 @@
 
 #import "XIU_BaseViewController.h"
 
+@protocol ModeSelectionDelegate <NSObject>
+
+- (void)modelDelegate;
+
+@end
+
+
 @interface ModeSelectionVC : UIViewController
+
+@property (nonatomic, assign)id<ModeSelectionDelegate> MyDelegate;
 
 @end

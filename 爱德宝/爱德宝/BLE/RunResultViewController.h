@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RunResultViewController : UIViewController
+@interface RunResultViewController : XIU_BaseViewController
 
 @property (nonatomic, strong) NSString *Km;
 @property (nonatomic, strong) NSString *Kcal;

@@ -47,7 +47,12 @@ static CGFloat const kPaddingLeftWidth = 15.0f;
         return;
     }
     self.titleLabel.text = @"头像";
-    [self.userIconView sd_setImageWithURL:[NSURL URLWithString:_curUser.userImg] placeholderImage:[UIImage imageNamed:@"头像占位图"]];
+    if ([UIImage imageWithContentsOfFile:iconPath]) {
+        self.userIconView.image = [UIImage imageWithContentsOfFile:iconPath];
+    }else{
+        [self.userIconView sd_setImageWithURL:[NSURL URLWithString:_curUser.userImg] placeholderImage:[UIImage imageNamed:@"头像占位图"]];
+    }
+    
 }
 
 + (CGFloat)cellHeight{

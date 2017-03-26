@@ -18,5 +18,5 @@ static NSString * const SliderBarPersonIdentifier = @"SliderBarPersonCell";
 
 @property (weak, nonatomic) IBOutlet UILabel *PersondistanceNumber;
 
-
+- (void)setValue;
 @end

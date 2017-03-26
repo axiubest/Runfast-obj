@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LeftSortsViewController : XIU_BaseViewController
-@property (nonatomic,strong) UITableView *tableview;
+@property (nonatomic,weak) UITableView *tableview;
 @end

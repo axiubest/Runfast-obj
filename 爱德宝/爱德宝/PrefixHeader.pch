@@ -25,12 +25,18 @@ static  NSString *const XIU_Social_RedirectURL = @"";
 
 #define TableView_ResignClass(cellName,identifier) [tableView registerClass:[cellName class] forCellReuseIdentifier:identifier]
 
+#define iconPath [NSString stringWithFormat:@"%@/huangIcon.png",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject]
 
 #define user_ranking @"user_ranking"
 #define MAINUUID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 
+#define model_Value @"model_value"
+#define sport_now_dis @"now_dis"
 #define sportDay @"sportDay"
 #define sportDis @"sportDis"
+#define sportStartDate @"sportStartDate"
+#define kLoginStatus @"login_status"
+#define kLoginUserDict @"user_dict"
 #define BASEURL @"112.74.28.179:8080/adbs/userbeancontrol/"
 // 重写NSLog，debug模式下打印行数
 #ifdef DEBUG
@@ -66,6 +72,8 @@ static  NSString *const XIU_Social_RedirectURL = @"";
 //static NSInteger const  NaigationBarHeight = 64;
 //static NSInteger const  TabBarHeight = 44;
 
+
+#define kPathDocument [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
 //------------屏幕尺寸---------------
 
 #import "UIView+Common.h"

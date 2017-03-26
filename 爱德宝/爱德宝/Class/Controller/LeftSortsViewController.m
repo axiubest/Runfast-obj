@@ -14,37 +14,52 @@
 #import "MoreViewController.h"
 #import "XIU_LoginViewController.h"
 #import "XIU_ModifyAvatarViewController.h"
+#import "HKFileTool.h"
+#import "XIU_HelpViewController.h"
 @interface LeftSortsViewController () <UITableViewDelegate,UITableViewDataSource,XIU_LoginViewControllerDelegate>
-
+{
+      SliderBarPersonCell *silderCell;
+}
 @end
 
 @implementation LeftSortsViewController
 
 
-- (void)login {
+- (void)poplogin {
     [self.tableview reloadData];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.tableview reloadData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     UITableView *tableview = [[UITableView alloc] init];
-    self.tableview = tableview;
     tableview.frame = self.view.bounds;
     tableview.dataSource = self;
     tableview.delegate  = self;
     tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableview];
-    
+    self.tableview = tableview;
+
     [tableview registerNib:[UINib nibWithNibName:@"SliderBarPersonCell" bundle:nil] forCellReuseIdentifier:SliderBarPersonIdentifier];
     
 }
 
+-(void)iconChange{
+#warning -------------------------黄昆-------------------------------
+    if ([UIImage imageNamed:iconPath]) {
+        if ([UIImage imageNamed:iconPath]) {
+            silderCell.PersonImageView.image = [UIImage imageNamed:iconPath];
+        }else{
+            //            [cell.PersonImageView sd_setImageWithURL:[NSURL URLWithString:[XIU_Login curLoginUser].userImg] placeholderImage:[UIImage imageNamed:@"头像"]];
+        }
+    }
+}
 
 - (void)mytext:(NSNotification *)not {
     [self.tableview reloadData];
@@ -56,15 +71,23 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [XIU_Login isLogin] ? 6 : 5;
+    return [XIU_Login isLogin] ? 7 : 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     if (indexPath.row == 0) {
-
+        
         SliderBarPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:SliderBarPersonIdentifier];
+        silderCell = cell;
+
+        if ([UIImage imageNamed:iconPath]) {
+            cell.PersonImageView.image = [UIImage imageNamed:iconPath];
+        }else{
+            //            [cell.PersonImageView sd_setImageWithURL:[NSURL URLWithString:[XIU_Login curLoginUser].userImg] placeholderImage:[UIImage imageNamed:@"头像"]];
+        }
+        [cell setValue];
         
         return cell;
     }
@@ -88,6 +111,8 @@
     }else if (indexPath.row == 4) {
         cell.textLabel.text = @"更多设置";
     }else if (indexPath.row == 5) {
+        cell.textLabel.text = @"帮助";
+    }else if (indexPath.row == 6) {
         cell.textLabel.text = @"退出";
     }
     return cell;
@@ -151,9 +176,19 @@
             
             break;
         case 5:{
-            [self.tableview reloadData];
+            XIU_HelpViewController *vc = [[XIU_HelpViewController alloc] init];
+            [self pushViewControllerWithCcontroller:vc];
+        }
+            
+            break;
+        case 6:{
             [XIU_Login doLogOut];
             [self HUDWithText:@"您已退出登录"];
+            [self poplogin];
+            [HKFileTool hk_removeFile:iconPath containSelf:YES complete:nil];
+            MainPageViewController *main = [[MainPageViewController alloc] init];
+            [self pushViewControllerWithCcontroller:main];
+
         }
             
             break;

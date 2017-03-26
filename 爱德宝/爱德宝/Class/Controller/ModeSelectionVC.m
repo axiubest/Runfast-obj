@@ -23,7 +23,10 @@ static NSString * disImage_select = @"行驶里程2";
 
 
 @interface ModeSelectionVC ()<AKPickerViewDataSource, AKPickerViewDelegate>
-
+{
+    NSString * modelTmp;
+    NSString * value;
+}
 @property (weak, nonatomic) IBOutlet UIImageView *TimeImageView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *CarImageView;
@@ -50,10 +53,23 @@ static NSString * disImage_select = @"行驶里程2";
 @implementation ModeSelectionVC
 
 -(void)viewWillAppear:(BOOL)animated {
-    
+    [super viewWillAppear:animated];
 }
 
 - (IBAction)startButton:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+
+    if (value) {
+        if (!modelTmp) {
+            modelTmp = @"time";
+        }
+        NSDictionary *obj = @{@"type":modelTmp,@"value":value};
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:model_Value];
+    }
+
+
+    [_MyDelegate modelDelegate];
 }
 
 - (void)viewDidLoad {
@@ -85,6 +101,7 @@ static NSString * disImage_select = @"行驶里程2";
     [_TimeView bk_whenTapped:^{
         
         [self createUpImageWithTimeImage:timeImage_stateHighLight CarImage:carImage_stateNormal DistanceImage:disImage_stateNormal SelectImage:timeImage_select SelectLab:@"时间／min"];
+        modelTmp = @"time";
         self.titles = [self createPickerViewStart:8 end:99];
         [self.pickerView reloadData];
 
@@ -93,6 +110,7 @@ static NSString * disImage_select = @"行驶里程2";
     
     [_CarView bk_whenTapped:^{
            [self createUpImageWithTimeImage:timeImage_stateNormal CarImage:carImage_stateHighLight DistanceImage:disImage_stateNormal SelectImage:carImage_select SelectLab:@"卡路里／Kcal"];
+        modelTmp = @"kcal";
         self.titles = [self createPickerViewStart:10 end:99];
         [self.pickerView reloadData];
     }];
@@ -102,7 +120,7 @@ static NSString * disImage_select = @"行驶里程2";
     [_DistanceView bk_whenTapped:^{
         
         [self createUpImageWithTimeImage:timeImage_stateNormal CarImage:carImage_stateNormal DistanceImage:disImage_stateHighLight SelectImage:disImage_select SelectLab:@"里程／Km"];
-        
+        modelTmp = @"dis";
         self.titles = [self createPickerViewStart:1 end:45];
         [self.pickerView reloadData];
 
@@ -142,13 +160,7 @@ static NSString * disImage_select = @"行驶里程2";
     return [self.titles count];
 }
 
-/*
- * AKPickerView now support images!
- *
- * Please comment '-pickerView:titleForItem:' entirely
- * and uncomment '-pickerView:imageForItem:' to see how it works.
- *
- */
+
 
 - (NSString *)pickerView:(AKPickerView *)pickerView titleForItem:(NSInteger)item
 {
@@ -166,7 +178,10 @@ static NSString * disImage_select = @"行驶里程2";
 
 - (void)pickerView:(AKPickerView *)pickerView didSelectItem:(NSInteger)item
 {
+    value =[NSString stringWithFormat:@"%@",self.titles[item]] ;
     NSLog(@"%@", self.titles[item]);
+    NSLog(@"%@", pickerView);
+    
 }
 
 

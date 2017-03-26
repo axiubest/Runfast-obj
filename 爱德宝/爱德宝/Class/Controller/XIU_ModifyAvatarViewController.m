@@ -19,12 +19,18 @@
 #import "NSDate+Helper.h"
 #import "NSDate+Common.h"
 #import "UITableView+Common.h"
+#import "HKFileTool.h"
+
+#import "AFNetworking.h"
+#import "QNUploadManager.h"
+#import "HTTPHandier.h"
 /**
  个人信息修改
  */
 @interface XIU_ModifyAvatarViewController ()
 {
     XIU_MyCenterModifyAvatarCell *UserHeaderIconcell;
+    UIImage *tmpImage;
 }
 @property (strong, nonatomic) XIU_User *curUser;
 @property (nonatomic, strong) UITableView *XIUTableView;
@@ -34,12 +40,7 @@
 #define kPaddingLeftWidth 15.0
 @implementation XIU_ModifyAvatarViewController
 
--(XIU_User *)curUser {
-    if (!_curUser) {
-        _curUser = [[XIU_User alloc] init];
-    }
-    return _curUser;
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,6 +48,7 @@
     [self setBackImageView:self.view];
     
     self.title = @"个人信息";
+     self.curUser = [[XIU_User alloc] init];
     self.curUser = [XIU_Login curLoginUser];
     
     //    添加myTableView
@@ -86,9 +88,9 @@
             switch (indexPath.row) {
                 case 0:
                     NSLog(@"%@", self.curUser);
+                    NSLog(@"%@", [XIU_Login curLoginUser]);
                     
                     [cell setTitleStr:@"昵称" valueStr:[XIU_Login curLoginUser].username];
-                    
                     break;
                 case 1:
                     [cell setTitleStr:@"性别" valueStr:self.curUser.usersex];
@@ -165,7 +167,9 @@
             case UserInformationItemStyle_userName: {
                 XIU_SettingTextViewController *vc = [XIU_SettingTextViewController settingTextVCWithTitle:@"昵称" textValue:_curUser.username  doneBlock:^(NSString *textValue) {
                     weakself.curUser.username = textValue;
-                    
+                    self.curUser.username = textValue;
+                    [XIU_Login saveNewUserInfoWithUser:self.curUser];
+                    [self request];
                     [weakself.XIUTableView reloadData];
                     //                    request
                 }];
@@ -176,6 +180,8 @@
                 [ActionSheetStringPicker showPickerWithTitle:nil rows:@[@[@"男", @"女", @"未知"]] initialSelection:@[_curUser.usersex] doneBlock:^(ActionSheetStringPicker *picker, NSArray * selectedIndex, NSArray *selectedValue) {
                     
                     weakself.curUser.usersex = selectedValue.lastObject;
+                    [XIU_Login saveNewUserInfoWithUser:self.curUser];
+                    [self request];
                     [weakself.XIUTableView reloadData];
                     
                 } cancelBlock:nil origin:self.view];
@@ -188,6 +194,9 @@
                 }
                 ActionSheetDatePicker *picker = [[ActionSheetDatePicker alloc] initWithTitle:nil datePickerMode:UIDatePickerModeDate selectedDate:curDate doneBlock:^(ActionSheetDatePicker *picker, NSDate *selectedDate, id origin) {
                     weakself.curUser.birth = [selectedDate string_yyyy_MM_dd];
+                    
+                    [XIU_Login saveNewUserInfoWithUser:self.curUser];
+                     [self request];
                     [weakself.XIUTableView reloadData];
                     //                    request
                 } cancelBlock:^(ActionSheetDatePicker *picker) {
@@ -202,7 +211,8 @@
             case UserInformationItemStyle_hobby: {
                 XIU_SettingTextViewController *vc = [XIU_SettingTextViewController settingTextVCWithTitle:@"爱好" textValue:_curUser.userhobby  doneBlock:^(NSString *textValue) {
                     weakself.curUser.userhobby = textValue;
-                    
+                            [XIU_Login saveNewUserInfoWithUser:self.curUser];
+                     [self request];
                     [weakself.XIUTableView reloadData];
                     //                    request
                 }];
@@ -250,13 +260,97 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         UIImage *editedImage, *originalImage;
         editedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+#warning --------------------------黄昆--------------------------------
         if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
             originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
             UIImageWriteToSavedPhotosAlbum(originalImage, self, nil, NULL);
+            NSLog(@"%@",originalImage);
+            
             UserHeaderIconcell.userIconView.image = originalImage;
+        }else if (picker.sourceType == UIImagePickerControllerSourceTypeSavedPhotosAlbum){
+            originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+            UIImageWriteToSavedPhotosAlbum(originalImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+            UserHeaderIconcell.userIconView.image = originalImage;
+            
         }
     }];
 }
+
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    tmpImage = image;
+    if (error != NULL) {
+        NSLog(@"保存失败");
+    }else{
+        NSLog(@"图片保存成功");
+        
+        [HKFileTool hk_removeFile:iconPath containSelf:YES complete:nil];
+        NSData *iconData =  UIImageJPEGRepresentation(image, 1.0);
+        [iconData writeToFile:iconPath atomically:YES];
+        
+        UserHeaderIconcell.userIconView.image = [UIImage imageNamed:iconPath];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"iconImage" object:nil];
+        
+        [self requestPic];
+        
+    }
+}
+
+- (void)requestPic {
+    NSLog(@"%@", tmpImage);
+    
+    if (UIImagePNGRepresentation(tmpImage).length == 0) {
+        self.curUser.userImg = @"";
+        return;
+    }else {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:@"http://112.74.28.179:8080/Chislim/Travel_notes_Servlet?dowhat=getUpLoadToken" parameters:nil progress:nil success:
+         ^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+             NSLog(@"请求成功---%@---%@",(NSString *)responseObject,[responseObject class]);
+             NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+             
+             //request of qiniu server
+             QNUploadManager *upManager = [[QNUploadManager alloc] init];
+             NSData *data = UIImagePNGRepresentation(tmpImage);
+             
+             [upManager putData:data key:nil token:str
+                       complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                           
+                           NSString *tmpStr = [NSString stringWithFormat:@"http://ofplk6att.bkt.clouddn.com/%@", resp[@"key"]];
+                           NSLog(@"%@", tmpStr);
+                           
+                           self.curUser.userImg = [NSString stringWithFormat:@"%@", tmpStr];
+                           [self request];
+                           
+                       } option:nil];
+             
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             
+             NSLog(@"请求失败--%@",error);
+         }];
+        
+    }
+
+}
+
+//- (void)requestServerOfChislim:(NSString *)picUrl {
+//    [[NSUserDefaults standardUserDefaults] setObject:picUrl forKey:@"userImage"];
+//    XIU_Login saveNewUserInfoWithUser:<#(XIU_User *)#>
+//    NSString *path = [NSString stringWithFormat:@"%@UserServlet?dowhat=updateUserImg&userId=%@&imageUrl=%@", BASEURL,MAIN_USERID, picUrl];
+//    NSString *u8 = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+//    
+//    [HTTPHandier getDataByString:u8 WithBodyString:nil WithDataBlock:^(id responceObject) {
+//        NSLog(@"发布成功");
+//        
+//        [self.XIUTableView reloadData];
+//        
+//    }];
+//    
+//}
+
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -268,5 +362,14 @@
     _XIUTableView.dataSource = nil;
 }
 
+- (void)request {
+    [[XIU_NetAPIManager sharedManager] request_UpdateUserInformationWithModel:self.curUser Block:^(id data, NSError *error) {
+        if (data) {
+            [self HUDWithText:@"保存成功"];
+        }else {
+            [self HUDWithText:@"保存失败"];
+        }
+    }];
+}
 
 @end

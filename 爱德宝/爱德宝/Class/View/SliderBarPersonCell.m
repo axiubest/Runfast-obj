@@ -13,18 +13,43 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+
+}
+
+- (void)setValue {
     if ([XIU_Login isLogin]) {
-        _PersonName.text = [XIU_Login curLoginUser].username;
-        _PersonNumber.text =[NSString stringWithFormat:@"总排名:%@", [XIU_Login curLoginUser].username];
+        _PersonName.text = [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginUserDict] objectForKey:@"username"];
+        
+        _PersonNumber.text =[NSString stringWithFormat:@"总排名:%@",[[NSUserDefaults standardUserDefaults] objectForKey:user_ranking]];
         _PersondistanceNumber.text = [NSString stringWithFormat:@"总里程:%@", [XIU_Login curLoginUser].allDis];
         
-        [_PersonImageView sd_setImageWithURL:[NSURL URLWithString:[XIU_Login curLoginUser].userImg] placeholderImage:[UIImage imageNamed:@"头像"]];
+        if ([UIImage imageNamed:iconPath]) {
+            _PersonImageView.image = [UIImage imageNamed:iconPath];
+            //            _PersonImageView.image = [UIImage imageWithContentsOfFile:iconPath];
+        }else{
+            [_PersonImageView sd_setImageWithURL:[NSURL URLWithString:[XIU_Login curLoginUser].userImg] placeholderImage:[UIImage imageNamed:@"头像"]];
+        }
+
     }else {
         _PersonNumber.text = @"总排名：未知";
         _PersonName.text = @"未登录，请点击登陆";
         _PersondistanceNumber.text = @"总里程";
     }
 }
+
+
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    
+
+    if ([[XIU_Login curLoginUser] userImg].length > 0) {
+       
+         [_PersonImageView sd_setImageWithURL:[NSURL URLWithString:[XIU_Login curLoginUser].userImg] placeholderImage:[UIImage imageNamed:@"头像"]];
+    }else {
+        _PersonImageView.image = [UIImage imageNamed:@"头像"];
+    }
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -46,6 +46,7 @@
         WordGradeHeaderView *vc = [[NSBundle mainBundle] loadNibNamed:
                                    @"WordGradeHeaderView" owner:nil options:nil].lastObject;
         vc.frame = CGRectMake(0, 0, KWIDTH, 200);
+        [vc setvalue];
         return vc;
     }
     return nil;
@@ -70,7 +71,6 @@
 - (void)request {
     [[XIU_NetAPIManager sharedManager] request_WorldGrade_WithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/getallrankinglist?" Params:@{@"page": @"0",@"size" :@"5",} andBlock:^(id data, NSError *error) {
         NSLog(@"%@", data);
-//        NSLog(@"%@--%@", BASEURL, )
         [self.dataSource addObjectsFromArray:data];
         [self.tableView reloadData];
     }];

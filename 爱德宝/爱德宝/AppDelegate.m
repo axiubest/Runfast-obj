@@ -18,6 +18,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [self requestInfo];
     MainPageViewController *mainVC = [[MainPageViewController alloc] init];
     self.mainNavigationController = [[XIU_BaseNavigationVC alloc] initWithRootViewController:mainVC];
     LeftSortsViewController *leftVC = [[LeftSortsViewController alloc] init];
@@ -26,6 +28,18 @@
     
    
     return YES;
+}
+
+#pragma mark 信息更新
+- (void)requestInfo {
+    if ([XIU_Login isLogin]) {
+        [[XIU_NetAPIManager sharedManager] request_Login_WithPath:[NSString stringWithFormat:@"%@loginByPhone?userphone=%@&userpass=%@",BASEURL, [XIU_Login curLoginUser].userphone, [XIU_Login curLoginUser].userpass] Params:nil andBlock:^(id data, NSError *error) {
+            if (data) {
+                NSLog(@"信息更新成功");
+            }
+        }];
+
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -15,14 +15,30 @@
 #import "SerialGATT.h"
 #import "RunResultViewController.h"
 #import "NSString+CHISLIM_BLE.h"
+#import "HKPlayVoice.h"
 @interface BLEViewController ()
 {
     CGFloat _topOffset;
     CGFloat speedNum;
-    CGFloat slopeNum;
+    int slopeNum;
 
+    NSString *modelDis;
+    NSString *modelKcar;
+    NSString *modelTime;
+    
+    
+    NSString *modelValue;
+    BOOL isModelValue;
 }
+
+
+@property (weak, nonatomic) IBOutlet UIView *slopeControlView;
+
 @property (nonatomic, strong) UIImageView *bgView;
+
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+
+//@property (nonatomic, strong)
 
 @property (nonatomic, strong) UIImageView *carSque;
 
@@ -33,7 +49,7 @@
 @property (nonatomic, strong) IndicatorProgressView *radarView; /** 扇形 */
 @property (nonatomic, strong) IndicatorProgressView *indicatorView; /** 扇形 */
 
-@property (weak, nonatomic) IBOutlet UIButton *startButton;
+//@property (weak, nonatomic) IBOutlet UIButton *startButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *endButton;
 
@@ -70,29 +86,6 @@
 @implementation BLEViewController
 
 
-
-
-
-static BLEViewController* _instance = nil;
-+(instancetype) shareInstance
-{
-    static dispatch_once_t onceToken ;
-    dispatch_once(&onceToken, ^{
-        _instance = [[super allocWithZone:NULL] init] ;
-    }) ;
-    return _instance ;
-}
-
-+(id) allocWithZone:(struct _NSZone *)zone
-{
-    return [BLEViewController shareInstance] ;
-}
-
--(id) copyWithZone:(struct _NSZone *)zone
-{
-    return [BLEViewController shareInstance] ;
-}
-
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -105,14 +98,45 @@ static BLEViewController* _instance = nil;
     [self addTap];
     
     
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    NSString *str = @"EE,A1,IDchislim,108,FF";
+    
+    NSData *data = [str dataUsingEncoding:[NSString defaultCStringEncoding]];
+    [_sensor write:_sensor.activePeripheral data:data];
+  //  self.startButton.hidden = YES;
+    self.endButton.hidden = NO;
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    _endButton.hidden = YES;
-    _startButton.hidden = NO;
+    
+    isModelValue = NO;
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:model_Value]);
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:model_Value]) {
+        isModelValue = YES;
+        NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:model_Value];
+//        modelType = [dic objectForKey:@"type"];
+        modelValue = [dic objectForKey:@"value"];
+        if ([[dic objectForKey:@"type"] isEqualToString:@"dis"]) {
+            modelDis = [dic objectForKey:@"type"];
+        }if ([[dic objectForKey:@"type"] isEqualToString:@"kcar"]) {
+            modelKcar =  [dic objectForKey:@"type"];
+        }if ([[dic objectForKey:@"type"] isEqualToString:@"time"]) {
+            modelTime = [dic objectForKey:@"type"];
+        }
+        
+    }
+    
+    _backButton.hidden = YES;
+    
     [_endButton setHalfCornerRadius];
-    [_startButton  setHalfCornerRadius];
+
     self.maxLab.text = @"25";
     self.minLab.text = @"0";
     _BmpImageView.animationImages = self.BmpImageArr;
@@ -136,25 +160,42 @@ static BLEViewController* _instance = nil;
     
 }
 
+
+
 - (void)addTap {
-    UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipesLeft:)];
-    UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipesRight:)];
+    UISwipeGestureRecognizer *speedleft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipesLeft:)];
+    UISwipeGestureRecognizer *speedright = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipesRight:)];
     
-    left.direction = UISwipeGestureRecognizerDirectionLeft;
-    right.direction = UISwipeGestureRecognizerDirectionRight;
+    speedleft.direction = UISwipeGestureRecognizerDirectionLeft;
+    speedright.direction = UISwipeGestureRecognizerDirectionRight;
     
-    [self.carSque addGestureRecognizer:left];
-    [self.carSque addGestureRecognizer:right];
+    UISwipeGestureRecognizer *slopeleft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSlopeSwipesLeft:)];
+    UISwipeGestureRecognizer *sloperight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSlopeSwipesRight:)];
+    
+    slopeleft.direction = UISwipeGestureRecognizerDirectionLeft;
+    sloperight.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    
+    
+    [self.carSque addGestureRecognizer:speedleft];
+    [self.carSque addGestureRecognizer:speedright];
+    [self.slopeControlView addGestureRecognizer:slopeleft];
+    [self.slopeControlView addGestureRecognizer:sloperight];
 }
 
+
+#pragma mark----------------------速度手势
 - (void)handleSwipesLeft:(UISwipeGestureRecognizer *)sender {
+    if (speedNum == 0.6) {
+        speedNum = 1;
+    }
     if (speedNum>0) {
-        speedNum-=0.1;
+        speedNum-=1;
     }else{
         speedNum = 0;
     }
-    if (speedNum<0.6) {
-        speedNum = 0.6;
+    if (speedNum<=0.6) {
+        speedNum = 1;
         //return;(if you do,the app will improve performance)
     }
     
@@ -162,20 +203,38 @@ static BLEViewController* _instance = nil;
     [self changeRadarViewJian];
 }
 - (void)handleSwipesRight:(UISwipeGestureRecognizer *)sender {
-    if (speedNum<0.6) {
-        speedNum = 0.6;
+    if (speedNum == 0.6) {
+        speedNum = 1;
     }
-    if (speedNum<18) {
-        speedNum+=0.1;
+    if (speedNum<[_maxLab.text floatValue]) {
+        speedNum+=1;
     }else{
-        speedNum = 18;
+        speedNum = [_maxLab.text floatValue];
     }
     
     [self setUpBLEValue:[NSString stringWithFormat:@"%.1f", speedNum] WithAttribute:@"p"];
     [self changeRadarViewPlus];
 }
+#pragma mark----------------------速度手势
 
 
+
+#pragma mark----------------------坡度手势
+- (void)handleSlopeSwipesLeft:(UISwipeGestureRecognizer *)sender {
+    slopeNum >0?--slopeNum:0;
+    [self setUpBLEValue:[NSString stringWithFormat:@"%d", slopeNum] WithAttribute:@"s"];
+    if (slopeNum == 0) {
+        [self HUDWithText:@"坡度已到达最小值"];
+    }
+}
+
+- (void)handleSlopeSwipesRight:(UISwipeGestureRecognizer *)sender {
+    slopeNum <18?++slopeNum:18;
+    if (slopeNum == 18) {
+        [self HUDWithText:@"坡度已到达最大值"];
+    }
+    [self setUpBLEValue:[NSString stringWithFormat:@"%d", slopeNum] WithAttribute:@"s"];
+}
 - (void)setUpBLEValue:(NSString *)value WithAttribute:(NSString *)attribute {
     //    value = @"1";
     NSString *str = [NSString XIU_BLEStringAppendingHaracteristics:value WithFunc:attribute];
@@ -195,7 +254,7 @@ static BLEViewController* _instance = nil;
     if ([BaseString containsString:@"FF"]) {
         NSArray *subArr = [BaseString componentsSeparatedByString:@","];
         NSLog(@"--%@---",subArr);
-        
+
         for (NSString *str in subArr) {
             if ([str containsString:@"st"]) continue;
             if ([str containsString:@"mp"]) continue;
@@ -210,9 +269,15 @@ static BLEViewController* _instance = nil;
             if ([str containsString:@"EE"])  continue;
             if ([str containsString:@"ca"]) {
                 self.KcalLab.text = [str substringFromIndex:2];
+//                if (modelKcar) {
+//                    [[str substringFromIndex:2] floatValue] >= [modelKcar floatValue] ? [self HUDWithText:@"您已达标卡路里数"] : @"";
+//                }
             }
             if ([str containsString:@"dis"]) {
                 self.KmLab.text = [str substringFromIndex:3];
+//                if (modelDis) {
+//                    [[str substringFromIndex:3] floatValue] >=[modelDis floatValue]? [self HUDWithText:@"您已达标公里数"] : @"";
+//                }
                 continue;
             }
             if ([str containsString:@"h"]) {
@@ -234,6 +299,10 @@ static BLEViewController* _instance = nil;
                 }
                 
                 self.TimeLab.text = timeStr;
+//                if (modelTime) {
+//                    [timeStr floatValue] >=[modelTime floatValue]? [self HUDWithText:@"您已达标时间数"] : @"";
+//                }
+
                 
             }
         }
@@ -272,9 +341,9 @@ static BLEViewController* _instance = nil;
     self.graView.frame = gradientLayer.bounds;
     
     // 扇形
-    self.radarView.frame = CGRectMake(-8, 10, self.carSque.width, self.carSque.height);
-    self.radarView.radius = self.carSque.width * 0.35;
-    self.radarView.arcAngle = 0;
+//    self.radarView.frame = CGRectMake(-8, 10, self.carSque.width, self.carSque.height);
+//    self.radarView.radius = self.carSque.width * 0.35;
+//    self.radarView.arcAngle = 0;
     //    self.radarView.indicatorWidth = 0.1;
     //    self.radarView.indicatorAlpha = 0.70; // 指针透明度
     self.radarView.offsetAngle = beginAngle;
@@ -298,12 +367,12 @@ static BLEViewController* _instance = nil;
     self.indicatorView.frame = CGRectMake(-8, 10, self.carSque.width, self.carSque.height);
     self.indicatorView.radius = self.carSque.width * 0.35; // 绘制半径
     self.indicatorView.arcAngle = 0; // 扇形角度范围，default： 0
-    self.indicatorView.indicatorWidth = 0.36; // 指针宽度
+    self.indicatorView.indicatorWidth = 0; // 指针宽度
     self.indicatorView.indicatorAlpha = 0.25; // 指针透明度
     self.indicatorView.offsetAngle = beginAngle;
     self.indicatorView.isRader = YES;
     [self.carSque addSubview:self.indicatorView];
-    
+
 }
 
 
@@ -379,35 +448,46 @@ static BLEViewController* _instance = nil;
 }
 
 - (IBAction)clickedEndButton:(id)sender {
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:model_Value];
     NSString *str = @"EE,A0,IDchislim,107,FF";
-    
     NSData *data = [str dataUsingEncoding:[NSString defaultCStringEncoding]];
     [_sensor write:_sensor.activePeripheral data:data];
     
+#pragma mark 正式解开
+//    if ([_KmLab.text integerValue] < 1) {
+//        [self HUDWithText:@"您的运动里程过少，不予保存。"];
+//        [self dismissViewControllerAnimated:YES completion:nil];
+//        return;
+//    }
+    [[NSUserDefaults standardUserDefaults] setObject:_KmLab.text forKey:sport_now_dis];
     
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [_sensor disconnect:_sensor.activePeripheral];
     });
-//    if ([_KmLab.text integerValue] > 1) {
         RunResultViewController *result = [[RunResultViewController alloc] init];
         result.Km = _KmLab.text;
         result.Kcal = _KcalLab.text;
         result.Time = _TimeLab.text;
         [self.navigationController pushViewController:result animated:YES];
-
-}
-
-
-- (IBAction)clickedStartButton:(id)sender {
-
-    NSString *str = @"EE,A1,IDchislim,108,FF";
     
-    NSData *data = [str dataUsingEncoding:[NSString defaultCStringEncoding]];
-    [_sensor write:_sensor.activePeripheral data:data];
-    self.startButton.hidden = YES;
-    self.endButton.hidden = NO;
+
 }
+
+
+//- (IBAction)clickedStartButton:(id)sender {
+//
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//
+//    
+//    NSString *str = @"EE,A1,IDchislim,108,FF";
+//    
+//    NSData *data = [str dataUsingEncoding:[NSString defaultCStringEncoding]];
+//    [_sensor write:_sensor.activePeripheral data:data];
+//    self.endButton.hidden = NO;
+//
+//}
 - (void)changeLowView {
     
     self.graView.num -= 1;
@@ -440,6 +520,9 @@ static BLEViewController* _instance = nil;
 
 }
 
+- (IBAction)PresentViewControllerBackButtonClick:(id)sender {
+    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 
@@ -576,5 +659,10 @@ static BLEViewController* _instance = nil;
     }
     return _BmpImageArr;
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 @end

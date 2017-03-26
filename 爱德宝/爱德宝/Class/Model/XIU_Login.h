@@ -26,4 +26,6 @@
 +(void)doLogOut;
 
 + (XIU_User *)curLoginUser;
+
++(void)saveNewUserInfoWithUser:(XIU_User *)user;
 @end

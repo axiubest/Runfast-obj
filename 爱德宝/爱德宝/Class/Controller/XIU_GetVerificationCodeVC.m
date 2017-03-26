@@ -8,11 +8,13 @@
 
 #import "XIU_GetVerificationCodeVC.h"
 #import "MainPageViewController.h"
+#import "QMS_Message.h"
 static id _instance = nil;
 @interface XIU_GetVerificationCodeVC ()
 {
     NSInteger _count;
     NSTimer *_Timer;
+    NSString *messageCode;
 }
 @property (nonatomic, weak)UITextField *VerificationField;
 
@@ -37,6 +39,19 @@ static id _instance = nil;
     image.frame  =CGRectMake(0, 0, KWIDTH, KHEIGHT);
     [self.view addSubview:image];
     [self creatSubView];
+    [self getCode];
+}
+
+- (void)getCode {
+    NSString *code = [NSString stringWithFormat:@"%u%u%u%u%u%u",arc4random()%10,arc4random()%10,arc4random()%10,arc4random()%10,arc4random()%10,arc4random()%10];
+    [QMS_Message messageHttpWithNumber:_PhoneNumberStr verification:code block:^(BOOL isOK) {
+        if (isOK) {
+            messageCode = code;
+        }else{
+            NSLog(@"自己去找bug");
+        }
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -182,6 +197,10 @@ static id _instance = nil;
 //下一步按钮
 - (void)chickedNextButton {
     //验证码判断
+    if (![_VerificationField.text isEqualToString:messageCode]) {
+        [self HUDWithText:@"验证码输入错误"];
+        return;
+    }
     //网络请求
     [self request];
 }

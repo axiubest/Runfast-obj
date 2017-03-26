@@ -18,7 +18,7 @@
 #define arc_size KWIDTH
 #define progressWidth 15
 
-@interface MainPageViewController ()<CBPeripheralManagerDelegate,BTSmartSensorDelegate, BLEListTableViewDelegate>
+@interface MainPageViewController ()<CBPeripheralManagerDelegate,BTSmartSensorDelegate,ModeSelectionDelegate, BLEListTableViewDelegate>
 {
     CGFloat speedNum;
     int slopeNum;
@@ -33,6 +33,9 @@
     NSString * heart;   //h
     
     NSString *slope;    //s
+    
+    CGFloat NowDis;
+    
 }
 
 
@@ -51,6 +54,9 @@
 
 @property (nonatomic, weak) UILabel *allLabel;
 @property (nonatomic, weak) UILabel *nowDayLabel;
+
+@property (nonatomic,weak) UILabel *currentNum;
+
 @end
 
 
@@ -62,17 +68,46 @@
 {
     [super viewWillAppear:animated];
     
+    NowDis = [[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis] ? [[[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis] floatValue] : 0;
+    
+    
 
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
     
     _allLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:sportDis] ? [NSString stringWithFormat:@"%@Km", [[NSUserDefaults standardUserDefaults] objectForKey:sportDis]] : @"请设置目标" ;
     self.nowDayLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:sportDay] ?[NSString stringWithFormat:@"%@天", [[NSUserDefaults standardUserDefaults] objectForKey:sportDay]]  :  @"0天";
+    
+    
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:sportStartDate]){
+        return;
+    }else{
+        self.currentNum.text = @"第0天";
+    }
+    
+    NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:sportStartDate];
+    
+    NSDate *dateFor = [NSDate date];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat  =@"yyyy-MM-dd";
+    NSString *dateStr = [fmt stringFromDate:dateFor];
+    fmt.dateFormat  =@"yyyy-MM-dd";
+    NSDate *create = [fmt dateFromString:dateStr];
+    
+    NSTimeInterval delta = [startDate timeIntervalSinceDate:create];
+    NSInteger num = delta/864000+1;
+    NSInteger totalNum = [[[NSUserDefaults standardUserDefaults] objectForKey:sportDay] integerValue];
+    self.currentNum.text = [NSString stringWithFormat:@"第%ld天",num<totalNum?num:totalNum];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"主界面";
+    
+    NSLog(@"%@", kPathDocument);
+    NSLog(@"%@", [XIU_Login curLoginUser].userImg);
+    
     _tvRecv = [NSString string];
     _speed = [NSString string];
     UIImageView *image = [[UIImageView alloc] initWithFrame:FULLRECT];
@@ -84,10 +119,17 @@
     
         [self createNavgationButtonWithImageNmae:nil title:@"连接" target:self action:@selector(clickedBLE) type:UINavigationItem_Type_RightItem];
     
-    [self createUI];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 60, 60)];
+    label.center = CGPointMake(KWIDTH/2 - 70, KHEIGHT/2 + 30);
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor lightGrayColor];
+    [self.view addSubview:label];
+    self.currentNum = label;
+    
     
     [self createProgressView];
-    
+    [self createUI];
+
     [self createBLE];
 }
 
@@ -107,7 +149,7 @@
 
 - (void)createProgressView {
     
-    NSInteger disNum = [[NSUserDefaults standardUserDefaults] objectForKey:sportDis] ?  [[[NSUserDefaults standardUserDefaults] objectForKey:sportDis] integerValue] : 100;;
+    NSInteger disNum = [[NSUserDefaults standardUserDefaults] objectForKey:sportDis] ?  [[[NSUserDefaults standardUserDefaults] objectForKey:sportDis] integerValue] : 300;;
     
     NSInteger allDayNum =  [[NSUserDefaults standardUserDefaults] objectForKey:sportDay] ? [[[NSUserDefaults standardUserDefaults] objectForKey:sportDay] integerValue] : 7;
 
@@ -127,7 +169,7 @@
     disprogress.blockCount = 26;   // 进度块的数量
     disprogress.minValue = 0;      // 进度条最小数值
     disprogress.maxValue = disNum;    // 进度条最大数值
-    disprogress.currentValue = 10; // 进度条当前数值
+    disprogress.currentValue = NowDis; // 进度条当前数值
     
     disprogress.showShadow = NO;  // 是否显示阴影
     disprogress.shadowOuterRadius = 85; // 阴影外圈半径
@@ -158,7 +200,7 @@
     progress.blockCount = 26;   // 进度块的数量
     progress.minValue = 0;      // 进度条最小数值
     progress.maxValue = allDayNum;    // 进度条最大数值
-    progress.currentValue = 10; // 进度条当前数值
+    progress.currentValue =  [self.currentNum.text floatValue]; // 进度条当前数值
     
     progress.showShadow = NO;  // 是否显示阴影
     progress.shadowOuterRadius = 85; // 阴影外圈半径
@@ -176,7 +218,7 @@
     lab.font = [UIFont systemFontOfSize:50 weight:2];
     lab.textAlignment = 1;
     lab.textColor = [UIColor whiteColor];
-    lab.text = [NSString stringWithFormat:@"%.f",_disProgressView.currentValue];
+    lab.text = [NSString stringWithFormat:@"%.f",NowDis];
     lab.center = CGPointMake(SV.center.x, SV.center.y - 40);
     [self.view addSubview:lab];
     
@@ -264,6 +306,7 @@
     CreateButton *styleSelectBtn  = [[CreateButton alloc] initWithFrame:CGRectMake(KWIDTH - 40 - 100 , historyBtn.y, historyBtn.width, historyBtn.height) Title:@"模式选择" ImageName:@"控制属性设置"];
     [styleSelectBtn bk_whenTapped:^{
         ModeSelectionVC *select = [[ModeSelectionVC alloc] init];
+        select.MyDelegate = self;
         [self.navigationController pushViewController:select animated:YES];
     }];
     [self.view addSubview:styleSelectBtn];
@@ -291,12 +334,13 @@
         return;
     }
     else if ([self isConnect]) {
-        BLEViewController *ble = [BLEViewController shareInstance];
+        BLEViewController *ble = [[BLEViewController alloc] init];
         ble.sensor = sensor;
+        ble.isContent = self.isConnect;
         [self.navigationController pushViewController:ble animated:YES];
         return;
     }
-    [self HUDWithText:@"连接错误请重新连接"];
+    [self HUDWithText:@"蓝牙未连接"];
 
 }
 
@@ -395,7 +439,7 @@
 
 -(void)setDisconnect
 {
-//    self.isConnect = NO;
+    self.isConnect = NO;
 //    if ([self.myDelegate respondsToSelector:@selector(qmsRunViewControllerisStart:)]) {
 //        [self.myDelegate qmsRunViewControllerisStart:NO];
 //    }
@@ -421,11 +465,16 @@
     }
     
     sensor.activePeripheral = _Peripheral;
-    
+    self.isConnect = YES;
     [sensor connect:sensor.activePeripheral];
+    [self HUDWithText:@"您已连接蓝牙，现在可以开始跑步了"];
 }
 
-
+#pragma mark model-Delegate
+- (void)modelDelegate {
+    
+    [self clickedQuickStartBtn];
+}
 
 
 

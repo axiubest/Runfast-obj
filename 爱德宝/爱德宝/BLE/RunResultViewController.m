@@ -7,7 +7,8 @@
 //
 
 #import "RunResultViewController.h"
-
+#import "MainPageViewController.h"
+#import "XIU_ShareView.h"
 @interface RunResultViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *BottomImageView;
 @property (weak, nonatomic) IBOutlet UILabel *TimeLab;
@@ -22,15 +23,18 @@
 
 - (IBAction)SureBtn:(id)sender {
     [self request];
+    MainPageViewController *main = [[MainPageViewController alloc] init];
+    [self.navigationController pushViewController:main animated:YES];
 }
 
 - (IBAction)ShareBtn:(id)sender {
+     [XIU_ShareView showShareView];
 }
 
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear: animated];
-    
+        self.navigationController.navigationBarHidden = YES;
     _TimeLab.text = [NSString stringWithFormat:@"%@ m:s", _Time];
     _KcalLab.text = [NSString stringWithFormat:@"%@KCal", _Kcal];
     _KmLab.text = [NSString stringWithFormat:@"%@Km", _Km];
@@ -42,20 +46,40 @@
     
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
 }
 
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+        self.navigationController.navigationBarHidden = NO;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 - (void)request {
-    [[XIU_NetAPIManager sharedManager] request_SaveSportGradeWithKm:@"12" Time:@"333" KCar:@"3443" Block:^(id data, NSError *error) {
-        
+
+    NSString *tmp = [[_Time componentsSeparatedByString:@"."] firstObject];
+    NSLog(@"%@", tmp);
+//    if ([tmp isEqualToString:@"0"]) {
+//        tmp = @"1";
+//    }
+    [[XIU_NetAPIManager sharedManager] request_SaveSportGradeWithKm:[NSString stringWithFormat:@"%@", _Km] Time:[NSString stringWithFormat:@"%@", tmp] KCar:[NSString stringWithFormat:@"%@", _Kcal] Block:^(id data, NSError *error) {
+        if (data) {
+            [self HUDWithText:@"数据上传成功"];
+        }else {
+            
+        }
     }];
 }
+
+
+
 
 @end

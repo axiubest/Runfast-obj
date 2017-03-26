@@ -10,7 +10,7 @@
 
 @protocol XIU_LoginViewControllerDelegate <NSObject>
 @required
-- (void)login;
+- (void)poplogin;
 
 @end
 

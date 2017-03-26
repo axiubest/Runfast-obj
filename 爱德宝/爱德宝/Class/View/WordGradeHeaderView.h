@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface WordGradeHeaderView : UIView
-
+- (void)setvalue;
 
 @end
