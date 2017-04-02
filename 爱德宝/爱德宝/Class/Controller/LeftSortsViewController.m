@@ -33,10 +33,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableview reloadData];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    imageview.image = [UIImage imageNamed:@"leftbackiamge"];
+    [self.view addSubview:imageview];
     
     UITableView *tableview = [[UITableView alloc] init];
     tableview.frame = self.view.bounds;
@@ -48,6 +53,15 @@
 
     [tableview registerNib:[UINib nibWithNibName:@"SliderBarPersonCell" bundle:nil] forCellReuseIdentifier:SliderBarPersonIdentifier];
     
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    
+    [center addObserver:self selector:@selector(resignnotice:) name:@"resignTableViewReloData" object:nil];
+    
+    [center addObserver:self selector:@selector(resignnotice:) name:@"modifyAvatarTableView" object:nil];
+}
+
+- (void)resignnotice:(NSNotification *)sender {
+    [self.tableview reloadData];
 }
 
 -(void)iconChange{
@@ -219,4 +233,7 @@
     return view;
 }
 
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end

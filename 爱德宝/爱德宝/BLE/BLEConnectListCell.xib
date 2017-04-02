@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="102" id="KGk-i7-Jjw" customClass="BLEConnectListCell">
+            <rect key="frame" x="0.0" y="0.0" width="353" height="102"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="353" height="101"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="tRq-tb-YrT">
+                        <rect key="frame" x="0.0" y="0.0" width="353" height="102"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="蓝牙名称：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fks-CZ-AW6">
+                        <rect key="frame" x="28" y="28" width="72" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.98039215690000003" green="0.93798098107458783" blue="0.97895582809457793" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQd-eT-3Ud">
+                        <rect key="frame" x="325" y="28" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="RQd-eT-3Ud" secondAttribute="trailing" constant="20" id="ODY-mE-q2K"/>
+                    <constraint firstItem="RQd-eT-3Ud" firstAttribute="top" secondItem="Fks-CZ-AW6" secondAttribute="top" id="TX2-yJ-iNZ"/>
+                    <constraint firstItem="tRq-tb-YrT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ZM4-aO-QvV"/>
+                    <constraint firstAttribute="bottom" secondItem="tRq-tb-YrT" secondAttribute="bottom" id="daA-k6-SS3"/>
+                    <constraint firstItem="Fks-CZ-AW6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="pcV-Rg-nRN"/>
+                    <constraint firstAttribute="trailing" secondItem="tRq-tb-YrT" secondAttribute="trailing" id="qR1-ch-dyC"/>
+                    <constraint firstItem="Fks-CZ-AW6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="20" id="tJG-ai-i0R"/>
+                    <constraint firstItem="tRq-tb-YrT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="zJ3-I5-W8l"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="ConnectLab" destination="RQd-eT-3Ud" id="j1h-vn-ozd"/>
+                <outlet property="bgView" destination="H2p-sc-9uM" id="FwK-kq-Wv2"/>
+            </connections>
+            <point key="canvasLocation" x="-1068" y="41"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bg.png" width="782" height="1258"/>
+    </resources>
+</document>

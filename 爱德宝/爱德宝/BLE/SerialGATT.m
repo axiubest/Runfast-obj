@@ -3,7 +3,7 @@
 //  BLKSoft
 //
 //  Created by BLKSofts on 7/13/12.
-//  Copyright (c) 2012 jnhuamao.cn. All rights reserved.
+//  Copyright (c) 2012 A-XIU. All rights reserved.
 //
 
 #import "SerialGATT.h"
@@ -266,7 +266,9 @@
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
-    activePeripheral = nil;
+//    activePeripheral = nil;
+    //断开链接重新连接
+    [central connectPeripheral:activePeripheral options:nil];
 
     [delegate abNormalConnect];
 }
@@ -280,7 +282,6 @@
 
 -(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    printf("in updateValueForCharacteristic function\n");
     
     if (error) {
         printf("updateValueForCharacteristic failed\n");

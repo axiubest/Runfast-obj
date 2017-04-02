@@ -10,6 +10,7 @@
 #import "HistoryGradeCell.h"
 #import "HistoryHeaderView.h"
 #import "HistorygradeModel.h"
+
 static NSString *const HistoryGradeIdentifier  =@"HistoryGradeCell";
 @interface HistoryViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

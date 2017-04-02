@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -25,6 +25,7 @@
                 <outlet property="TimeLab" destination="GBY-yJ-FDG" id="vPV-yr-PHP"/>
                 <outlet property="TimeView" destination="oV4-9y-7uU" id="g8N-7q-ByH"/>
                 <outlet property="endButton" destination="vn6-p2-TKI" id="aFe-ev-bJw"/>
+                <outlet property="modelShowLab" destination="Qza-rf-7ea" id="t7R-Ky-A6S"/>
                 <outlet property="slopeControlView" destination="SFS-hD-2kz" id="0eH-GE-eg2"/>
                 <outlet property="slopeLab" destination="Jdv-u3-PB0" id="Lgd-qq-Gbf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -56,6 +57,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oV4-9y-7uU" userLabel="TimeView">
                     <rect key="frame" x="93" y="507" width="70" height="70"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="sporting_outline_time.png" translatesAutoresizingMaskIntoConstraints="NO" id="Wgj-YF-WzT">
+                            <rect key="frame" x="-5" y="-5" width="80" height="80"/>
+                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="时间 (1).png" translatesAutoresizingMaskIntoConstraints="NO" id="DHS-BX-i8J">
                             <rect key="frame" x="0.0" y="35" width="35" height="35"/>
                         </imageView>
@@ -77,21 +81,28 @@
                         <constraint firstAttribute="trailing" secondItem="yPG-EO-HZb" secondAttribute="trailing" id="4Pf-uG-l9P"/>
                         <constraint firstItem="yPG-EO-HZb" firstAttribute="top" secondItem="GBY-yJ-FDG" secondAttribute="bottom" id="7WS-Jb-K8e"/>
                         <constraint firstAttribute="bottom" secondItem="DHS-BX-i8J" secondAttribute="bottom" id="82n-Zv-VR9"/>
+                        <constraint firstAttribute="bottom" secondItem="Wgj-YF-WzT" secondAttribute="bottom" id="8FW-bU-9bs"/>
                         <constraint firstItem="yPG-EO-HZb" firstAttribute="top" secondItem="DHS-BX-i8J" secondAttribute="top" id="F72-4Y-tlo"/>
                         <constraint firstItem="GBY-yJ-FDG" firstAttribute="leading" secondItem="oV4-9y-7uU" secondAttribute="leading" id="GV1-iO-aea"/>
                         <constraint firstItem="DHS-BX-i8J" firstAttribute="leading" secondItem="oV4-9y-7uU" secondAttribute="leading" id="LcN-Ql-CyI"/>
+                        <constraint firstItem="Wgj-YF-WzT" firstAttribute="top" secondItem="oV4-9y-7uU" secondAttribute="top" id="OId-ac-EMy"/>
                         <constraint firstItem="GBY-yJ-FDG" firstAttribute="top" secondItem="oV4-9y-7uU" secondAttribute="top" id="OyS-NO-RFQ"/>
+                        <constraint firstAttribute="trailing" secondItem="Wgj-YF-WzT" secondAttribute="trailing" id="TYw-jo-ird"/>
                         <constraint firstItem="DHS-BX-i8J" firstAttribute="width" secondItem="oV4-9y-7uU" secondAttribute="height" multiplier="1:2" id="TZO-3C-APu"/>
                         <constraint firstItem="DHS-BX-i8J" firstAttribute="width" secondItem="DHS-BX-i8J" secondAttribute="height" multiplier="1:1" id="Wv6-Hl-hts"/>
                         <constraint firstAttribute="width" secondItem="oV4-9y-7uU" secondAttribute="height" multiplier="1:1" id="eCr-X8-lDb"/>
                         <constraint firstAttribute="width" constant="70" id="mvj-2y-6q3"/>
                         <constraint firstItem="yPG-EO-HZb" firstAttribute="leading" secondItem="DHS-BX-i8J" secondAttribute="trailing" id="nBb-jc-rO4"/>
+                        <constraint firstItem="Wgj-YF-WzT" firstAttribute="leading" secondItem="oV4-9y-7uU" secondAttribute="leading" id="r5J-1a-QEO"/>
                         <constraint firstAttribute="trailing" secondItem="GBY-yJ-FDG" secondAttribute="trailing" id="uhr-sd-GyC"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p7s-9N-3FK" userLabel="KmView">
                     <rect key="frame" x="213" y="510" width="70" height="65"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sporting_outline_distance.png" translatesAutoresizingMaskIntoConstraints="NO" id="I4z-t8-xd5">
+                            <rect key="frame" x="0.0" y="0.0" width="70" height="65"/>
+                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="速度计.png" translatesAutoresizingMaskIntoConstraints="NO" id="EcY-cQ-3qF">
                             <rect key="frame" x="0.0" y="30" width="35" height="35"/>
                         </imageView>
@@ -115,9 +126,13 @@
                         <constraint firstAttribute="trailing" secondItem="hVo-MI-HDP" secondAttribute="trailing" id="7QZ-Es-zHd"/>
                         <constraint firstItem="FNT-A3-EMH" firstAttribute="top" secondItem="EcY-cQ-3qF" secondAttribute="top" id="9Fp-K5-avg"/>
                         <constraint firstAttribute="width" secondItem="p7s-9N-3FK" secondAttribute="height" multiplier="79:73" id="Ieb-DS-Tdm"/>
+                        <constraint firstAttribute="trailing" secondItem="I4z-t8-xd5" secondAttribute="trailing" id="JtM-AG-VD7"/>
                         <constraint firstItem="hVo-MI-HDP" firstAttribute="leading" secondItem="p7s-9N-3FK" secondAttribute="leading" id="KHg-yt-P51"/>
+                        <constraint firstItem="I4z-t8-xd5" firstAttribute="leading" secondItem="p7s-9N-3FK" secondAttribute="leading" id="OFu-Ty-XsX"/>
+                        <constraint firstAttribute="bottom" secondItem="I4z-t8-xd5" secondAttribute="bottom" id="RbO-oi-Oak"/>
                         <constraint firstItem="EcY-cQ-3qF" firstAttribute="width" secondItem="p7s-9N-3FK" secondAttribute="height" multiplier="7:13" id="Sob-0p-vqM"/>
                         <constraint firstItem="FNT-A3-EMH" firstAttribute="top" secondItem="hVo-MI-HDP" secondAttribute="bottom" id="Wqa-QT-aF1"/>
+                        <constraint firstItem="I4z-t8-xd5" firstAttribute="top" secondItem="p7s-9N-3FK" secondAttribute="top" id="Zee-dB-QWj"/>
                         <constraint firstAttribute="bottom" secondItem="EcY-cQ-3qF" secondAttribute="bottom" id="oBA-Cc-TZG"/>
                         <constraint firstItem="hVo-MI-HDP" firstAttribute="top" secondItem="p7s-9N-3FK" secondAttribute="top" id="rL1-1Q-Ts2"/>
                         <constraint firstItem="FNT-A3-EMH" firstAttribute="leading" secondItem="EcY-cQ-3qF" secondAttribute="trailing" id="vMD-OW-Eg6"/>
@@ -127,6 +142,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4IH-Gg-UZY" userLabel="BpmView">
                     <rect key="frame" x="30" y="407" width="70" height="70"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sporting_outline_heart.png" translatesAutoresizingMaskIntoConstraints="NO" id="GFJ-iF-fdx">
+                            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="心电.png" translatesAutoresizingMaskIntoConstraints="NO" id="D3T-a0-jKJ">
                             <rect key="frame" x="0.0" y="35" width="35" height="35"/>
                             <constraints>
@@ -153,16 +171,23 @@
                         <constraint firstItem="L1N-pZ-fzu" firstAttribute="top" secondItem="4IH-Gg-UZY" secondAttribute="top" id="Aoy-8B-kYm"/>
                         <constraint firstAttribute="trailing" secondItem="L1N-pZ-fzu" secondAttribute="trailing" id="E2Y-tB-Ar1"/>
                         <constraint firstItem="D3T-a0-jKJ" firstAttribute="width" secondItem="4IH-Gg-UZY" secondAttribute="height" multiplier="1:2" id="Ehc-F2-JPW"/>
+                        <constraint firstItem="GFJ-iF-fdx" firstAttribute="leading" secondItem="4IH-Gg-UZY" secondAttribute="leading" id="MIq-Yy-4Fm"/>
+                        <constraint firstAttribute="trailing" secondItem="GFJ-iF-fdx" secondAttribute="trailing" id="TvK-aU-oDu"/>
                         <constraint firstItem="L1N-pZ-fzu" firstAttribute="leading" secondItem="4IH-Gg-UZY" secondAttribute="leading" id="WS7-Qu-9aj"/>
                         <constraint firstItem="D3T-a0-jKJ" firstAttribute="leading" secondItem="4IH-Gg-UZY" secondAttribute="leading" id="Zd7-V2-aHK"/>
                         <constraint firstAttribute="bottom" secondItem="D3T-a0-jKJ" secondAttribute="bottom" id="kuV-Pk-yUY"/>
                         <constraint firstItem="Arq-cD-Vug" firstAttribute="leading" secondItem="D3T-a0-jKJ" secondAttribute="trailing" id="nwJ-wM-uB1"/>
+                        <constraint firstItem="GFJ-iF-fdx" firstAttribute="top" secondItem="4IH-Gg-UZY" secondAttribute="top" id="tPX-5r-VHC"/>
                         <constraint firstAttribute="trailing" secondItem="Arq-cD-Vug" secondAttribute="trailing" id="tek-cc-NZm"/>
+                        <constraint firstAttribute="bottom" secondItem="GFJ-iF-fdx" secondAttribute="bottom" id="wJN-XV-ncx"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1f-hR-nBS" userLabel="KcalView">
                     <rect key="frame" x="275" y="407" width="70" height="70"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sporting_outline_calories.png" translatesAutoresizingMaskIntoConstraints="NO" id="oxn-W1-esf">
+                            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="徒步2.png" translatesAutoresizingMaskIntoConstraints="NO" id="woZ-As-bXX">
                             <rect key="frame" x="0.0" y="35" width="35" height="35"/>
                         </imageView>
@@ -185,12 +210,16 @@
                         <constraint firstAttribute="trailing" secondItem="bSU-Rv-PCR" secondAttribute="trailing" id="JX0-SP-rcb"/>
                         <constraint firstItem="bSU-Rv-PCR" firstAttribute="top" secondItem="woZ-As-bXX" secondAttribute="top" id="JjX-Ue-kL1"/>
                         <constraint firstItem="woZ-As-bXX" firstAttribute="width" secondItem="woZ-As-bXX" secondAttribute="height" multiplier="1:1" id="R1D-n6-8L2"/>
+                        <constraint firstAttribute="bottom" secondItem="oxn-W1-esf" secondAttribute="bottom" id="RYR-lu-1j0"/>
                         <constraint firstItem="bSU-Rv-PCR" firstAttribute="leading" secondItem="woZ-As-bXX" secondAttribute="trailing" id="SRr-Sc-Ss6"/>
+                        <constraint firstItem="oxn-W1-esf" firstAttribute="leading" secondItem="d1f-hR-nBS" secondAttribute="leading" id="StC-5Q-wjF"/>
                         <constraint firstItem="pXc-Md-xhc" firstAttribute="top" secondItem="d1f-hR-nBS" secondAttribute="top" id="UP8-Kg-qF0"/>
                         <constraint firstAttribute="trailing" secondItem="pXc-Md-xhc" secondAttribute="trailing" id="fLg-El-MKs"/>
+                        <constraint firstAttribute="trailing" secondItem="oxn-W1-esf" secondAttribute="trailing" id="jcd-o7-HGO"/>
                         <constraint firstAttribute="bottom" secondItem="woZ-As-bXX" secondAttribute="bottom" id="k8g-Sb-3CN"/>
                         <constraint firstItem="bSU-Rv-PCR" firstAttribute="top" secondItem="pXc-Md-xhc" secondAttribute="bottom" id="p2p-O3-w4X"/>
                         <constraint firstItem="woZ-As-bXX" firstAttribute="leading" secondItem="d1f-hR-nBS" secondAttribute="leading" id="peb-bZ-iuU"/>
+                        <constraint firstItem="oxn-W1-esf" firstAttribute="top" secondItem="d1f-hR-nBS" secondAttribute="top" id="rsj-sV-aDr"/>
                         <constraint firstItem="pXc-Md-xhc" firstAttribute="leading" secondItem="d1f-hR-nBS" secondAttribute="leading" id="u3C-M5-9Ro"/>
                     </constraints>
                 </view>
@@ -208,7 +237,18 @@
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SFS-hD-2kz" userLabel="slopeControlView">
                     <rect key="frame" x="0.0" y="294.5" width="375" height="212.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qza-rf-7ea">
+                            <rect key="frame" x="187" y="136.5" width="0.0" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.91372549020000005" green="0.92941176469999998" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Qza-rf-7ea" firstAttribute="centerY" secondItem="SFS-hD-2kz" secondAttribute="centerY" constant="30" id="vNr-yo-ZFw"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -218,6 +258,7 @@
                 <constraint firstItem="vn6-p2-TKI" firstAttribute="top" secondItem="SFS-hD-2kz" secondAttribute="bottom" constant="100" id="1gv-wz-Zdw"/>
                 <constraint firstItem="d1f-hR-nBS" firstAttribute="centerY" secondItem="4IH-Gg-UZY" secondAttribute="centerY" id="3iB-Nk-fod"/>
                 <constraint firstItem="vn6-p2-TKI" firstAttribute="top" secondItem="oV4-9y-7uU" secondAttribute="bottom" constant="30" id="4FL-gz-UWO"/>
+                <constraint firstItem="Qza-rf-7ea" firstAttribute="centerX" secondItem="6rQ-PM-47O" secondAttribute="centerX" id="4PT-2b-ddd"/>
                 <constraint firstAttribute="trailing" secondItem="vn6-p2-TKI" secondAttribute="trailing" constant="30" id="4h0-CU-VgY"/>
                 <constraint firstItem="p7s-9N-3FK" firstAttribute="centerY" secondItem="oV4-9y-7uU" secondAttribute="centerY" id="7NT-uF-6KY"/>
                 <constraint firstAttribute="bottom" secondItem="vn6-p2-TKI" secondAttribute="bottom" constant="20" id="7gB-uj-DTt"/>
@@ -248,6 +289,10 @@
     </objects>
     <resources>
         <image name="bg.png" width="782" height="1258"/>
+        <image name="sporting_outline_calories.png" width="192" height="192"/>
+        <image name="sporting_outline_distance.png" width="192" height="192"/>
+        <image name="sporting_outline_heart.png" width="192" height="192"/>
+        <image name="sporting_outline_time.png" width="192" height="192"/>
         <image name="徒步2.png" width="100" height="100"/>
         <image name="心电.png" width="100" height="100"/>
         <image name="时间 (1).png" width="100" height="100"/>

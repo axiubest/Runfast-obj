@@ -3,7 +3,7 @@
 //  BLKSoft
 //
 //  Created by BLKSofts on 7/13/12.
-//  Copyright (c) 2012 jnhuamao.cn. All rights reserved.
+//  Copyright (c) 2012 A-XIU. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

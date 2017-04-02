@@ -54,21 +54,23 @@ static NSString * disImage_select = @"行驶里程2";
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    value = @"8";
 }
 
 - (IBAction)startButton:(id)sender {
     
     [self.navigationController popViewControllerAnimated:YES];
 
-    if (value) {
+    
         if (!modelTmp) {
             modelTmp = @"time";
-        }
-        NSDictionary *obj = @{@"type":modelTmp,@"value":value};
-        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:model_Value];
+            
+
     }
+    NSDictionary *obj = @{@"type":modelTmp,@"value":value};
+    [[NSUserDefaults standardUserDefaults] setObject:obj forKey:model_Value];
 
-
+    
     [_MyDelegate modelDelegate];
 }
 
@@ -111,6 +113,7 @@ static NSString * disImage_select = @"行驶里程2";
     [_CarView bk_whenTapped:^{
            [self createUpImageWithTimeImage:timeImage_stateNormal CarImage:carImage_stateHighLight DistanceImage:disImage_stateNormal SelectImage:carImage_select SelectLab:@"卡路里／Kcal"];
         modelTmp = @"kcal";
+        value = @"10";
         self.titles = [self createPickerViewStart:10 end:99];
         [self.pickerView reloadData];
     }];
@@ -121,6 +124,7 @@ static NSString * disImage_select = @"行驶里程2";
         
         [self createUpImageWithTimeImage:timeImage_stateNormal CarImage:carImage_stateNormal DistanceImage:disImage_stateHighLight SelectImage:disImage_select SelectLab:@"里程／Km"];
         modelTmp = @"dis";
+        value = @"1";
         self.titles = [self createPickerViewStart:1 end:45];
         [self.pickerView reloadData];
 

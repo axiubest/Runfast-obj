@@ -10,7 +10,12 @@
 #import "WordGradeHeaderView.h"
 #import "WordGradeCell.h"
 #import "WorldGradeModel.h"
+#import "MJRefresh.h"
+
 @interface WordGradeViewController ()<UITableViewDelegate, UITableViewDataSource>
+{
+    int pageNum;
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property(nonatomic, strong) XIU_Login *login;
@@ -55,7 +60,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WordGradeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WordGradeIdentifier"];
-    NSLog(@"%ld", (long)indexPath.section);
     [cell dataSource:self.dataSource[indexPath.section] count:indexPath.section];
     return cell;
 }
@@ -64,15 +68,27 @@
     self.login = [[XIU_Login alloc] init];
     [_tableView registerNib:[UINib nibWithNibName:@"WordGradeCell" bundle:nil] forCellReuseIdentifier:@"WordGradeIdentifier"];
     _tableView.sectionFooterHeight = 0.000001;
-    
-    [self request];
+     pageNum = 0;
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        pageNum++;
+        [self requestWithPage:pageNum];
+        
+    }];
+
+    [self requestWithPage:pageNum];
 }
 
-- (void)request {
-    [[XIU_NetAPIManager sharedManager] request_WorldGrade_WithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/getallrankinglist?" Params:@{@"page": @"0",@"size" :@"5",} andBlock:^(id data, NSError *error) {
-        NSLog(@"%@", data);
+
+
+- (void)requestWithPage:(int)page {
+    NSLog(@"%d", page);
+    
+    [[XIU_NetAPIManager sharedManager] request_WorldGrade_WithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/getallrankinglist?" Params:@{@"page": [NSNumber numberWithInt:page],@"size" :@"10",} andBlock:^(id data, NSError *error) {
+        
         [self.dataSource addObjectsFromArray:data];
         [self.tableView reloadData];
+        [self.tableView.mj_footer endRefreshing];
+
     }];
 }
 

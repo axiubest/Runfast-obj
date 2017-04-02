@@ -20,8 +20,12 @@
     if ([XIU_Login isLogin]) {
         _PersonName.text = [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginUserDict] objectForKey:@"username"];
         
-        _PersonNumber.text =[NSString stringWithFormat:@"总排名:%@",[[NSUserDefaults standardUserDefaults] objectForKey:user_ranking]];
-        _PersondistanceNumber.text = [NSString stringWithFormat:@"总里程:%@", [XIU_Login curLoginUser].allDis];
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:user_ranking]) {
+             _PersonNumber.text = @"暂无排名";
+        }else {
+            _PersonNumber.text =[NSString stringWithFormat:@"总排名:%@",[[NSUserDefaults standardUserDefaults] objectForKey:user_ranking]];
+        }
+          _PersondistanceNumber.text = [NSString stringWithFormat:@"总里程:%@", [XIU_Login curLoginUser].allDis];
         
         if ([UIImage imageNamed:iconPath]) {
             _PersonImageView.image = [UIImage imageNamed:iconPath];

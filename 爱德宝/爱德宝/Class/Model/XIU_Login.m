@@ -121,13 +121,14 @@ static XIU_User *curLoginUser;
 
 
 +(void)saveNewUserInfoWithUser:(XIU_User *)user {
-    
+    NSLog(@"%@", user);
+
   NSDictionary *dic = @{@"id":user.userId,
                         @"usersex":user.usersex,
                         @"allCir":user.allCir,
                         @"allDis":user.allDis,
                         @"channelid":user.channelid,
-                        @"birth":user.birth ? user.birth : @"",
+                        @"birth":user.birth,
                         @"weight":user.weight,
                         @"userpass":user.userpass,
                         @"username":user.username,
@@ -138,6 +139,8 @@ static XIU_User *curLoginUser;
                         @"userfrom":user.userfrom,
                         @"allTime":user.allTime,
                         @"identified":user.identified ? user.identified : @""};
+    
+    
     [[NSUserDefaults standardUserDefaults] setObject:dic forKey:kLoginUserDict];
    }
 

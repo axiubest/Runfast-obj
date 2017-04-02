@@ -80,11 +80,9 @@
     
     
     if (![[NSUserDefaults standardUserDefaults] objectForKey:sportStartDate]){
-        return;
-    }else{
         self.currentNum.text = @"第0天";
+        return;
     }
-    
     NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:sportStartDate];
     
     NSDate *dateFor = [NSDate date];
@@ -94,11 +92,10 @@
     fmt.dateFormat  =@"yyyy-MM-dd";
     NSDate *create = [fmt dateFromString:dateStr];
     
-    NSTimeInterval delta = [startDate timeIntervalSinceDate:create];
-    NSInteger num = delta/864000+1;
+    NSTimeInterval delta = [create timeIntervalSinceDate:startDate];
+    NSInteger num = delta/86400+1;
     NSInteger totalNum = [[[NSUserDefaults standardUserDefaults] objectForKey:sportDay] integerValue];
     self.currentNum.text = [NSString stringWithFormat:@"第%ld天",num<totalNum?num:totalNum];
-
 }
 
 - (void)viewDidLoad {
@@ -451,7 +448,7 @@
 
 -(void)abNormalConnect{
     self.isConnect = NO;
-//    [self endBtnClick:nil];
+// 中断链接；
 }
 
 

@@ -61,9 +61,6 @@
     NSString *sevenDateStr  =[formater stringFromDate:monthdate];
     _endLab.text = sevenDateStr;
 
-    
-
-
 }
 
 
@@ -153,6 +150,17 @@
 - (void)save {
     [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%ld", (long)day] forKey:sportDay];
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%.0lf", dis] forKey:sportDis];
+    
+    NSDate *dateFor = [NSDate date];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat = @"yy-MM-dd";
+    NSString *dateStr = [fmt stringFromDate:dateFor];
+    fmt.dateFormat = @"yy-MM-dd";
+    NSDate *create = [fmt dateFromString:dateStr];
+    [[NSUserDefaults standardUserDefaults] setObject:create forKey:sportStartDate];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"sportInfor" object:nil];
+    
     [self pushViewControllerWithCcontroller:[[MainPageViewController alloc] init]];
     
 }

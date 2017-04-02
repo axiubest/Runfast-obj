@@ -39,7 +39,7 @@ static id _instance = nil;
     image.frame  =CGRectMake(0, 0, KWIDTH, KHEIGHT);
     [self.view addSubview:image];
     [self creatSubView];
-    [self getCode];
+//    [self getCode];
 }
 
 - (void)getCode {
@@ -188,6 +188,7 @@ static id _instance = nil;
         [timer invalidate];
         self.getVerificationNum.enabled = YES;
         [self.getVerificationNum setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [self getCode];
         self.getVerificationNum.backgroundColor = [UIColor redColor];
         self.getVerificationNum.tintColor = [UIColor whiteColor];
         
@@ -197,10 +198,10 @@ static id _instance = nil;
 //下一步按钮
 - (void)chickedNextButton {
     //验证码判断
-    if (![_VerificationField.text isEqualToString:messageCode]) {
-        [self HUDWithText:@"验证码输入错误"];
-        return;
-    }
+//    if (![_VerificationField.text isEqualToString:messageCode]) {
+//        [self HUDWithText:@"验证码输入错误"];
+//        return;
+//    }
     //网络请求
     [self request];
 }
@@ -208,10 +209,14 @@ static id _instance = nil;
 - (void)request {
     [[XIU_NetAPIManager sharedManager] request_ResignWithPhoneNumber:_PhoneNumberStr Psw:_PasswordField.text andBlock:^(id data, NSError *error) {
         if (data) {
+            NSLog(@"%@", data);
+            
             [XIU_Login doLogin:data];
             [self HUDWithText:@"注册成功"];
 
             [self pushViewControllerWithCcontroller:[[MainPageViewController alloc] init]];
+            
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"resignTableViewReloData" object:nil];
             
         }else {
             [self HUDWithText:@"注册失败"];

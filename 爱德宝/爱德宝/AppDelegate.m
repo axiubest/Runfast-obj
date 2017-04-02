@@ -33,14 +33,19 @@
 #pragma mark 信息更新
 - (void)requestInfo {
     if ([XIU_Login isLogin]) {
-        [[XIU_NetAPIManager sharedManager] request_Login_WithPath:[NSString stringWithFormat:@"%@loginByPhone?userphone=%@&userpass=%@",BASEURL, [XIU_Login curLoginUser].userphone, [XIU_Login curLoginUser].userpass] Params:nil andBlock:^(id data, NSError *error) {
+        
+        [[XIU_NetAPIManager sharedManager] request_Login_WithPath:[NSString stringWithFormat:@"http://112.74.28.179:8080/adbs/userbeancontrol/selectUserByPhone?"] Params:@{@"phone":[XIU_Login curLoginUser].userphone} andBlock:^(id data, NSError *error) {
             if (data) {
-                NSLog(@"信息更新成功");
+                
+                NSLog(@"%@---------%@", @"信息更新成功",data);
             }
         }];
 
     }
 }
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

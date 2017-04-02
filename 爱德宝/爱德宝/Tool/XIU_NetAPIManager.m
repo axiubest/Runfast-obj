@@ -27,9 +27,9 @@
 
 
 - (void)request_Login_WithPath:(NSString *)path Params:(id)params andBlock:(void (^)(id data, NSError *error))block {
-    NSLog(@"%@---%@", path, params);
     
     [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:path withParams:params withMethodType:Get andBlock:^(id data, NSError *error) {
+        
         id loginData = [[data objectForKey:@"data"] objectForKey:@"user"];
         
         if ([[data objectForKey:@"data"] objectForKey:@"ranking"]) {
@@ -168,14 +168,11 @@
 - (void)request_UpdateUserInformationWithModel:(XIU_User *)user Block:(void (^)(id data, NSError *error))block {
     
     NSLog(@"%@", user);
-    if (user.birth.length < 1) {
-        user.birth = @"1970.1.1";
-    }
-
+//
+//    
     
     
-    
-    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/updateuserbeaninfo?" withParams:@{@"id":user.userId,@"name":user.username,@"usersex":user.usersex,@"birt":user.birth ,@"userhobby":user.userhobby,@"userImg":user.userImg,@"weight":user.weight,@"height":user.height} withMethodType:Get andBlock:^(id data, NSError *error) {
+    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/updateuserbeaninfo?" withParams:@{@"id":user.userId,@"name":user.username,@"usersex":user.usersex,@"birth":user.birth ,@"userhobby":user.userhobby,@"userImg":user.userImg,@"weight":user.weight,@"height":user.height} withMethodType:Get andBlock:^(id data, NSError *error) {
         if (data) {
             
             block(data, nil);

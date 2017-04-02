@@ -198,7 +198,6 @@
 		83B12F4D1E800E91009EF55B /* time4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F3A1E800E91009EF55B /* time4.png */; };
 		83B12F501E80228D009EF55B /* NSString+CHISLIM_BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12F4F1E80228D009EF55B /* NSString+CHISLIM_BLE.m */; };
 		83B12F521E815F19009EF55B /* fanhui.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B12F511E815F19009EF55B /* fanhui.png */; };
-		83B12F581E842DA5009EF55B /* HKPlayVoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12F571E842DA5009EF55B /* HKPlayVoice.m */; };
 		83B12F5B1E854ED1009EF55B /* HKFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12F5A1E854ED1009EF55B /* HKFileTool.m */; };
 		83B12F5E1E8569F6009EF55B /* QMS_Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12F5D1E8569F6009EF55B /* QMS_Message.m */; };
 		83B12F611E856AC6009EF55B /* XIU_GetVerificationCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B12F601E856AC6009EF55B /* XIU_GetVerificationCodeVC.m */; };
@@ -269,6 +268,15 @@
 		83B1303D1E8765F3009EF55B /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B130281E8765F3009EF55B /* UIScrollView+MJRefresh.m */; };
 		83B1303E1E8765F3009EF55B /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B1302A1E8765F3009EF55B /* UIView+MJExtension.m */; };
 		83B130411E8766D3009EF55B /* QuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B130401E8766D3009EF55B /* QuestionModel.m */; };
+		FA326E0C1E892A64007C2B56 /* XIU_HelpDetialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FA326E0A1E892A64007C2B56 /* XIU_HelpDetialVC.m */; };
+		FA326E0D1E892A65007C2B56 /* XIU_HelpDetialVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA326E0B1E892A64007C2B56 /* XIU_HelpDetialVC.xib */; };
+		FA326E0F1E893739007C2B56 /* 启动页.png in Resources */ = {isa = PBXBuildFile; fileRef = FA326E0E1E893739007C2B56 /* 启动页.png */; };
+		FA3A514A1E90AD5D00E52ED8 /* BLEConnectListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3A51481E90AD5D00E52ED8 /* BLEConnectListCell.m */; };
+		FA3A514B1E90AD5D00E52ED8 /* BLEConnectListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3A51491E90AD5D00E52ED8 /* BLEConnectListCell.xib */; };
+		FAEE07361E8E5E2C006E02B9 /* sporting_outline_calories.png in Resources */ = {isa = PBXBuildFile; fileRef = FAEE07321E8E5E2C006E02B9 /* sporting_outline_calories.png */; };
+		FAEE07371E8E5E2C006E02B9 /* sporting_outline_distance.png in Resources */ = {isa = PBXBuildFile; fileRef = FAEE07331E8E5E2C006E02B9 /* sporting_outline_distance.png */; };
+		FAEE07381E8E5E2C006E02B9 /* sporting_outline_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = FAEE07341E8E5E2C006E02B9 /* sporting_outline_heart.png */; };
+		FAEE07391E8E5E2C006E02B9 /* sporting_outline_time.png in Resources */ = {isa = PBXBuildFile; fileRef = FAEE07351E8E5E2C006E02B9 /* sporting_outline_time.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -610,8 +618,6 @@
 		83B12F4E1E80228D009EF55B /* NSString+CHISLIM_BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CHISLIM_BLE.h"; sourceTree = "<group>"; };
 		83B12F4F1E80228D009EF55B /* NSString+CHISLIM_BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CHISLIM_BLE.m"; sourceTree = "<group>"; };
 		83B12F511E815F19009EF55B /* fanhui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fanhui.png; sourceTree = "<group>"; };
-		83B12F561E842DA5009EF55B /* HKPlayVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKPlayVoice.h; sourceTree = "<group>"; };
-		83B12F571E842DA5009EF55B /* HKPlayVoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKPlayVoice.m; sourceTree = "<group>"; };
 		83B12F591E854ED1009EF55B /* HKFileTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKFileTool.h; sourceTree = "<group>"; };
 		83B12F5A1E854ED1009EF55B /* HKFileTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKFileTool.m; sourceTree = "<group>"; };
 		83B12F5C1E8569F6009EF55B /* QMS_Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMS_Message.h; sourceTree = "<group>"; };
@@ -757,6 +763,17 @@
 		83B1302A1E8765F3009EF55B /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		83B1303F1E8766D3009EF55B /* QuestionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionModel.h; sourceTree = "<group>"; };
 		83B130401E8766D3009EF55B /* QuestionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionModel.m; sourceTree = "<group>"; };
+		FA326E091E892A64007C2B56 /* XIU_HelpDetialVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XIU_HelpDetialVC.h; sourceTree = "<group>"; };
+		FA326E0A1E892A64007C2B56 /* XIU_HelpDetialVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XIU_HelpDetialVC.m; sourceTree = "<group>"; };
+		FA326E0B1E892A64007C2B56 /* XIU_HelpDetialVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XIU_HelpDetialVC.xib; sourceTree = "<group>"; };
+		FA326E0E1E893739007C2B56 /* 启动页.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "启动页.png"; sourceTree = "<group>"; };
+		FA3A51471E90AD5D00E52ED8 /* BLEConnectListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEConnectListCell.h; sourceTree = "<group>"; };
+		FA3A51481E90AD5D00E52ED8 /* BLEConnectListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEConnectListCell.m; sourceTree = "<group>"; };
+		FA3A51491E90AD5D00E52ED8 /* BLEConnectListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BLEConnectListCell.xib; sourceTree = "<group>"; };
+		FAEE07321E8E5E2C006E02B9 /* sporting_outline_calories.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sporting_outline_calories.png; sourceTree = "<group>"; };
+		FAEE07331E8E5E2C006E02B9 /* sporting_outline_distance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sporting_outline_distance.png; sourceTree = "<group>"; };
+		FAEE07341E8E5E2C006E02B9 /* sporting_outline_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sporting_outline_heart.png; sourceTree = "<group>"; };
+		FAEE07351E8E5E2C006E02B9 /* sporting_outline_time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sporting_outline_time.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -816,6 +833,7 @@
 				83ABA07A1E6E56FE00F9B529 /* AppDelegate.m */,
 				83ABA0A01E7014F600F9B529 /* PrefixHeader.pch */,
 				83ABA0821E6E56FE00F9B529 /* Assets.xcassets */,
+				FA326E0E1E893739007C2B56 /* 启动页.png */,
 				83ABA0841E6E56FE00F9B529 /* LaunchScreen.storyboard */,
 				83ABA0871E6E56FE00F9B529 /* Info.plist */,
 				83ABA0761E6E56FE00F9B529 /* Supporting Files */,
@@ -889,6 +907,9 @@
 				83B12FF71E875BE9009EF55B /* XIU_HelpViewController.h */,
 				83B12FF81E875BE9009EF55B /* XIU_HelpViewController.m */,
 				83B12FF91E875BE9009EF55B /* XIU_HelpViewController.xib */,
+				FA326E091E892A64007C2B56 /* XIU_HelpDetialVC.h */,
+				FA326E0A1E892A64007C2B56 /* XIU_HelpDetialVC.m */,
+				FA326E0B1E892A64007C2B56 /* XIU_HelpDetialVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -937,8 +958,6 @@
 			children = (
 				83B12F6A1E86084D009EF55B /* HTTPHandier.h */,
 				83B12F6B1E86084D009EF55B /* HTTPHandier.m */,
-				83B12F561E842DA5009EF55B /* HKPlayVoice.h */,
-				83B12F571E842DA5009EF55B /* HKPlayVoice.m */,
 				83B12F5C1E8569F6009EF55B /* QMS_Message.h */,
 				83B12F5D1E8569F6009EF55B /* QMS_Message.m */,
 				83B12F0C1E7D869E009EF55B /* XIU_UMManager.h */,
@@ -1247,6 +1266,10 @@
 		83B12DA81E717115009EF55B /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				FAEE07321E8E5E2C006E02B9 /* sporting_outline_calories.png */,
+				FAEE07331E8E5E2C006E02B9 /* sporting_outline_distance.png */,
+				FAEE07341E8E5E2C006E02B9 /* sporting_outline_heart.png */,
+				FAEE07351E8E5E2C006E02B9 /* sporting_outline_time.png */,
 				83B12F511E815F19009EF55B /* fanhui.png */,
 				83B12F281E800E91009EF55B /* icon_calories1.png */,
 				83B12F291E800E91009EF55B /* icon_calories2.png */,
@@ -1351,6 +1374,9 @@
 				83B12E661E74FE14009EF55B /* BLEListTableViewController.m */,
 				83B12ED41E799953009EF55B /* Constant.h */,
 				83B12ED51E799953009EF55B /* Constant.m */,
+				FA3A51471E90AD5D00E52ED8 /* BLEConnectListCell.h */,
+				FA3A51481E90AD5D00E52ED8 /* BLEConnectListCell.m */,
+				FA3A51491E90AD5D00E52ED8 /* BLEConnectListCell.xib */,
 			);
 			path = BLE;
 			sourceTree = "<group>";
@@ -1810,8 +1836,10 @@
 				83B12F011E7D8635009EF55B /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				83B12DE11E72DD79009EF55B /* 圆点.png in Resources */,
 				83B12F491E800E91009EF55B /* icon_heart6.png in Resources */,
+				FA326E0D1E892A65007C2B56 /* XIU_HelpDetialVC.xib in Resources */,
 				83B12DFC1E73042B009EF55B /* XIU_LoginViewController.xib in Resources */,
 				83B12F481E800E91009EF55B /* icon_heart5.png in Resources */,
+				FAEE07391E8E5E2C006E02B9 /* sporting_outline_time.png in Resources */,
 				041658321E78C572006F621D /* 时间.png in Resources */,
 				83B12F3F1E800E91009EF55B /* icon_distance1.png in Resources */,
 				83B12DBE1E719D06009EF55B /* 近一周.png in Resources */,
@@ -1828,6 +1856,7 @@
 				83B12E6E1E759701009EF55B /* 头像.png in Resources */,
 				041658301E78C572006F621D /* 里程.png in Resources */,
 				83B12F3B1E800E91009EF55B /* icon_calories1.png in Resources */,
+				FAEE07361E8E5E2C006E02B9 /* sporting_outline_calories.png in Resources */,
 				83B12F471E800E91009EF55B /* icon_heart4.png in Resources */,
 				83B12F271E7EAB97009EF55B /* RunResultViewController.xib in Resources */,
 				83B12DED1E72FDCE009EF55B /* MoreViewController.xib in Resources */,
@@ -1840,12 +1869,16 @@
 				83B12F1E1E7E8DEA009EF55B /* 心电.png in Resources */,
 				83B12DCA1E71A4F2009EF55B /* 皇冠.png in Resources */,
 				83B12DAC1E717126009EF55B /* 箭头.png in Resources */,
+				FAEE07371E8E5E2C006E02B9 /* sporting_outline_distance.png in Resources */,
 				83B12F3D1E800E91009EF55B /* icon_calories3.png in Resources */,
 				83B12DD11E72D238009EF55B /* 皇冠other.png in Resources */,
+				FA326E0F1E893739007C2B56 /* 启动页.png in Resources */,
 				83B12DC81E71A33D009EF55B /* WordGradeHeaderView.xib in Resources */,
 				83B12F521E815F19009EF55B /* fanhui.png in Resources */,
 				83B12F3C1E800E91009EF55B /* icon_calories2.png in Resources */,
 				83B12F1C1E7E8DE2009EF55B /* 速度计.png in Resources */,
+				FA3A514B1E90AD5D00E52ED8 /* BLEConnectListCell.xib in Resources */,
+				FAEE07381E8E5E2C006E02B9 /* sporting_outline_heart.png in Resources */,
 				83B12DB41E7189B9009EF55B /* movingObjectViewController.xib in Resources */,
 				83B12F441E800E91009EF55B /* icon_heart1.png in Resources */,
 				83B12F401E800E91009EF55B /* icon_distance2.png in Resources */,
@@ -1878,6 +1911,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA3A514A1E90AD5D00E52ED8 /* BLEConnectListCell.m in Sources */,
+				FA326E0C1E892A64007C2B56 /* XIU_HelpDetialVC.m in Sources */,
 				83B1302B1E8765F3009EF55B /* MJRefreshAutoFooter.m in Sources */,
 				83B12E731E76D12A009EF55B /* WorldGradeModel.m in Sources */,
 				83B12F651E8606F5009EF55B /* QMS_ForgetPassword.m in Sources */,
@@ -2006,7 +2041,6 @@
 				83ABA1441E7039E500F9B529 /* SDWebImageDecoder.m in Sources */,
 				83B12F0B1E7D866B009EF55B /* SMPageControl.m in Sources */,
 				83ABA12E1E7039E500F9B529 /* MASLayoutConstraint.m in Sources */,
-				83B12F581E842DA5009EF55B /* HKPlayVoice.m in Sources */,
 				83ABA0A61E7031F100F9B529 /* MainPageViewController.m in Sources */,
 				83B12FE41E8681A4009EF55B /* QNDnsManager.m in Sources */,
 				83B12E291E7308F5009EF55B /* ActionSheetStringPicker.m in Sources */,

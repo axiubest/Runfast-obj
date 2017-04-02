@@ -19,18 +19,18 @@
 
 @implementation RunResultViewController
 
-
-
 - (IBAction)SureBtn:(id)sender {
+    
     [self request];
+    
     MainPageViewController *main = [[MainPageViewController alloc] init];
     [self.navigationController pushViewController:main animated:YES];
 }
 
 - (IBAction)ShareBtn:(id)sender {
+    
      [XIU_ShareView showShareView];
 }
-
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear: animated];
@@ -45,8 +45,6 @@
     
     
 }
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];

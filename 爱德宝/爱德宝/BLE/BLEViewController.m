@@ -15,7 +15,8 @@
 #import "SerialGATT.h"
 #import "RunResultViewController.h"
 #import "NSString+CHISLIM_BLE.h"
-#import "HKPlayVoice.h"
+
+
 @interface BLEViewController ()
 {
     CGFloat _topOffset;
@@ -25,9 +26,8 @@
     NSString *modelDis;
     NSString *modelKcar;
     NSString *modelTime;
-    
-    
     NSString *modelValue;
+    
     BOOL isModelValue;
 }
 
@@ -81,6 +81,11 @@
 @property (nonatomic, strong) NSMutableArray *KmImageArr;
 @property (nonatomic, strong) NSMutableArray *TimeImageArr;
 @property (nonatomic, strong) NSMutableArray *BmpImageArr;
+
+
+//完成目标后显示
+@property (weak, nonatomic) IBOutlet UILabel *modelShowLab;
+
 @end
 
 @implementation BLEViewController
@@ -93,8 +98,11 @@
     [self initBaseAttribute];
     [self initProgressView];
  
+    
+    
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(notice:) name:@"RunMainNotification" object:nil];
+
     [self addTap];
     
     
@@ -105,30 +113,34 @@
     
     NSData *data = [str dataUsingEncoding:[NSString defaultCStringEncoding]];
     [_sensor write:_sensor.activePeripheral data:data];
-  //  self.startButton.hidden = YES;
+
     self.endButton.hidden = NO;
 }
-
 
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
     isModelValue = NO;
-    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:model_Value]);
-    
+
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:model_Value]) {
+        
+      _modelShowLab.text = @"";
         isModelValue = YES;
         NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:model_Value];
 //        modelType = [dic objectForKey:@"type"];
         modelValue = [dic objectForKey:@"value"];
         if ([[dic objectForKey:@"type"] isEqualToString:@"dis"]) {
+            _modelShowLab.text = [NSString stringWithFormat:@"目标:%@公里", modelValue];
             modelDis = [dic objectForKey:@"type"];
         }if ([[dic objectForKey:@"type"] isEqualToString:@"kcar"]) {
+              _modelShowLab.text = [NSString stringWithFormat:@"目标:%@卡路里", modelValue];
             modelKcar =  [dic objectForKey:@"type"];
         }if ([[dic objectForKey:@"type"] isEqualToString:@"time"]) {
+          _modelShowLab.text = [NSString stringWithFormat:@"目标:%@分钟", modelValue];
             modelTime = [dic objectForKey:@"type"];
+            
         }
         
     }
@@ -185,10 +197,10 @@
 
 
 #pragma mark----------------------速度手势
+
+// speed down
 - (void)handleSwipesLeft:(UISwipeGestureRecognizer *)sender {
-    if (speedNum == 0.6) {
-        speedNum = 1;
-    }
+
     if (speedNum>0) {
         speedNum-=1;
     }else{
@@ -199,9 +211,11 @@
         //return;(if you do,the app will improve performance)
     }
     
-    [self setUpBLEValue:[NSString stringWithFormat:@"%.1f", speedNum] WithAttribute:@"p"];
+    [self setUpBLEValue:[NSString stringWithFormat:@"%.0f", speedNum] WithAttribute:@"p"];
     [self changeRadarViewJian];
 }
+
+// speed up
 - (void)handleSwipesRight:(UISwipeGestureRecognizer *)sender {
     if (speedNum == 0.6) {
         speedNum = 1;
@@ -212,10 +226,9 @@
         speedNum = [_maxLab.text floatValue];
     }
     
-    [self setUpBLEValue:[NSString stringWithFormat:@"%.1f", speedNum] WithAttribute:@"p"];
+    [self setUpBLEValue:[NSString stringWithFormat:@"%.0f", speedNum] WithAttribute:@"p"];
     [self changeRadarViewPlus];
 }
-#pragma mark----------------------速度手势
 
 
 
@@ -269,15 +282,25 @@
             if ([str containsString:@"EE"])  continue;
             if ([str containsString:@"ca"]) {
                 self.KcalLab.text = [str substringFromIndex:2];
-//                if (modelKcar) {
-//                    [[str substringFromIndex:2] floatValue] >= [modelKcar floatValue] ? [self HUDWithText:@"您已达标卡路里数"] : @"";
-//                }
+                if (modelKcar) {
+                    if ([[str substringFromIndex:2] integerValue] >= [modelKcar integerValue]) {
+                        _modelShowLab.hidden = NO;
+                        _modelShowLab.text = [NSString stringWithFormat:@"%@卡路里目标已完成",modelValue];
+                    }
+         
+                }
             }
             if ([str containsString:@"dis"]) {
                 self.KmLab.text = [str substringFromIndex:3];
-//                if (modelDis) {
-//                    [[str substringFromIndex:3] floatValue] >=[modelDis floatValue]? [self HUDWithText:@"您已达标公里数"] : @"";
-//                }
+                
+                if (modelDis) {
+                    
+                    if ([[[self.KmLab.text componentsSeparatedByString:@"."] firstObject] isEqualToString:modelValue]) {
+                        _modelShowLab.hidden = NO;
+                        _modelShowLab.text = [NSString stringWithFormat:@"%@公里目标已完成",modelValue];
+                    }
+
+                }
                 continue;
             }
             if ([str containsString:@"h"]) {
@@ -299,9 +322,13 @@
                 }
                 
                 self.TimeLab.text = timeStr;
-//                if (modelTime) {
-//                    [timeStr floatValue] >=[modelTime floatValue]? [self HUDWithText:@"您已达标时间数"] : @"";
-//                }
+                if (modelTime) {
+                    if ([[[self.TimeLab.text componentsSeparatedByString:@"."] firstObject] isEqualToString:modelValue]) {
+                        _modelShowLab.hidden = NO;
+                        _modelShowLab.text = [NSString stringWithFormat:@"%@分钟目标已完成",modelValue];
+                    }
+           
+                }
 
                 
             }
@@ -460,7 +487,10 @@
 //        [self dismissViewControllerAnimated:YES completion:nil];
 //        return;
 //    }
-    [[NSUserDefaults standardUserDefaults] setObject:_KmLab.text forKey:sport_now_dis];
+    
+    CGFloat historyNum = [[[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis] floatValue];
+    CGFloat nowNum = [_KmLab.text floatValue] + historyNum;
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%.2f", nowNum] forKey:sport_now_dis];
     
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

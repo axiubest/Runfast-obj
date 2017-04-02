@@ -34,6 +34,7 @@
 }
 @property (strong, nonatomic) XIU_User *curUser;
 @property (nonatomic, strong) UITableView *XIUTableView;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 @end
 
@@ -93,14 +94,14 @@
                     [cell setTitleStr:@"昵称" valueStr:[XIU_Login curLoginUser].username];
                     break;
                 case 1:
-                    [cell setTitleStr:@"性别" valueStr:self.curUser.usersex];
+                    [cell setTitleStr:@"性别" valueStr:[XIU_Login curLoginUser].usersex];
                     
                     break;
                 case 2:
-                    [cell setTitleStr:@"生日" valueStr:self.curUser.birth];
+                    [cell setTitleStr:@"生日" valueStr:[XIU_Login curLoginUser].birth];
                     break;
                 case 3:
-                    [cell setTitleStr:@"爱好" valueStr:self.curUser.userhobby];
+                    [cell setTitleStr:@"爱好" valueStr:[XIU_Login curLoginUser].userhobby];
                     break;
                 default:
                     break;
@@ -167,37 +168,31 @@
             case UserInformationItemStyle_userName: {
                 XIU_SettingTextViewController *vc = [XIU_SettingTextViewController settingTextVCWithTitle:@"昵称" textValue:_curUser.username  doneBlock:^(NSString *textValue) {
                     weakself.curUser.username = textValue;
-                    self.curUser.username = textValue;
-                    [XIU_Login saveNewUserInfoWithUser:self.curUser];
                     [self request];
-                    [weakself.XIUTableView reloadData];
                     //                    request
                 }];
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
             case UserInformationItemStyle_sex: {
-                [ActionSheetStringPicker showPickerWithTitle:nil rows:@[@[@"男", @"女", @"未知"]] initialSelection:@[_curUser.usersex] doneBlock:^(ActionSheetStringPicker *picker, NSArray * selectedIndex, NSArray *selectedValue) {
+                [ActionSheetStringPicker showPickerWithTitle:nil rows:@[@[@"男", @"女"]] initialSelection:@[_curUser.usersex] doneBlock:^(ActionSheetStringPicker *picker, NSArray * selectedIndex, NSArray *selectedValue) {
                     
                     weakself.curUser.usersex = selectedValue.lastObject;
-                    [XIU_Login saveNewUserInfoWithUser:self.curUser];
+
                     [self request];
-                    [weakself.XIUTableView reloadData];
                     
                 } cancelBlock:nil origin:self.view];
             }
                 break;
             case UserInformationItemStyle_birthday: {
-                NSDate *curDate = [NSDate dateFromString:_curUser.birth withFormat:@"yyyy-MM-dd"];
+                NSDate *curDate = [NSDate dateFromString:_curUser.birth withFormat:@"yyyyMMdd"];
                 if (!curDate) {
-                    curDate = [NSDate dateFromString:@"1990-01-01" withFormat:@"yyyy-MM-dd"];
+                    curDate = [NSDate dateFromString:@"19900101" withFormat:@"yyyyMMdd"];
                 }
                 ActionSheetDatePicker *picker = [[ActionSheetDatePicker alloc] initWithTitle:nil datePickerMode:UIDatePickerModeDate selectedDate:curDate doneBlock:^(ActionSheetDatePicker *picker, NSDate *selectedDate, id origin) {
                     weakself.curUser.birth = [selectedDate string_yyyy_MM_dd];
                     
-                    [XIU_Login saveNewUserInfoWithUser:self.curUser];
                      [self request];
-                    [weakself.XIUTableView reloadData];
                     //                    request
                 } cancelBlock:^(ActionSheetDatePicker *picker) {
                     
@@ -211,9 +206,7 @@
             case UserInformationItemStyle_hobby: {
                 XIU_SettingTextViewController *vc = [XIU_SettingTextViewController settingTextVCWithTitle:@"爱好" textValue:_curUser.userhobby  doneBlock:^(NSString *textValue) {
                     weakself.curUser.userhobby = textValue;
-                            [XIU_Login saveNewUserInfoWithUser:self.curUser];
                      [self request];
-                    [weakself.XIUTableView reloadData];
                     //                    request
                 }];
                 [self.navigationController pushViewController:vc animated:YES];
@@ -242,17 +235,15 @@
     picker.allowsEditing = YES;//设置可编辑
     
     if (buttonIndex == 0) {
-        //        拍照
-        //        if (![Helper checkCameraAuthorizationStatus]) {
-        //            return;
-        //        }
+
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     }else if (buttonIndex == 1){
 
         picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     }
     [self presentViewController:picker animated:YES completion:nil];//进入照相界面
-    
+
+
 }
 
 #pragma mark UIImagePickerControllerDelegate
@@ -283,6 +274,10 @@
         NSLog(@"保存失败");
     }else{
         NSLog(@"图片保存成功");
+        _hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+        _hud.labelText = @"正在保存";
+        _hud.mode = MBProgressHUDModeText;
+        [_hud hide:YES afterDelay:6];
         
         [HKFileTool hk_removeFile:iconPath containSelf:YES complete:nil];
         NSData *iconData =  UIImageJPEGRepresentation(image, 1.0);
@@ -298,7 +293,8 @@
 }
 
 - (void)requestPic {
-    NSLog(@"%@", tmpImage);
+
+
     
     if (UIImagePNGRepresentation(tmpImage).length == 0) {
         self.curUser.userImg = @"";
@@ -336,21 +332,6 @@
 
 }
 
-//- (void)requestServerOfChislim:(NSString *)picUrl {
-//    [[NSUserDefaults standardUserDefaults] setObject:picUrl forKey:@"userImage"];
-//    XIU_Login saveNewUserInfoWithUser:<#(XIU_User *)#>
-//    NSString *path = [NSString stringWithFormat:@"%@UserServlet?dowhat=updateUserImg&userId=%@&imageUrl=%@", BASEURL,MAIN_USERID, picUrl];
-//    NSString *u8 = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-//    
-//    [HTTPHandier getDataByString:u8 WithBodyString:nil WithDataBlock:^(id responceObject) {
-//        NSLog(@"发布成功");
-//        
-//        [self.XIUTableView reloadData];
-//        
-//    }];
-//    
-//}
-
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -363,9 +344,18 @@
 }
 
 - (void)request {
+    
+    if (self.curUser.birth.length < 2) {
+        self.curUser.birth = @"";
+    }
+    
+    [XIU_Login saveNewUserInfoWithUser:self.curUser];
     [[XIU_NetAPIManager sharedManager] request_UpdateUserInformationWithModel:self.curUser Block:^(id data, NSError *error) {
         if (data) {
             [self HUDWithText:@"保存成功"];
+            [self.XIUTableView reloadData];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"modifyAvatarTableView" object:nil];
+
         }else {
             [self HUDWithText:@"保存失败"];
         }

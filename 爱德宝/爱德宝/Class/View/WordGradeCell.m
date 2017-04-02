@@ -30,7 +30,10 @@
     _userName.text = model.username;
     _userKmLab.text = [NSString stringWithFormat:@"%@", model.allDis];
     _gradeLab.text = [NSString stringWithFormat:@"%ld", count + 1];
-    if (count < 3) {
+    
+    
+    if ([_gradeLab.text integerValue] == 3) {
+        
         _huangguanImageView.image = [UIImage imageNamed:@"皇冠"];
         _gradeLab.textColor = [UIColor blackColor];
     }

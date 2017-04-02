@@ -44,16 +44,6 @@
 
 
 
-
-
--(NSString *)birth {
-    if (!(_birth.length > 0 || _birth)) {
-        return @"1970-1-1";
-    }else {
-        return _birth;
-    }
-}
-
 - (NSString *)userhobby{
     if (_userhobby && _userhobby.length > 0) {
         return _userhobby;

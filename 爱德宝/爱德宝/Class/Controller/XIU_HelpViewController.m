@@ -9,6 +9,7 @@
 #import "XIU_HelpViewController.h"
 #import "MJRefresh.h"
 #import "QuestionModel.h"
+#import "XIU_HelpDetialVC.h"
 @interface XIU_HelpViewController ()
 {
     int pageNum;
@@ -39,7 +40,7 @@
     pageNum = 0;
     [self requestWithPage:pageNum];
     
-    self.tableView.mj_footer = [MJRefreshAutoGifFooter footerWithRefreshingBlock:nil];
+
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         pageNum++;
         [self requestWithPage:pageNum];
@@ -70,12 +71,21 @@
     cell.backgroundColor  =[UIColor clearColor];
     cell.textLabel.textColor  =[UIColor whiteColor];
     
-    cell.textLabel.text = [self.dataSource[indexPath.row] quesAnswer];
+    cell.textLabel.text = [self.dataSource[indexPath.row] quesTitle];
     NSLog(@"%@", self.dataSource[indexPath.row] );
     
     return cell;
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    XIU_HelpDetialVC *vc = [[XIU_HelpDetialVC alloc] init];
+    vc.str =  [self.dataSource[indexPath.row] quesAnswer];
+    vc.title = [self.dataSource[indexPath.row] quesTitle];
+    NSLog(@"%@", [self.dataSource[indexPath.row] quesAnswer]);
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 /*
 // Override to support conditional editing of the table view.
