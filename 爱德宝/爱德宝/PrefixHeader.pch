@@ -37,7 +37,7 @@ static  NSString *const XIU_Social_RedirectURL = @"";
 #define sportStartDate @"sportStartDate"
 #define kLoginStatus @"login_status"
 #define kLoginUserDict @"user_dict"
-#define BASEURL @"112.74.28.179:8080/adbs/userbeancontrol/"
+#define BASEURL @"http://112.74.28.179:8080/adbs/userbeancontrol/"
 // 重写NSLog，debug模式下打印行数
 #ifdef DEBUG
 #define NSLog(s, ... ) NSLog( @"[%@ in line %d]=>>%@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )

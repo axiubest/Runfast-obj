@@ -94,43 +94,43 @@
 }
 
 - (IBAction)ChickedNextBtn:(id)sender {
-    
-    if (!self.PhoneNum.text.length) {
-        [self alterMessage:@"手机号不能为空"];
-        [self.PhoneNum becomeFirstResponder];
-        return;
-    }
-    if (!self.firstPwd.text.length){
-        [self alterMessage:@"密码不能为空"];
-        [self.firstPwd becomeFirstResponder];
-        return;
-    }
-    if (!self.secondPwd.text.length){
-        [self alterMessage:@"确认密码不能为空"];
-        [self.secondPwd becomeFirstResponder];
-        return;
-    }
-    if (!self.VerificationCodeNum.text.length) {
-        [self alterMessage:@"验证码不能为空"];
-        [self.VerificationCodeNum becomeFirstResponder];
-        return;
-    }
-    if (![self.firstPwd.text isEqualToString:self.secondPwd.text]) {
-        [self alterMessage:@"确认密码和密码一样哦"];
-        [self.firstPwd becomeFirstResponder];
-        return;
-    }
-    if (![NSString valiMobile:self.PhoneNum.text]){
-        [self alterMessage:@"请输入正确的手机号码"];
-        [self.PhoneNum becomeFirstResponder];
-        return;
-    }
-    
-    //    NSLog(@"需要验证验证码");
-    if (![self.VerificationCodeNum.text isEqualToString:self.messageCode]) {
-        [self alterMessage:@"验证码不正确"];
-        return;
-    }
+//    
+//    if (!self.PhoneNum.text.length) {
+//        [self alterMessage:@"手机号不能为空"];
+//        [self.PhoneNum becomeFirstResponder];
+//        return;
+//    }
+//    if (!self.firstPwd.text.length){
+//        [self alterMessage:@"密码不能为空"];
+//        [self.firstPwd becomeFirstResponder];
+//        return;
+//    }
+//    if (!self.secondPwd.text.length){
+//        [self alterMessage:@"确认密码不能为空"];
+//        [self.secondPwd becomeFirstResponder];
+//        return;
+//    }
+//    if (!self.VerificationCodeNum.text.length) {
+//        [self alterMessage:@"验证码不能为空"];
+//        [self.VerificationCodeNum becomeFirstResponder];
+//        return;
+//    }
+//    if (![self.firstPwd.text isEqualToString:self.secondPwd.text]) {
+//        [self alterMessage:@"确认密码和密码一样哦"];
+//        [self.firstPwd becomeFirstResponder];
+//        return;
+//    }
+//    if (![NSString valiMobile:self.PhoneNum.text]){
+//        [self alterMessage:@"请输入正确的手机号码"];
+//        [self.PhoneNum becomeFirstResponder];
+//        return;
+//    }
+//    
+//    //    NSLog(@"需要验证验证码");
+//    if (![self.VerificationCodeNum.text isEqualToString:self.messageCode]) {
+//        [self alterMessage:@"验证码不正确"];
+//        return;
+//    }
     
     [self request];
 }
@@ -196,8 +196,11 @@
 
 - (void)request {
     
-    NSString *path = [NSString stringWithFormat:@"112.74.28.179:8080/adbs/userbeancontrol/updateuserbeanpass?userphone=%@&userpass=%@", self.PhoneNum.text, self.secondPwd.text];
-    [HTTPHandier getDataByString:path WithBodyString:nil WithDataBlock:^(id responceObject) {
+    NSString *path = [NSString stringWithFormat:@"http://112.74.28.179:8080/adbs/userbeancontrol/updateuserbeanpass?userphone=%@&userpass=%@", self.PhoneNum.text, self.secondPwd.text];
+    
+    NSString * urlString = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+;
+    [HTTPHandier getDataByString:urlString WithBodyString:nil WithDataBlock:^(id responceObject) {
         [self HUDWithText:@"修改成功"];
         [self dissmissFirstResponder];
         [self landHTTPRequest];
@@ -222,7 +225,7 @@
     [HTTPHandier getDataByString:path WithBodyString:nil WithDataBlock:^(id responceObject) {
         NSDictionary * obj = [[responceObject objectForKey:@"data"] objectForKey:@"user"];
         if (!obj) {
-            [self HUDWithText:@"修改密码失败"];
+            [self HUDWithText:@"登录失败"];
             return;
         }
        [self saveDictionary:obj];
@@ -231,9 +234,12 @@
         
         if ([self.PhoneNum.text isEqualToString:userPhone] && [self.secondPwd.text isEqualToString:password] ) {
             //登陆成功进入下一个界面
-            
-            [[NSUserDefaults standardUserDefaults]setObject:self.PhoneNum.text forKey:@"uid"];
+        
             [self.view endEditing:NO];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"forgetPassword" object:nil];
+            
+            
             MainPageViewController *main = [[MainPageViewController alloc] init];
             [self.navigationController pushViewController:main animated:YES];
             

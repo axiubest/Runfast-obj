@@ -266,9 +266,9 @@
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
-//    activePeripheral = nil;
+    activePeripheral = nil;
     //断开链接重新连接
-    [central connectPeripheral:activePeripheral options:nil];
+//    [central connectPeripheral:activePeripheral options:nil];
 
     [delegate abNormalConnect];
 }

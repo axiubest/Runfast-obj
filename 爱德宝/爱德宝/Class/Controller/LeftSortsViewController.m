@@ -58,6 +58,8 @@
     [center addObserver:self selector:@selector(resignnotice:) name:@"resignTableViewReloData" object:nil];
     
     [center addObserver:self selector:@selector(resignnotice:) name:@"modifyAvatarTableView" object:nil];
+    
+    [center addObserver:self selector:@selector(resignnotice:) name:@"forgetPassword" object:nil];
 }
 
 - (void)resignnotice:(NSNotification *)sender {

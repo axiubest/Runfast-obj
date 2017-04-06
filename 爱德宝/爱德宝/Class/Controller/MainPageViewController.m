@@ -103,7 +103,6 @@
     self.title = @"主界面";
     
     NSLog(@"%@", kPathDocument);
-    NSLog(@"%@", [XIU_Login curLoginUser].userImg);
     
     _tvRecv = [NSString string];
     _speed = [NSString string];
