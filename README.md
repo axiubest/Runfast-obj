@@ -12,4 +12,10 @@
  * 跑步结束界面（保存，分享）
 
 ### 首页
-首页的UI布局由一个仪表盘组成，外层显示公里数，内层显示时间天数，目标设置可在：我的——运动目标，设置。下方两个按钮条转到历史记录和模式选择两个模块中。
+首页的UI布局由一个仪表盘组成，外层显示公里数，内层显示时间天数，目标设置可在：我的——运动目标，设置。下方两个按钮条转到历史记录和模式选择两个模块中。蓝牙中心控制者SerialGATT服务保持在首页即MainPageViewController控制器中，由此控制器传值到蓝牙列表，跑步机控制界面。
+
+### 蓝牙连接列表
+由MainPageViewController将蓝牙设备数组peripheralViewControllerArray，传递到次中。list展示。点击cell携参回调回首页执行开始跑步。
+
+### 跑步控制界面
+由MainPageViewController将蓝牙服务SerialGATT *sensor传递到BLEViewController控制器中，经过软硬件双方校验后将正确的蓝牙数据包内容分隔显示到指定label中展示。（具体校验方法下方有做说明）
