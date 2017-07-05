@@ -25,6 +25,15 @@
 }
 
 
+- (void)request_TrtavelWithBlock:(void (^)(id data, NSError *error))block {
+    NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+
+    [[XIU_NetAPIClient sharedJsonClient] requestJsonDataWithPath:@"http://112.74.28.179:8080/adbs/userbeancontrol/loginByIdentified?" withParams:@{@"dentified":idfv} withMethodType:Get andBlock:^(id data, NSError *error) {
+        
+    }];
+    
+}
+
 
 - (void)request_Login_WithPath:(NSString *)path Params:(id)params andBlock:(void (^)(id data, NSError *error))block {
     

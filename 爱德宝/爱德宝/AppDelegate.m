@@ -31,6 +31,8 @@
 }
 
 #pragma mark 信息更新
+
+//http://localhost:8080/userbeancontrol/loginByIdentified?identified=4546 游客
 - (void)requestInfo {
     if ([XIU_Login isLogin]) {
         
@@ -41,6 +43,11 @@
             }
         }];
 
+    }else{//未登录
+        
+        [[XIU_NetAPIManager sharedManager] request_TrtavelWithBlock:^(id data, NSError *error) {
+            
+        }];
     }
 }
 

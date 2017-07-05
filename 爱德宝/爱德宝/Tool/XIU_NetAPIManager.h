@@ -31,4 +31,7 @@
 
 #pragma  mark help
 - (void)request_QuestionWithPage:(int)page Block:(void (^)(id data, NSError *error))block;
+
+#pragma mark traver
+- (void)request_TrtavelWithBlock:(void (^)(id data, NSError *error))block;
 @end
