@@ -23,9 +23,10 @@
         if (![[NSUserDefaults standardUserDefaults] objectForKey:user_ranking]) {
              _PersonNumber.text = @"暂无排名";
         }else {
-            _PersonNumber.text =[NSString stringWithFormat:@"总排名:%@",[[NSUserDefaults standardUserDefaults] objectForKey:user_ranking]];
+            _PersonNumber.text =[NSString stringWithFormat:@"总排名:%@名",[[NSUserDefaults standardUserDefaults] objectForKey:user_ranking]];
         }
-          _PersondistanceNumber.text = [NSString stringWithFormat:@"总里程:%@", [XIU_Login curLoginUser].allDis];
+        NSString *str =[NSString stringWithFormat:@"%.2fKm",[[XIU_Login curLoginUser].allDis floatValue]];
+          _PersondistanceNumber.text = str;
         
         if ([UIImage imageNamed:iconPath]) {
             _PersonImageView.image = [UIImage imageNamed:iconPath];

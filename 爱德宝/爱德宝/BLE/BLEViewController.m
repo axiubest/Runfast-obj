@@ -83,6 +83,8 @@
 @property (nonatomic, strong) NSMutableArray *BmpImageArr;
 
 
+@property (nonatomic, weak) UILabel *statesLab;
+
 //完成目标后显示
 @property (weak, nonatomic) IBOutlet UILabel *modelShowLab;
 
@@ -115,6 +117,16 @@
     [_sensor write:_sensor.activePeripheral data:data];
 
     self.endButton.hidden = NO;
+    
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, KWIDTH, KHEIGHT)];
+    lab.backgroundColor = [UIColor darkGrayColor];
+    lab.text = @"请注意！安全锁脱落,请放回";
+    lab.textAlignment = 1;
+    lab.textColor = [UIColor whiteColor];
+    lab.font = [UIFont systemFontOfSize:25 weight:2];
+    lab.hidden = YES;
+    _statesLab = lab;
+    [self.view addSubview:lab];
 }
 
 
@@ -202,7 +214,7 @@
 - (void)handleSwipesLeft:(UISwipeGestureRecognizer *)sender {
 
     if (speedNum>0) {
-        speedNum-=1;
+        speedNum-=0.1;
     }else{
         speedNum = 0;
     }
@@ -211,7 +223,7 @@
         //return;(if you do,the app will improve performance)
     }
     
-    [self setUpBLEValue:[NSString stringWithFormat:@"%.0f", speedNum] WithAttribute:@"p"];
+    [self setUpBLEValue:[NSString stringWithFormat:@"%.1f", speedNum] WithAttribute:@"p"];
     [self changeRadarViewJian];
 }
 
@@ -221,12 +233,12 @@
         speedNum = 1;
     }
     if (speedNum<[_maxLab.text floatValue]) {
-        speedNum+=1;
+        speedNum+=0.1;
     }else{
         speedNum = [_maxLab.text floatValue];
     }
     
-    [self setUpBLEValue:[NSString stringWithFormat:@"%.0f", speedNum] WithAttribute:@"p"];
+    [self setUpBLEValue:[NSString stringWithFormat:@"%.1f", speedNum] WithAttribute:@"p"];
     [self changeRadarViewPlus];
 }
 
@@ -242,8 +254,10 @@
 }
 
 - (void)handleSlopeSwipesRight:(UISwipeGestureRecognizer *)sender {
-    slopeNum <18?++slopeNum:18;
-    if (slopeNum == 18) {
+    NSInteger maxNum = [self.maxLab.text integerValue];
+    
+    slopeNum <maxNum?++slopeNum:maxNum;
+    if (slopeNum == maxNum) {
         [self HUDWithText:@"坡度已到达最大值"];
     }
     [self setUpBLEValue:[NSString stringWithFormat:@"%d", slopeNum] WithAttribute:@"s"];
@@ -269,7 +283,19 @@
         NSLog(@"--%@---",subArr);
 
         for (NSString *str in subArr) {
-            if ([str containsString:@"st"]) continue;
+            if ([str containsString:@"st"]){
+                NSString *stopStr = [str substringFromIndex:2];
+                
+                if ([stopStr integerValue] != 20) {
+                    //20为正常状态， 设备锁脱落不为20
+                    _statesLab.hidden = NO;
+
+                }else {
+                    _statesLab.hidden = YES;
+
+                }
+                continue;
+            }
             if ([str containsString:@"mp"]) continue;
             if ([str containsString:@"sf"]) continue;
             if ([str containsString:@"ms"]) {
@@ -491,6 +517,7 @@
     CGFloat historyNum = [[[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis] floatValue];
     CGFloat nowNum = [_KmLab.text floatValue] + historyNum;
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%.2f", nowNum] forKey:sport_now_dis];
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis]);
     
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

@@ -64,10 +64,7 @@
 - (void)request {
 
     NSString *tmp = [[_Time componentsSeparatedByString:@"."] firstObject];
-    NSLog(@"%@", tmp);
-//    if ([tmp isEqualToString:@"0"]) {
-//        tmp = @"1";
-//    }
+    
     [[XIU_NetAPIManager sharedManager] request_SaveSportGradeWithKm:[NSString stringWithFormat:@"%@", _Km] Time:[NSString stringWithFormat:@"%@", tmp] KCar:[NSString stringWithFormat:@"%@", _Kcal] Block:^(id data, NSError *error) {
         if (data) {
             [self HUDWithText:@"数据上传成功"];

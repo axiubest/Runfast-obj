@@ -36,6 +36,8 @@
     
     CGFloat NowDis;
     
+    NSInteger nowDate;
+    
 }
 
 
@@ -57,6 +59,8 @@
 
 @property (nonatomic,weak) UILabel *currentNum;
 
+@property (nonatomic,weak) UILabel *label;//all dis label;
+
 @end
 
 
@@ -69,13 +73,15 @@
     [super viewWillAppear:animated];
     
     NowDis = [[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis] ? [[[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis] floatValue] : 0;
+    NSLog(@"%.2f", [[[NSUserDefaults standardUserDefaults] objectForKey:sport_now_dis] floatValue]);
     
-    
+    _disProgressView.currentValue = NowDis;
+    _label.text = [NSString stringWithFormat:@"%.1f", NowDis];
 
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
     
-    _allLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:sportDis] ? [NSString stringWithFormat:@"%@Km", [[NSUserDefaults standardUserDefaults] objectForKey:sportDis]] : @"请设置目标" ;
+    _allLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:sportDis] ? [NSString stringWithFormat:@"运动目标：%@Km", [[NSUserDefaults standardUserDefaults] objectForKey:sportDis]] : @"请设置目标" ;
     self.nowDayLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:sportDay] ?[NSString stringWithFormat:@"%@天", [[NSUserDefaults standardUserDefaults] objectForKey:sportDay]]  :  @"0天";
     
     
@@ -83,24 +89,11 @@
         self.currentNum.text = @"第0天";
         return;
     }
-    NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:sportStartDate];
-    
-    NSDate *dateFor = [NSDate date];
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    fmt.dateFormat  =@"yyyy-MM-dd";
-    NSString *dateStr = [fmt stringFromDate:dateFor];
-    fmt.dateFormat  =@"yyyy-MM-dd";
-    NSDate *create = [fmt dateFromString:dateStr];
-    
-    NSTimeInterval delta = [create timeIntervalSinceDate:startDate];
-    NSInteger num = delta/86400+1;
-    NSInteger totalNum = [[[NSUserDefaults standardUserDefaults] objectForKey:sportDay] integerValue];
-    self.currentNum.text = [NSString stringWithFormat:@"第%ld天",num<totalNum?num:totalNum];
-}
+ }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"主界面";
+    self.title = @"天天爱跑";
     
     NSLog(@"%@", kPathDocument);
     
@@ -118,7 +111,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 60, 60)];
     label.center = CGPointMake(KWIDTH/2 - 70, KHEIGHT/2 + 30);
     label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor lightGrayColor];
+    label.textColor = [UIColor colorWithHexString:@"4F94CD"];
     [self.view addSubview:label];
     self.currentNum = label;
     
@@ -145,6 +138,23 @@
 
 - (void)createProgressView {
     
+    NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:sportStartDate];
+    
+    NSDate *dateFor = [NSDate date];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat  =@"yyyy-MM-dd";
+    NSString *dateStr = [fmt stringFromDate:dateFor];
+    fmt.dateFormat  =@"yyyy-MM-dd";
+    NSDate *create = [fmt dateFromString:dateStr];
+    
+    NSTimeInterval delta = [create timeIntervalSinceDate:startDate];
+    NSInteger num = delta/86400+1;
+    NSInteger totalNum = [[[NSUserDefaults standardUserDefaults] objectForKey:sportDay] integerValue];
+    self.currentNum.text = [NSString stringWithFormat:@"第%ld天",num<totalNum?num:totalNum];
+    nowDate = num<totalNum?num:totalNum;
+
+    
+    
     NSInteger disNum = [[NSUserDefaults standardUserDefaults] objectForKey:sportDis] ?  [[[NSUserDefaults standardUserDefaults] objectForKey:sportDis] integerValue] : 300;;
     
     NSInteger allDayNum =  [[NSUserDefaults standardUserDefaults] objectForKey:sportDay] ? [[[NSUserDefaults standardUserDefaults] objectForKey:sportDay] integerValue] : 7;
@@ -153,8 +163,8 @@
     CLDashboardProgressView *disprogress = [[CLDashboardProgressView alloc] initWithFrame:CGRectMake(0, 0, arc_size, arc_size)];
     disprogress.backgroundColor = [UIColor whiteColor];
     disprogress.outerRadius = 160; // 外圈半径
-    disprogress.innerRadius = 140;  // 内圈半径
-    disprogress.beginAngle = 140;    // 起始角度
+    disprogress.innerRadius = 148;  // 内圈半径
+    disprogress.beginAngle = 200;    // 起始角度
     disprogress.blockAngle = 8;   // 每个进度块的角度
     disprogress.gapAngle = 0;     // 两个进度块的间隙的角度
     disprogress.progressColor = [UIColor greenColor]; // 进度条填充色
@@ -170,7 +180,7 @@
     disprogress.showShadow = NO;  // 是否显示阴影
     disprogress.shadowOuterRadius = 85; // 阴影外圈半径
     disprogress.shadowInnerRadius = 10; // 阴影内圈半径
-    disprogress.shadowFillColor = [[UIColor grayColor] colorWithAlphaComponent:0.3];   // 阴影颜色
+    disprogress.shadowFillColor = [[UIColor grayColor] colorWithAlphaComponent:0.1];   // 阴影颜色
     
     disprogress.autoAdjustAngle = YES;  // 自动调整角度
     disprogress.center = self.view.center;
@@ -181,6 +191,7 @@
     
     
     
+    //date
     CLDashboardProgressView *progress = [[CLDashboardProgressView alloc] initWithFrame:CGRectMake(0, 0, arc_size, arc_size)];
     progress.backgroundColor = [UIColor whiteColor];
     progress.outerRadius = _disProgressView.outerRadius - 30; // 外圈半径
@@ -196,7 +207,8 @@
     progress.blockCount = 26;   // 进度块的数量
     progress.minValue = 0;      // 进度条最小数值
     progress.maxValue = allDayNum;    // 进度条最大数值
-    progress.currentValue =  [self.currentNum.text floatValue]; // 进度条当前数值
+    progress.currentValue =  nowDate; // 进度条当前数值
+    
     
     progress.showShadow = NO;  // 是否显示阴影
     progress.shadowOuterRadius = 85; // 阴影外圈半径
@@ -211,15 +223,16 @@
     
     
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, KWIDTH, 50)];
-    lab.font = [UIFont systemFontOfSize:50 weight:2];
+    lab.font = [UIFont systemFontOfSize:30 weight:2];
     lab.textAlignment = 1;
     lab.textColor = [UIColor whiteColor];
     lab.text = [NSString stringWithFormat:@"%.f",NowDis];
     lab.center = CGPointMake(SV.center.x, SV.center.y - 40);
+    _label = lab;
     [self.view addSubview:lab];
     
     UILabel *allLab = [[UILabel alloc] init];
-    allLab.textColor  = [UIColor lightGrayColor];
+    allLab.textColor  = [UIColor greenColor];
     _allLabel = allLab;
     allLab.text = @"100km";
     [self.view addSubview:allLab];

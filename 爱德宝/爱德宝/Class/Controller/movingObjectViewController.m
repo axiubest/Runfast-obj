@@ -150,6 +150,9 @@
 - (void)save {
     [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%ld", (long)day] forKey:sportDay];
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%.0lf", dis] forKey:sportDis];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:sport_now_dis];
+    [[NSUserDefaults standardUserDefaults] objectForKey:model_Value];
+    
     
     NSDate *dateFor = [NSDate date];
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];

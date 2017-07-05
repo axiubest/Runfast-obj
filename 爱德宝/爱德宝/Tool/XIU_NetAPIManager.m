@@ -93,8 +93,9 @@
                 WorldGradeModel *model = [[WorldGradeModel alloc] init];
                 model.ids = [obj objectForKey:@"id"];
                 model.allCir = [obj objectForKey:@"allCir"];
+              model.allTime = [obj objectForKey:@"allTime"];
                 model.userImg = [obj objectForKey:@"userImg"];
-                model.allDis = [obj objectForKey:@"allTime"];
+                model.allDis = [obj objectForKey:@"allDis"];
                 model.username = [obj objectForKey:@"username"];
                 [arr addObject:model];
             }

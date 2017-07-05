@@ -31,29 +31,17 @@ static NSString *KBASEURL = @"112.74.28.179:8080/userbeancontrol/";
    
     if (errorCode != 0) {
         error = [NSError errorWithDomain:[NSObject baseURLStr] code:errorCode userInfo:responseJSON];
+        if (errorCode == 1) {//wrong password
+            [NSObject showHudTipStr:responseJSON[@"msg"]];
+        }
         if (errorCode == 1000 || errorCode == 3207) {//用户未登录
-//            if ([Login isLogin]) {
-//                [Login doLogout];//已登录的状态要抹掉
-//                //更新 UI 要延迟 >1.0 秒，否则屏幕可能会不响应触摸事件。。暂不知为何
-//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if ([XIU_Login isLogin]) {
+                [XIU_Login doLogOut];//已登录的状态要抹掉
+                //更新 UI 要延迟 >1.0 秒，否则屏幕可能会不响应触摸事件。。暂不知为何
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //                    [((AppDelegate *)[UIApplication sharedApplication].delegate) setupLoginViewController];
 //                    kTipAlert(@"%@", [NSObject tipFromError:error]);
-//                });
-//            }
-        }else{
-            //验证码弹窗
-            NSMutableDictionary *params = nil;
-            if (errorCode == 907) {//operation_need_captcha 比如：每日新增关注用户超过 20 个
-                params = @{@"type": @3}.mutableCopy;
-            }else if (errorCode == 1018){//user_not_get_request_too_many
-                params = @{@"type": @1}.mutableCopy;
-            }
-            if (params) {
-//                [NSObject showCaptchaViewParams:params];
-            }
-            //错误提示
-            if (autoShowError) {
-//                [NSObject showError:error];
+                });
             }
         }
     }
